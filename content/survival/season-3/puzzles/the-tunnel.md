@@ -13,7 +13,7 @@ infobox:
   Type: 'community project'
   Coordinates: '100 0'
 ---
-The Tunnel was a puzzle created by and for Season 3. Designed around uncovering the mystery of a tunnel that existed outside of time and space, the puzzle was implemented using datapacks and served as a spiritual sequel to "[The Disc](/articles/the-disc-11-puzzle/)" puzzle in Season 2, once again requiring collaboration by the Slabserver community in order to solve.
+The Tunnel was a puzzle created by and for Season 3. Designed around uncovering the mystery of a tunnel that existed outside of time and space, the puzzle was implemented using datapacks and served as a spiritual sequel to "[The Disc](/survival/season-2/puzzles/the-disc-11-puzzle/)" puzzle in Season 2, once again requiring collaboration by the Slabserver community in order to solve.
 
 ## Development
 
@@ -31,4 +31,4 @@ Around a month before Season 3 was announced, began to seek out ideas for anothe
 
 ## Sequel
 
-On the 23rd of August 2024, announced that a third and final puzzle had been secretly in development for Season 4 since March 2020. The third puzzle concludes the unofficial trilogy of community puzzles, and released on April 4th, 2025, its name finally revealed as "[The Passage](/articles/the-passage/)".
+On the 23rd of August 2024, announced that a third and final puzzle had been secretly in development for Season 4 since March 2020. The third puzzle concludes the unofficial trilogy of community puzzles, and released on April 4th, 2025, its name finally revealed as "[The Passage](/survival/season-4/puzzles/the-passage/)".

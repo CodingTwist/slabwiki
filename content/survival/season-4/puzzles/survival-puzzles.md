@@ -11,7 +11,7 @@ description: 'DaUltraTrilogy'
 
 <h3>
 
-[The Disc 11 Puzzle](/articles/the-disc-11-puzzle/)
+[The Disc 11 Puzzle](/survival/season-2/puzzles/the-disc-11-puzzle/)
 
 </h3>
 
@@ -30,7 +30,7 @@ description: 'DaUltraTrilogy'
 
 <h3>
 
-[The Tunnel](/articles/the-tunnel/)
+[The Tunnel](/survival/season-3/puzzles/the-tunnel/)
 
 </h3>
 
@@ -49,7 +49,7 @@ description: 'DaUltraTrilogy'
 
 <h3>
 
-[The Passage](/articles/the-passage/)
+[The Passage](/survival/season-4/puzzles/the-passage/)
 
 </h3>
 

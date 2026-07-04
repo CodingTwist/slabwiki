@@ -46,7 +46,7 @@
   --c-card:      #2f2a22;
   --c-fg:        #f0ebe0;
   --c-body:      #d8cfba;
-  --c-muted:     #a89f8c;
+  --c-muted:     #c2b8a2;
   --c-faint:     #b8ad98;
   --c-line:      #0c0a07;
   --c-grass:     #5b8a3c;
@@ -180,8 +180,8 @@
   /* Micro-label: NAVIGATE / SERVER STATUS / COMMUNITY WIKI. */
   .pixel-label {
     font-family: var(--font-pixel);
-    font-size: 9px;
-    letter-spacing: .04em;
+    font-size: 10px;
+    letter-spacing: .08em;
     text-transform: uppercase;
     line-height: 1;
   }

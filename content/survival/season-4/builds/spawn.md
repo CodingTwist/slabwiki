@@ -15,7 +15,7 @@ Spawn is the first thing you seen once you login so it needed to be grand. Desig
 
 ## Features
 
-- [Community Storage](/articles/s4spawn-storage/) to store all the items
+- [Community Storage](/survival/season-4/builds/spawn-storage/) to store all the items
 - Mail Room
 - PVP arena
 - Town hall with helpful info and the day counter.
