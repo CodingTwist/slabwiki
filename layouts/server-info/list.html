@@ -1,0 +1,22 @@
+{{ define "main" }}
+<div class="page-sheet px-6 sm:px-8 py-8">
+  <div class="mb-5">
+    <h1 class="pixel text-[26px] md:text-[30px]">{{ .Title }}</h1>
+    {{ with .Description }}<p class="text-muted text-sm mt-1.5">{{ . }}</p>{{ end }}
+    <div class="stripe-divider mt-4"></div>
+  </div>
+  <article class="prose">
+    {{ .Content }}
+    {{ with .Pages }}
+    <ul class="list-none pl-0 space-y-3 mt-6">
+      {{ range .ByTitle }}
+      <li><a href="{{ .RelPermalink }}" class="mc-card mc-card-hover block p-3.5 no-underline">
+        <strong class="pixel text-[13px] uppercase text-fg">{{ .Title }}</strong>
+        {{ with .Description }}<div class="text-sm text-muted mt-1.5">{{ . }}</div>{{ end }}
+      </a></li>
+      {{ end }}
+    </ul>
+    {{ end }}
+  </article>
+</div>
+{{ end }}

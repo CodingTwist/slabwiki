@@ -1,0 +1,19 @@
+{{- $out := slice -}}
+{{- range .Site.RegularPages -}}
+  {{- if ne .Section "server-info" -}}
+    {{- $server := .Params.server | default "" -}}
+    {{- $sec := "" -}}{{- with .CurrentSection }}{{ if .Title }}{{ $sec = .LinkTitle }}{{ end }}{{ end -}}
+    {{- $coord := "" -}}
+    {{- with .Params.loc }}{{ $coord = . }}{{ end -}}
+    {{- with .Params.infobox }}{{ with .Coordinates }}{{ $coord = . }}{{ end }}{{ end -}}
+    {{- $s := lower (printf "%s %s %s %s %s" .Title $server $sec $coord (.Params.owners | default "")) -}}
+    {{- $out = $out | append (dict
+        "title" .Title
+        "url" .RelPermalink
+        "category" $sec
+        "season" $server
+        "coord" $coord
+        "s" $s) -}}
+  {{- end -}}
+{{- end -}}
+{{- $out | jsonify -}}

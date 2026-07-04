@@ -1,0 +1,63 @@
+{{ define "main" }}
+{{ $shops := .Pages }}
+<div class="page-sheet px-6 sm:px-8 py-8">
+  <div class="mb-5">
+    <span class="pixel-label text-gold">{{ .Site.Params.currentSeason }} · {{ len $shops }} shops</span>
+    <h1 class="pixel text-[26px] md:text-[30px] mt-1.5">{{ .Title }}</h1>
+    {{ with .Description }}<p class="text-muted text-sm mt-1.5">{{ . }}</p>{{ end }}
+    <div class="stripe-divider mt-4"></div>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-3 mb-5">
+    <label class="flex items-center gap-2 flex-1 min-w-[220px] mc-input !w-auto focus-within:border-grass">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-muted shrink-0"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="shop-search" type="search" placeholder="Search shops, owners, stock, coords…" autocomplete="off"
+             class="w-full bg-transparent outline-none text-sm text-fg placeholder:text-muted">
+    </label>
+    <span class="text-sm text-faint"><span id="shop-count">{{ len $shops }}</span> shown</span>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4" id="shop-grid">
+    {{ range $shops.ByTitle }}
+    <a href="{{ .RelPermalink }}" data-search="{{ lower (printf "%s %s %s %s" .Title .Params.owners .Params.summary .Params.loc) }}"
+       class="mc-card mc-card-hover flex flex-col no-underline overflow-hidden group">
+      {{ with .Params.image }}
+      <div class="aspect-[16/10] overflow-hidden bg-surface-2 border-b-[3px] border-line">
+        <img src="{{ . | relURL }}" alt="" loading="lazy" class="w-full h-full object-cover">
+      </div>
+      {{ end }}
+      <div class="p-3.5 flex flex-col gap-2 flex-1">
+        <h3 class="pixel text-[12px] uppercase text-fg leading-snug">{{ .Title }}</h3>
+        {{ with .Params.summary }}<p class="text-sm text-muted line-clamp-2">{{ . }}</p>{{ end }}
+        <div class="flex flex-wrap items-center gap-1.5 mt-auto pt-1">
+          {{ with .Params.owners }}<span class="chip">👤 {{ . }}</span>{{ end }}
+          {{ with .Params.loc }}<span class="coord" data-coord="{{ . }}">{{ . }}</span>{{ end }}
+        </div>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+  <p class="text-muted mt-6 hidden" id="no-results">No shops match your search.</p>
+</div>
+
+<script>
+(function () {
+  var input = document.getElementById('shop-search');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('#shop-grid > a'));
+  var countEl = document.getElementById('shop-count');
+  var empty = document.getElementById('no-results');
+  function apply() {
+    var q = input.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function (c) {
+      var hit = !q || c.getAttribute('data-search').indexOf(q) !== -1;
+      c.style.display = hit ? '' : 'none';
+      if (hit) shown++;
+    });
+    countEl.textContent = shown;
+    empty.classList.toggle('hidden', !!shown);
+  }
+  input.addEventListener('input', apply);
+})();
+</script>
+{{ end }}

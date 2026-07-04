@@ -1,0 +1,35 @@
+{{/* Blocky entry card. Works for shops (.Params.image, .Params.loc) and
+     articles (.Params.infobox.image). Chips are derived from the path now:
+     the immediate section is the category (carries title + sprite icon), and a
+     "Season N" ancestor supplies the season chip. */}}
+{{ $img := "" }}
+{{ with .Params.image }}{{ $img = . }}{{ end }}
+{{ with .Params.infobox }}{{ with .image }}{{ $img = . }}{{ end }}{{ end }}
+{{ $coord := "" }}
+{{ with .Params.loc }}{{ $coord = . }}{{ end }}
+{{ with .Params.infobox }}{{ with .Coordinates }}{{ $coord = . }}{{ end }}{{ end }}
+{{ $sec := .CurrentSection }}
+{{ $catTitle := "" }}{{ $catIcon := "" }}
+{{ with $sec }}{{ with .Params.icon }}{{ $catIcon = . }}{{ $catTitle = $sec.LinkTitle }}{{ end }}{{ end }}
+{{ $season := "" }}
+{{ with $sec.Parent }}{{ if hasPrefix .LinkTitle "Season" }}{{ $season = .LinkTitle }}{{ end }}{{ end }}
+<a href="{{ .RelPermalink }}" class="mc-card mc-card-hover flex flex-col no-underline overflow-hidden group">
+  {{ with $img }}
+  <div class="aspect-[16/10] overflow-hidden bg-surface-2 border-b-[3px] border-line relative">
+    <img src="{{ . | relURL }}" alt="" loading="lazy" class="w-full h-full object-cover">
+    {{ with $season }}
+    <span class="pixel absolute top-2 left-2 text-[7px] uppercase text-white bg-[rgba(0,0,0,.4)] px-1.5 py-1">{{ . }}</span>
+    {{ end }}
+  </div>
+  {{ end }}
+  <div class="p-4 flex flex-col gap-2 flex-1">
+    <h3 class="pixel text-[13px] uppercase text-fg leading-snug">{{ .Title }}</h3>
+    {{ with .Params.summary }}<p class="text-sm text-muted line-clamp-2">{{ . }}</p>
+    {{ else }}{{ with .Description }}<p class="text-sm text-muted line-clamp-2">{{ . }}</p>{{ end }}{{ end }}
+    <div class="flex flex-wrap items-center gap-1.5 mt-auto pt-1">
+      {{ with $catTitle }}<span class="chip inline-flex items-center gap-1">{{ with $catIcon }}{{ partial "mc-icon.html" . }}{{ end }}{{ . }}</span>{{ end }}
+      {{ if not $img }}{{ with $season }}<span class="chip chip-season">{{ . }}</span>{{ end }}{{ end }}
+      {{ with $coord }}<span class="coord" data-coord="{{ . }}">{{ . }}</span>{{ end }}
+    </div>
+  </div>
+</a>

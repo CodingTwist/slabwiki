@@ -1,0 +1,38 @@
+{{ define "main" }}
+<div class="w-full">
+  <div class="grid lg:grid-cols-[1fr_300px] gap-6 items-start">
+
+      <article class="mc-panel min-w-0 px-6 py-6 sm:px-8 sm:pb-8">
+        <span class="pixel-label text-gold">{{ with .Site.Params.currentSeason }}{{ . }} · {{ end }}Shop</span>
+        <h1 class="pixel text-[26px] md:text-[30px] mt-1.5">{{ .Title }}</h1>
+        <div class="stripe-divider my-4"></div>
+        <div class="prose">
+          {{ with .Params.summary }}
+            <h2>Stock</h2>
+            <p>{{ . }}</p>
+          {{ else }}
+            <p class="text-muted">No stock summary recorded for this shop.</p>
+          {{ end }}
+        </div>
+      </article>
+
+      <aside class="mc-panel lg:sticky lg:top-[var(--sticky-h)] overflow-hidden">
+        <div class="pixel bg-wood text-white text-center text-[12px] px-2.5 py-3 border-b-4 border-line [text-shadow:2px_2px_0_rgb(0_0_0/0.3)] uppercase">{{ .Title }}</div>
+        {{ with .Params.image }}
+        <div class="border-b-4 border-line">
+          <img src="{{ . | relURL }}" alt="{{ $.Title }}" class="w-full h-[150px] object-cover pixelated block">
+        </div>
+        {{ end }}
+        <dl class="text-[13.5px] py-1">
+          {{ with .Params.owners }}<div class="flex justify-between gap-2 px-3.5 py-2 border-b-2 border-rowline"><dt class="text-wood-l font-bold shrink-0">Owners</dt><dd class="text-fg font-bold text-right min-w-0 [overflow-wrap:anywhere]">{{ . }}</dd></div>{{ end }}
+          {{ with .Params.loc }}<div class="flex justify-between gap-2 px-3.5 py-2 border-b-2 border-rowline"><dt class="text-wood-l font-bold shrink-0">Location</dt><dd class="min-w-0 text-right"><span class="coord" data-coord="{{ . }}">{{ . }}</span></dd></div>{{ end }}
+          {{ with .Params.updated }}<div class="flex justify-between gap-2 px-3.5 py-2"><dt class="text-wood-l font-bold shrink-0">Updated</dt><dd class="text-fg font-bold text-right min-w-0 [overflow-wrap:anywhere]">{{ . }}</dd></div>{{ end }}
+        </dl>
+        <a href="{{ "/shops" | relURL }}" class="mc-panel-grass block border-t-4 text-center py-2.5 no-underline">
+          <span class="pixel-label text-[8px] text-white">◂ All shops</span>
+        </a>
+      </aside>
+
+  </div>
+</div>
+{{ end }}

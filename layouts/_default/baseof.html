@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#16130e">
+  <title>{{ if .IsHome }}{{ .Site.Title }} - {{ .Site.Params.tagline }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <link rel="icon" href="{{ "favicon.png" | relURL }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800;6..12,900&display=swap" rel="stylesheet">
+  {{ with resources.Get "css/app.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+  {{ end }}
+  {{ with resources.Get "css/mc-items.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+  {{ end }}
+  <script>
+    // Set theme before paint to avoid flash.
+    (function(){var t=localStorage.getItem('slab-theme');if(t){document.documentElement.setAttribute('data-theme',t);}})();
+  </script>
+</head>
+<body class="checker-bg min-h-screen flex flex-col">
+
+  {{/* ── Sticky stack: top bar + breadcrumb strip stay pinned together ── */}}
+  <div id="sticky-stack" class="sticky top-0 z-30">
+    {{/* ── Top bar: full-width grass band, logo, worlds, search, toggle ── */}}
+    <header class="mc-panel-grass border-b-4 border-line">
+      <div class="mx-auto max-w-[1600px] w-full px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap sm:flex-nowrap items-center gap-x-4 gap-y-2">
+        <a class="flex items-center gap-3 no-underline shrink-0" href="{{ "/" | relURL }}">
+          <img src="{{ "images/logo.png" | relURL }}" alt="SlabServer wiki logo" class="block w-10 h-10 border-[3px] border-line shadow-[inset_0_-8px_0_rgb(0_0_0/0.18)] object-cover">
+          <span class="flex flex-col">
+            <span class="pixel text-[17px] text-white [text-shadow:2px_2px_0_rgb(0_0_0/0.35)]">SlabServer</span>
+            <span class="pixel-label mt-1 text-[8px]" style="color:var(--c-logo-text)">Community wiki</span>
+          </span>
+        </a>
+        <div class="relative order-last basis-full sm:order-none sm:ml-auto sm:w-60 lg:w-80">
+          <input id="site-search" type="search" placeholder="🔍 Search the wiki…" autocomplete="off" aria-label="Search" class="mc-input">
+          <div class="search-results" id="search-results"></div>
+        </div>
+        {{ partial "theme-toggle.html" . }}
+      </div>
+    </header>
+
+    {{/* ── Breadcrumb strip (full width) ── */}}
+    <div class="bg-surface-2 border-b-[3px] border-line">
+      <div class="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 py-2">
+        {{ partial "breadcrumbs.html" . }}
+      </div>
+    </div>
+  </div>
+
+  {{/* ── Body: sidebar + content grouped and centered on the wallpaper ── */}}
+  <div class="flex-1 w-full article-backdrop" style="--backdrop-url:url('{{ "images/misc/Spawn_Cover_Image.png" | relURL }}')">
+    <div class="mx-auto max-w-[1600px] w-full flex flex-col lg:flex-row gap-5 px-4 lg:px-6 py-6">
+      <aside class="lg:w-[260px] shrink-0">
+        {{ partial "sidebar.html" . }}
+      </aside>
+      <main class="flex-1 min-w-0">
+        {{ block "main" . }}{{ end }}
+      </main>
+    </div>
+  </div>
+
+  {{/* ── Footer strip (full width) ── */}}
+  <footer class="bg-surface-2 border-t-[3px] border-line">
+    <div class="px-4 sm:px-6 py-3.5 flex flex-wrap items-center gap-x-3 gap-y-1">
+      <span class="pixel-label text-[8px] text-wood-l">Slabserver wiki</span>
+      <span class="text-xs text-muted">· © {{ now.Year }} Slabserver community · Companion archive to <a class="text-grass-hi no-underline hover:underline" href="https://slabserver.org/">slabserver.org</a></span>
+      <a href="{{ "/server-info" | relURL }}" class="text-xs text-grass-hi no-underline hover:underline">Server Info</a>
+      <span class="ml-auto text-xs text-muted">Shops synced from the live directory sheet</span>
+    </div>
+  </footer>
+
+  {{/* ── Site search: fetch the JSON index once, filter on keyup ── */}}
+  <script>
+  (function(){
+    var input = document.getElementById('site-search');
+    var box = document.getElementById('search-results');
+    if(!input) return;
+    var idx = null, sel = -1, items = [];
+    function load(cb){
+      if(idx){ cb(); return; }
+      fetch('{{ "index.json" | relURL }}').then(function(r){return r.json();}).then(function(j){ idx = j; cb(); }).catch(function(){ idx = []; cb(); });
+    }
+    function render(q){
+      q = q.trim().toLowerCase();
+      if(!q){ box.classList.remove('open'); box.innerHTML=''; return; }
+      var hits = idx.filter(function(e){ return e.s.indexOf(q) !== -1; }).slice(0, 12);
+      items = hits;
+      if(!hits.length){ box.innerHTML = '<div class="sr-empty">No matches.</div>'; box.classList.add('open'); return; }
+      box.innerHTML = hits.map(function(e){
+        var meta = [e.category, e.season].filter(Boolean).join(' · ');
+        return '<a href="'+e.url+'"><span class="sr-title">'+e.title+'</span>'+(meta?'<br><span class="sr-meta">'+meta+'</span>':'')+'</a>';
+      }).join('');
+      box.classList.add('open'); sel = -1;
+    }
+    input.addEventListener('input', function(){ load(function(){ render(input.value); }); });
+    input.addEventListener('focus', function(){ if(input.value) load(function(){ render(input.value); }); });
+    input.addEventListener('keydown', function(e){
+      var links = box.querySelectorAll('a');
+      if(e.key==='ArrowDown'){ e.preventDefault(); sel=Math.min(sel+1,links.length-1); }
+      else if(e.key==='ArrowUp'){ e.preventDefault(); sel=Math.max(sel-1,0); }
+      else if(e.key==='Enter'){ if(links[sel]){ window.location=links[sel].href; } return; }
+      else return;
+      links.forEach(function(l,i){ l.classList.toggle('sel', i===sel); });
+    });
+    document.addEventListener('click', function(e){ if(!e.target.closest('#site-search') && !e.target.closest('#search-results')) box.classList.remove('open'); });
+  })();
+
+  // Keep the sidebar's sticky offset in sync with the header+breadcrumb stack's real height.
+  (function(){
+    var stack = document.getElementById('sticky-stack');
+    if(!stack) return;
+    function sync(){ document.documentElement.style.setProperty('--sticky-h', (stack.offsetHeight + 16) + 'px'); }
+    sync();
+    new ResizeObserver(sync).observe(stack);
+  })();
+
+  // Copy coord chips to clipboard.
+  document.addEventListener('click', function(e){
+    var c = e.target.closest('.coord');
+    if(!c) return;
+    e.preventDefault(); e.stopPropagation();
+    var t = c.getAttribute('data-coord') || c.textContent;
+    navigator.clipboard && navigator.clipboard.writeText(t.trim());
+    c.classList.add('copied');
+    setTimeout(function(){ c.classList.remove('copied'); }, 1200);
+  });
+  </script>
+</body>
+</html>

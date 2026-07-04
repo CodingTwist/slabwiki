@@ -1,0 +1,12 @@
+{{ define "main" }}
+<div class="page-sheet px-6 sm:px-8 py-8 max-w-[860px]">
+  <div class="mb-5">
+    <span class="pixel-label text-gold">Server Info</span>
+    <h1 class="pixel text-[26px] md:text-[30px] mt-1.5">{{ .Title }}</h1>
+    <div class="stripe-divider mt-4"></div>
+  </div>
+  <article class="prose">
+    {{ .Content }}
+  </article>
+</div>
+{{ end }}

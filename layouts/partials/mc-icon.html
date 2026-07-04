@@ -1,0 +1,7 @@
+{{- /* Minecraft item sprite icon. Context = the item slug (e.g. "grass-block").
+     Renders nothing if empty. Add `lg` via a dict to get the 32px size. */ -}}
+{{- $slug := . -}}{{- $lg := false -}}
+{{- if reflect.IsMap . -}}{{- $slug = .slug -}}{{- $lg = .lg -}}{{- end -}}
+{{- with $slug -}}
+<span class="icon-minecraft{{ if not $lg }}-sm{{ end }} icon-minecraft-{{ . }}" aria-hidden="true"></span>
+{{- end -}}

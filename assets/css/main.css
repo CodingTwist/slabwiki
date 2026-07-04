@@ -1,0 +1,410 @@
+@import "tailwindcss";
+
+/* Hugo pipes this through stdin, so Tailwind can't auto-detect templates -
+   point it at the layouts explicitly. */
+@source "../../layouts";
+
+/* ── Theme tokens → Tailwind utilities ──────────────────────────────
+   `@theme` keeps the var() reference in the generated utilities, so
+   flipping data-theme at runtime re-themes everything live.
+   Palette: the "1B" design spec - grass green, wood brown, gold accent,
+   ink/paper neutrals, chunky near-black borders in BOTH themes. */
+@theme {
+  --color-bg:        var(--c-bg);
+  --color-surface:   var(--c-surface);
+  --color-surface-2: var(--c-surface-2);
+  --color-card:      var(--c-card);
+  --color-fg:        var(--c-fg);
+  --color-body:      var(--c-body);
+  --color-muted:     var(--c-muted);
+  --color-faint:     var(--c-faint);
+  --color-line:      var(--c-line);
+  --color-grass:     var(--c-grass);
+  --color-grass-hi:  var(--c-grass-hi);
+  --color-wood:      var(--c-wood);
+  --color-wood-l:    var(--c-wood-l);
+  --color-gold:      var(--c-gold);
+  --color-divider:   var(--c-divider);
+  --color-rowline:   var(--c-rowline);
+
+  --font-pixel: "Silkscreen", ui-monospace, "Cascadia Code", monospace;
+  --font-sans:  "Nunito Sans", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+:root {
+  /* Fallback before JS measures the real header+breadcrumb stack height. */
+  --sticky-h: 84px;
+}
+
+/* Dark: night soil & lantern light. */
+:root,
+:root[data-theme="dark"] {
+  --c-bg:        #16130e;
+  --c-tile:      rgba(0, 0, 0, .22);
+  --c-surface:   #24201a;
+  --c-surface-2: #1c1913;
+  --c-card:      #2f2a22;
+  --c-fg:        #f0ebe0;
+  --c-body:      #d8cfba;
+  --c-muted:     #a89f8c;
+  --c-faint:     #b8ad98;
+  --c-line:      #0c0a07;
+  --c-grass:     #5b8a3c;
+  --c-grass-hi:  #7cc24a;
+  --c-wood:      #8a5e35;
+  --c-wood-l:    #c49a63;
+  --c-gold:      #e0a92e;
+  --c-shadow:    rgba(0, 0, 0, .6);
+  --c-card-sh:   rgba(0, 0, 0, .5);
+  --c-divider:   #3a342a;
+  --c-rowline:   #3a342a;
+  --c-logo-text: #cfe0bc;
+}
+
+:root[data-theme="light"] {
+  --c-bg:        #d9d4c7;
+  --c-tile:      rgba(0, 0, 0, .02);
+  --c-surface:   #f5f3ee;
+  --c-surface-2: #ece7db;
+  --c-card:      #ffffff;
+  --c-fg:        #2a2620;
+  --c-body:      #3a352c;
+  --c-muted:     #8a8375;
+  --c-faint:     #6b6455;
+  --c-line:      #2a2620;
+  --c-grass:     #5b8a3c;
+  --c-grass-hi:  #3f6d2a;
+  --c-wood:      #7a5230;
+  --c-wood-l:    #9c6b3f;
+  --c-gold:      #e0a92e;
+  --c-shadow:    rgba(42, 38, 32, .35);
+  --c-card-sh:   rgba(42, 38, 32, .22);
+  --c-divider:   #d3ccbb;
+  --c-rowline:   #eee6d6;
+  --c-logo-text: #dbe9cd;
+}
+
+/* Follow the OS when the user hasn't chosen. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --c-bg:        #d9d4c7;
+    --c-tile:      rgba(0, 0, 0, .02);
+    --c-surface:   #f5f3ee;
+    --c-surface-2: #ece7db;
+    --c-card:      #ffffff;
+    --c-fg:        #2a2620;
+    --c-body:      #3a352c;
+    --c-muted:     #8a8375;
+    --c-faint:     #6b6455;
+    --c-line:      #2a2620;
+    --c-grass:     #5b8a3c;
+    --c-grass-hi:  #3f6d2a;
+    --c-wood:      #7a5230;
+    --c-wood-l:    #9c6b3f;
+    --c-gold:      #e0a92e;
+    --c-shadow:    rgba(42, 38, 32, .35);
+    --c-card-sh:   rgba(42, 38, 32, .22);
+    --c-divider:   #d3ccbb;
+    --c-rowline:   #eee6d6;
+    --c-logo-text: #dbe9cd;
+  }
+}
+
+/* data-theme drives dark: variant, so `dark:` styles apply whenever the
+   resolved theme is dark (default, explicit, or OS-dark). */
+@custom-variant dark {
+  &:where(:root[data-theme="dark"] *) { @slot; }
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme]) *) { @slot; }
+  }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; font-size: 17px; }
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--color-grass); color: #10200a; }
+}
+
+/* ── Reusable component classes (Tailwind @apply) ─────────────────── */
+@layer components {
+  /* Pixelated checkerboard page background - the "outside" of the frame. */
+  .checker-bg {
+    background-color: var(--color-bg);
+    background-image:
+      linear-gradient(45deg, var(--c-tile) 25%, transparent 25%, transparent 75%, var(--c-tile) 75%),
+      linear-gradient(45deg, var(--c-tile) 25%, transparent 25%, transparent 75%, var(--c-tile) 75%);
+    background-size: 26px 26px;
+    background-position: 0 0, 13px 13px;
+  }
+
+  /* Darkened cover-image backdrop behind the whole content row. Content
+     sits on a centered .page-sheet, so the image shows in the gutters. */
+  .article-backdrop {
+    background-image: linear-gradient(rgb(0 0 0 / .40), rgb(0 0 0 / .55)), var(--backdrop-url);
+    background-size: cover;
+    background-position: center 42%;
+    background-attachment: fixed;
+    image-rendering: pixelated;
+  }
+
+  /* Opaque content column framed as a chunky panel floating on the wallpaper:
+     full border + hard offset shadow anchor it; width comes from the centered
+     sidebar+main group in baseof, so the spawn image shows in the outer gutters. */
+  .page-sheet {
+    @apply bg-surface border-4 border-line;
+    box-shadow: 10px 10px 0 var(--c-shadow);
+  }
+
+  /* Sidebar nav framed as its own floating panel to the side. */
+  .mc-nav {
+    @apply bg-surface-2 border-4 border-line;
+    box-shadow: 8px 8px 0 var(--c-shadow);
+  }
+
+  /* The site frame: one big chunky panel sitting on the checkerboard. */
+  .mc-frame {
+    @apply bg-surface border-4 border-line overflow-hidden;
+    box-shadow: 12px 12px 0 var(--c-shadow);
+  }
+
+  /* Pixel display type. Silkscreen runs big - size it down per use. */
+  .pixel {
+    font-family: var(--font-pixel);
+    line-height: 1.15;
+  }
+  /* Micro-label: NAVIGATE / SERVER STATUS / COMMUNITY WIKI. */
+  .pixel-label {
+    font-family: var(--font-pixel);
+    font-size: 9px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  /* Blocky card: hard corners, 3px border, hard offset shadow. */
+  .mc-card {
+    @apply bg-card border-[3px] border-line;
+    box-shadow: 4px 4px 0 var(--c-card-sh);
+  }
+  .mc-card-hover { transition: transform .08s steps(2), box-shadow .08s steps(2), border-color .1s; }
+  .mc-card-hover:hover {
+    transform: translate(-3px, -3px);
+    border-color: var(--c-grass);
+    box-shadow: 7px 7px 0 var(--c-card-sh);
+  }
+
+  /* Heavier panel for hero / article / infobox. */
+  .mc-panel {
+    @apply bg-card border-4 border-line;
+    box-shadow: 8px 8px 0 var(--c-shadow);
+  }
+
+  /* Grass panel (hero, server status) with a subtle vertical sheen. */
+  .mc-panel-grass {
+    @apply border-line;
+    background-color: var(--color-grass);
+    background-image: linear-gradient(180deg, rgb(255 255 255 / .12), rgb(0 0 0 / .10));
+  }
+
+  /* Pixel badge chip: FEATURED / EDIT / NEW / season tags. */
+  .mc-badge {
+    @apply inline-flex items-center gap-1 border-2 border-line px-1.5 py-1
+           text-[8px] text-fg bg-surface-2 no-underline;
+    font-family: var(--font-pixel);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+  }
+  .mc-badge-grass { @apply bg-grass text-white border-line; }
+  .mc-badge-gold  { @apply bg-gold text-[#2a2620] border-line; }
+
+  /* Chunky button: pix label, 3px border, hard shadow, nudges on hover. */
+  .mc-btn {
+    @apply inline-flex items-center gap-2 border-[3px] border-line px-3 py-2
+           bg-surface-2 text-fg text-[10px] no-underline select-none cursor-pointer;
+    font-family: var(--font-pixel);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    box-shadow: 3px 3px 0 var(--c-card-sh);
+    transition: filter .08s ease, transform .05s ease;
+  }
+  .mc-btn:hover { filter: brightness(1.08); }
+  .mc-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--c-card-sh); }
+  .mc-btn-grass { @apply bg-grass text-white; }
+  .mc-btn-gold  { @apply bg-gold text-[#2a2620]; }
+  .mc-btn-dark  { @apply bg-line text-white; box-shadow: 3px 3px 0 rgb(0 0 0 / .28); }
+
+  /* Inset search field. */
+  .mc-input {
+    @apply w-full text-[15px] px-3 py-2 bg-surface border-[3px] border-line
+           text-fg placeholder:text-muted outline-none;
+    box-shadow: inset 2px 2px 0 rgb(0 0 0 / .12);
+  }
+  .mc-input:focus { @apply border-grass; }
+
+  /* Repeating grass stripe - accent bars (hero lip, header edge). */
+  .stripe-grass {
+    background: repeating-linear-gradient(90deg, #6aa03f 0 8px, #5b8a3c 8px 16px);
+  }
+
+  /* Title rule: 4px striped divider under page titles. */
+  .stripe-divider {
+    @apply border-2 border-line;
+    height: 4px;
+    background: repeating-linear-gradient(90deg, var(--color-grass) 0 14px, var(--color-grass-hi) 14px 28px);
+  }
+
+  /* Section heading: pix, grass, underlined with soft divider. */
+  .section-h {
+    @apply text-[17px] text-grass-hi border-b-[3px] border-divider pb-2;
+    font-family: var(--font-pixel);
+    line-height: 1.2;
+  }
+
+  .pixelated { image-rendering: pixelated; }
+
+  /* Coordinate copy-chip. */
+  .coord {
+    @apply inline-flex items-center gap-1 font-mono text-[0.78rem] px-2 py-0.5
+           border-2 border-line bg-surface-2 text-muted cursor-pointer
+           select-none transition-colors;
+  }
+  .coord::before { content: "📍"; font-size: 0.85em; }
+  .coord:hover { @apply border-grass text-fg; }
+  .coord.copied { @apply border-grass text-grass-hi; }
+  .coord.copied::after { content: " ✓ copied"; }
+
+  /* Pill/tag chips (non-pixel, for inline metadata). */
+  .chip {
+    @apply inline-flex items-center gap-1 text-xs px-2 py-0.5
+           border-2 border-line bg-surface-2 text-muted no-underline transition-colors;
+  }
+  a.chip:hover { @apply border-grass text-fg; }
+  .chip-season { @apply text-gold; }
+
+  /* Prose (article body) - themed typographic defaults. */
+  .prose { @apply max-w-none leading-[1.75] text-body text-[16.5px]; }
+  .prose h2 {
+    @apply text-[17px] text-grass-hi border-b-[3px] border-divider pb-2 mt-8 mb-3;
+    font-family: var(--font-pixel);
+    line-height: 1.2;
+  }
+  .prose h3 { @apply text-[14px] text-grass-hi mt-6 mb-2; font-family: var(--font-pixel); }
+  .prose p, .prose ul, .prose ol { @apply my-3; }
+  .prose ul { @apply list-disc pl-6; }
+  .prose ol { @apply list-decimal pl-6; }
+  .prose strong { @apply text-fg; }
+  .prose a { @apply text-grass-hi underline underline-offset-2; }
+  .prose a:hover { filter: brightness(1.1); }
+  .prose img { @apply border-[3px] border-line my-4 max-w-full h-auto; box-shadow: 4px 4px 0 var(--c-card-sh); }
+  .prose code {
+    @apply font-mono text-[0.85em] bg-surface-2 border border-rowline px-1 py-0.5 text-fg;
+  }
+  .prose pre {
+    @apply bg-surface-2 border-2 border-line p-4 overflow-x-auto my-4;
+  }
+  .prose pre code { @apply bg-transparent border-0 p-0; }
+  .prose blockquote {
+    @apply border-l-4 border-grass pl-4 italic text-muted my-4;
+  }
+  .prose table { @apply w-full border-collapse my-4 text-sm; }
+  .prose th, .prose td { @apply border-2 border-rowline px-3 py-2 text-left; }
+  .prose th { @apply bg-surface-2 text-fg; }
+
+  /* ── Puzzle strip: skewed accordion banner ──────────────────────────
+     Three panels sharing one skewX() transform so their shared edges
+     read as continuous diagonal cuts (a parallelogram seam, not an
+     overlay). A white border on the seam is the "cut glass" divider.
+     Content is skewed back the opposite amount and overscaled so it
+     stays upright and gap-free, then gets cropped by the parent's
+     overflow:hidden - that crop is what sells the masking illusion. */
+  .puzzle-strip {
+    @apply border-4 border-line;
+    display: flex;
+    height: 300px;
+    overflow: hidden;
+    background: var(--color-line);
+    box-shadow: 8px 8px 0 var(--c-shadow);
+  }
+  .puzzle-panel {
+    position: relative;
+    flex: 1 1 0%;
+    min-width: 0;
+    overflow: hidden;
+    transform: skewX(-9deg);
+    cursor: pointer;
+    transition: flex-grow .5s cubic-bezier(.22,.85,.2,1), transform .5s cubic-bezier(.22,.85,.2,1);
+  }
+  .puzzle-panel + .puzzle-panel {
+    border-left: 5px solid #fff;
+    margin-left: -3px;
+  }
+  .puzzle-strip:hover .puzzle-panel { flex-grow: 1; }
+  .puzzle-strip:hover .puzzle-panel:hover { flex-grow: 3.2; }
+  /* Hovered panel straightens into a clean rectangle so the whole
+     square artwork can be shown (contain), instead of a skewed crop. */
+  .puzzle-panel:hover { transform: skewX(0deg); }
+  .puzzle-img {
+    position: absolute;
+    top: -15%; bottom: -15%; left: -25%; right: -25%;
+    background-size: cover;
+    background-position: center;
+    transform: skewX(9deg) scale(1.18);
+    transition: transform .5s cubic-bezier(.22,.85,.2,1), filter .3s ease;
+    image-rendering: pixelated;
+  }
+  .puzzle-panel:hover .puzzle-img {
+    top: 0; bottom: 0; left: 0; right: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: skewX(0deg) scale(1);
+    filter: brightness(1.05);
+  }
+  .puzzle-overlay {
+    position: absolute;
+    inset: -15% -25%;
+    transform: skewX(9deg);
+    background: linear-gradient(to top, rgb(0 0 0 / .82) 0%, rgb(0 0 0 / .25) 60%, transparent 85%);
+    transition: opacity .4s ease;
+  }
+  .puzzle-panel:hover .puzzle-overlay {
+    inset: 0;
+    transform: skewX(0deg);
+    opacity: .55;
+  }
+  .puzzle-caption {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    transform: skewX(9deg);
+    transform-origin: bottom left;
+    padding: 1rem 1.25rem;
+    white-space: nowrap;
+    color: #fff;
+    transition: transform .5s cubic-bezier(.22,.85,.2,1);
+  }
+  .puzzle-panel:hover .puzzle-caption { transform: skewX(0deg); }
+  .puzzle-caption .pixel-label { color: var(--c-gold); opacity: .9; }
+  .puzzle-caption h3 { text-shadow: 2px 2px 0 rgb(0 0 0 / .5); }
+
+  /* Header search dropdown (JS toggles .open; JS builds the inner markup). */
+  .search-results {
+    @apply hidden absolute left-0 right-0 top-[110%] z-50 bg-card border-[3px] border-line
+           overflow-hidden max-h-[70vh] overflow-y-auto;
+    box-shadow: 6px 6px 0 var(--c-shadow);
+  }
+  .search-results.open { @apply block; }
+  .search-results a {
+    @apply block px-3 py-2 no-underline text-fg border-b-2 border-rowline hover:bg-surface-2;
+  }
+  .search-results a:last-child { @apply border-b-0; }
+  .search-results a.sel { @apply bg-surface-2; }
+  .sr-title { @apply font-bold; }
+  .sr-meta  { @apply text-xs text-muted; }
+  .sr-empty { @apply px-3 py-2 text-sm text-muted; }
+}

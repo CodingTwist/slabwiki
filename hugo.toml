@@ -1,0 +1,31 @@
+baseURL = 'https://wiki.slabserver.org/'
+locale = 'en-us'
+title = 'SlabWiki'
+enableGitInfo = false
+
+[params]
+  description = 'The community wiki and shop directory for Slabserver - a Minecraft SMP.'
+  tagline = 'Community wiki & shop directory for Slabserver'
+  # Published Google Sheet (Directory - Slabserver Season 4), exported as CSV.
+  # File > Share > Publish to web > CSV, or the /export?format=csv&gid=... form.
+  shopsCsvUrl = 'https://docs.google.com/spreadsheets/d/1tVqO1Z_EbCM7iZ2kseCXIA_iDk-8j-BJTWPxvY4lG3Q/export?format=csv&gid=758267300'
+  currentSeason = 'Season 4'
+  # Minecraft server address for the live sidebar status panel (mcsrvstat.us).
+  serverAddress = 'slabserver.org'
+
+# Top axis is the server (content/<server>/). Season and category are just
+# nested sections under a server - no taxonomies. Each content/<server>/_index.md
+# cascades a `server` param that templates key off. currentSeason is informational.
+# The empty block disables Hugo's built-in `tags`/`categories` taxonomies.
+[taxonomies]
+
+# Home also emits index.json - the client-side search index.
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[markup.tableOfContents]
+  startLevel = 2
+  endLevel = 3

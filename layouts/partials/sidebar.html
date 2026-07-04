@@ -1,0 +1,102 @@
+{{/* Server-aware sidebar. Derives the current server from .Params.server
+     (cascaded from each content/<server>/_index.md) and looks it up in
+     data/servers.yaml. Primary group = the server landing's children minus its
+     quicklink slugs (Survival → seasons, Nexus → games); then quicklinks; then
+     server status. Each section is its own bordered box, stacked with a gap. On
+     pages with no server (home, server-info) it renders a compact server
+     directory instead. Icons use the crisp 32px sprite. */}}
+{{ $curPerm := .RelPermalink }}
+{{ $server := .Params.server }}
+{{ $entry := "" }}
+{{ range hugo.Data.servers.servers }}{{ if eq .title $server }}{{ $entry = . }}{{ end }}{{ end }}
+
+<div class="flex flex-col gap-4 lg:sticky lg:top-[var(--sticky-h)]">
+  {{/* ── Server switcher (always shown) ──────────────────── */}}
+  <nav class="mc-nav px-4 py-4 lg:px-3 lg:py-4" aria-label="Servers">
+    <div class="pixel-label text-wood-l px-2 pb-2.5 hidden lg:block">Servers</div>
+    <ul class="flex lg:flex-col gap-0.5 overflow-x-auto lg:overflow-visible pb-1 lg:pb-0">
+      {{ range hugo.Data.servers.servers }}
+        {{ $active := eq $server .title }}
+        <li class="shrink-0">
+          <a href="{{ printf "/%s" .slug | relURL }}"
+             class="flex items-center gap-2.5 px-2 py-2 text-[15px] font-bold no-underline whitespace-nowrap border-l-4
+                    {{ if $active }}border-grass text-grass-hi bg-[rgba(91,138,60,.16)]{{ else }}border-transparent text-fg hover:bg-[rgba(91,138,60,.08)]{{ end }}">
+            {{ partial "mc-icon.html" (dict "slug" .icon "lg" true) }}
+            <span>{{ .title }}</span>
+          </a>
+        </li>
+      {{ end }}
+      {{ $si := hasPrefix $curPerm (relURL "/server-info") }}
+      <li class="shrink-0">
+        <a href="{{ "/server-info" | relURL }}"
+           class="flex items-center gap-2.5 px-2 py-2 text-[15px] font-bold no-underline whitespace-nowrap border-l-4
+                  {{ if $si }}border-grass text-grass-hi bg-[rgba(91,138,60,.16)]{{ else }}border-transparent text-fg hover:bg-[rgba(91,138,60,.08)]{{ end }}">
+          <span>Server Info</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  {{/* ── Quick links (always shown, across every server) ── */}}
+  <nav class="mc-nav px-3 py-4 hidden lg:block" aria-label="Quick links">
+    <div class="pixel-label text-wood-l px-2 pb-2.5">Quick links</div>
+    <ul class="flex flex-col gap-0.5">
+      {{ range hugo.Data.servers.servers }}
+        {{ $srv := . }}
+        {{ range .quicklinks }}
+          {{ $url := printf "/%s/%s" $srv.slug .slug }}
+          {{ $active := hasPrefix $curPerm ($url | relURL) }}
+          <li>
+            <a href="{{ $url | relURL }}"
+               class="flex items-center gap-2.5 px-2 py-1.5 no-underline whitespace-nowrap border-l-4
+                      {{ if $active }}border-grass bg-[rgba(91,138,60,.16)]{{ else }}border-transparent hover:bg-[rgba(91,138,60,.08)]{{ end }}">
+              {{ partial "mc-icon.html" (dict "slug" .icon "lg" true) }}
+              <span class="text-[15px] font-bold {{ if $active }}text-grass-hi{{ else }}text-fg{{ end }}">{{ .title }}</span>
+            </a>
+          </li>
+        {{ end }}
+      {{ end }}
+    </ul>
+  </nav>
+{{ if $entry }}
+  {{ $landing := site.GetPage (printf "/%s" $entry.slug) }}
+  {{ $quickSlugs := slice }}
+  {{ range $entry.quicklinks }}{{ $quickSlugs = $quickSlugs | append .slug }}{{ end }}
+
+  {{/* ── Primary group (seasons / games) ─────────────────── */}}
+  <nav class="mc-nav px-4 py-4 lg:px-3 lg:py-4" aria-label="{{ $entry.title }} navigation">
+    <div class="pixel-label text-wood-l px-2 pb-2.5 hidden lg:block">{{ $entry.navLabel }}</div>
+    <ul class="flex lg:flex-col gap-0.5 overflow-x-auto lg:overflow-visible pb-1 lg:pb-0">
+      <li class="shrink-0">
+        <a href="{{ $landing.RelPermalink }}"
+           class="flex items-center gap-2 px-2.5 py-2 text-[15px] font-bold no-underline whitespace-nowrap border-l-4
+                  {{ if eq $curPerm $landing.RelPermalink }}border-grass text-grass-hi bg-[rgba(91,138,60,.16)]{{ else }}border-transparent text-fg hover:bg-[rgba(91,138,60,.08)]{{ end }}">
+          <span>All {{ $entry.title }}</span>
+        </a>
+      </li>
+      {{ range sort $landing.Pages "Weight" "desc" }}
+        {{ if in $quickSlugs (path.Base .Path) }}{{ continue }}{{ end }}
+        {{ $active := and (ne .RelPermalink $landing.RelPermalink) (hasPrefix $curPerm .RelPermalink) }}
+        <li class="shrink-0">
+          <a href="{{ .RelPermalink }}"
+             class="flex items-center gap-2 px-2.5 py-2 text-[15px] font-bold no-underline whitespace-nowrap border-l-4
+                    {{ if $active }}border-grass text-grass-hi bg-[rgba(91,138,60,.16)]{{ else }}border-transparent text-fg hover:bg-[rgba(91,138,60,.08)]{{ end }}">
+            <span>{{ .LinkTitle }}</span>
+            {{ if .Params.current }}<span class="mc-badge mc-badge-gold ml-auto hidden lg:inline">now</span>{{ end }}
+          </a>
+        </li>
+      {{ end }}
+    </ul>
+  </nav>
+
+  {{/* ── Server status (already its own bordered box) ────── */}}
+  <div class="hidden lg:block">
+    {{ partial "server-status.html" . }}
+  </div>
+{{ else }}
+  {{/* ── No server context: switcher box above already lists servers ─────── */}}
+  <div class="hidden lg:block">
+    {{ partial "server-status.html" . }}
+  </div>
+{{ end }}
+</div>

@@ -1,0 +1,63 @@
+{{/* ── Shop pages, generated at build time from the live directory sheet ──
+     The published Google Sheet CSV is the source of truth. Each row becomes
+     its own clickable shop page, tagged into the current season + "Shops".
+     If the fetch fails (offline / unpublished) the build still succeeds. */}}
+{{ $url := site.Params.shopsCsvUrl }}
+
+{{/* Build a lookup of Season 4 shop photos: normalised name -> image path.
+     Filenames look like "S4_Airship.png" / "S4_Gibbriel's_Redstone.png". */}}
+{{ $imgmap := dict }}
+{{ range slice "season-4" "season-4-shops" }}
+  {{ $dir := . }}
+  {{ range (os.ReadDir (printf "static/images/%s" $dir)) }}
+    {{ $base := replaceRE `\.[^.]+$` "" .Name }}
+    {{ $base = replaceRE `(?i)^s4[_-]?` "" $base }}
+    {{ $key := lower (replaceRE `[^a-zA-Z0-9]` "" $base) }}
+    {{ if $key }}{{ $imgmap = merge $imgmap (dict $key (printf "/images/%s/%s" $dir .Name)) }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ with try (resources.GetRemote $url) }}
+  {{ with .Err }}
+    {{ warnf "shops: could not fetch directory sheet: %s" . }}
+  {{ else with .Value }}
+    {{ $csv := transform.Unmarshal (dict "delimiter" ",") .Content }}
+    {{ $header := index $csv 0 }}
+    {{ $idx := dict }}
+    {{ range $i, $h := $header }}{{ $idx = merge $idx (dict (lower (trim $h " ")) $i) }}{{ end }}
+    {{ $col := index $idx }}
+    {{ $seen := dict }}
+    {{ range after 1 $csv }}
+      {{ $name := trim (index . (index $idx "name")) " " }}
+      {{ if $name }}
+        {{ $owners  := trim (index . (index $idx "owners")) " " }}
+        {{ $loc     := trim (index . (index $idx "location")) " " }}
+        {{ $summary := trim (index . (index $idx "stock summary")) " " }}
+        {{ $updated := trim (index . (index $idx "last updated")) " " }}
+
+        {{/* de-duplicate slugs so two same-named shops don't collide */}}
+        {{ $slug := urlize $name }}
+        {{ $n := index $seen $slug | default 0 }}
+        {{ $seen = merge $seen (dict $slug (add $n 1)) }}
+        {{ $path := cond (gt $n 0) (printf "%s-%d" $slug (add $n 1)) $slug }}
+
+        {{/* attach a photo if one matches this shop's name */}}
+        {{ $img := index $imgmap (lower (replaceRE `[^a-zA-Z0-9]` "" $name)) }}
+
+        {{ $.AddPage (dict
+          "kind" "page"
+          "path" $path
+          "title" $name
+          "params" (dict
+            "owners"     $owners
+            "loc"        $loc
+            "summary"    $summary
+            "updated"    $updated
+            "image"      $img
+            "shop"       true
+          )
+          "content" (dict "mediaType" "text/markdown" "value" $summary)
+        ) }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}

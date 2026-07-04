@@ -1,0 +1,20 @@
+{{/* Breadcrumb strip: Home › Survival › Season 4 › Farms › Gibbs Witch Farm.
+     Walks the section ancestry now that server/season/category are real path
+     segments. Rendered in the full-width band under the header (baseof). */}}
+{{ $link := "text-faint hover:text-grass-hi no-underline" }}
+{{ $sep := "opacity-50" }}
+{{ $here := "text-grass-hi font-bold" }}
+<nav class="flex flex-wrap items-center gap-2 text-[13px]" aria-label="Breadcrumb">
+  {{ if .IsHome }}
+    <span class="{{ $here }}">Home</span>
+  {{ else }}
+    {{ range .Ancestors.Reverse }}
+      {{ if .IsHome }}
+        <a href="{{ .RelPermalink }}" class="{{ $link }}">Home</a>
+      {{ else }}
+        <span class="{{ $sep }}">›</span><a href="{{ .RelPermalink }}" class="{{ $link }}">{{ .LinkTitle }}</a>
+      {{ end }}
+    {{ end }}
+    <span class="{{ $sep }}">›</span><span class="{{ $here }}">{{ .LinkTitle }}</span>
+  {{ end }}
+</nav>

@@ -1,0 +1,108 @@
+{{ define "main" }}
+{{ $servers := hugo.Data.servers.servers }}
+{{ $survival := site.GetPage "/survival" }}
+{{ $seasons := slice }}
+{{ with $survival }}{{ range .Sections }}{{ if hasPrefix .LinkTitle "Season" }}{{ $seasons = $seasons | append . }}{{ end }}{{ end }}{{ end }}
+{{ $current := "" }}{{ range $seasons }}{{ if .Params.current }}{{ $current = . }}{{ end }}{{ end }}
+{{ $survivalPages := where .Site.RegularPages "Params.server" "Survival" }}
+{{ $featured := where $survivalPages "Params.infobox.image" "!=" nil }}
+<div class="page-sheet px-6 sm:px-8 py-8">
+
+  {{/* ── Hero: grass panel with stripe lip ─────────────────── */}}
+  <section class="mc-panel mc-panel-grass relative px-7 pt-10 pb-8 sm:px-9">
+    <div class="stripe-grass absolute top-0 left-0 right-0 h-2.5 border-b-[3px] border-line"></div>
+    <span class="pixel-label text-[9px] text-[#d7ecc4]">Community wiki · All servers</span>
+    <h1 class="pixel text-[26px] sm:text-[32px] text-white [text-shadow:3px_3px_0_rgb(0_0_0/0.35)] leading-[1.3] mt-2">Welcome to the<br>Slabserver Wiki</h1>
+    <p class="text-[#eaf4dd] text-[16px] mt-4 max-w-[600px] leading-[1.65]">A living directory of every Slabserver world - the Survival seasons, the Nexus games, spawn, public farms, shops and lore. Pick a server to explore, or search anything from the header.</p>
+    {{ with $current }}
+    <a href="{{ .RelPermalink }}" class="mc-btn mc-btn-gold mt-5">▸ Explore {{ .LinkTitle }}</a>
+    {{ end }}
+  </section>
+
+  {{/* ── Stat cards (computed scoreboard) ──────────────────── */}}
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
+    <div class="mc-card border-t-4 border-t-grass p-5"><div class="pixel text-[28px] text-grass-hi">{{ len $servers }}</div><div class="text-[14px] text-muted font-bold mt-2">Servers documented</div></div>
+    <div class="mc-card border-t-4 border-t-grass p-5"><div class="pixel text-[28px] text-grass-hi">{{ len $seasons }}</div><div class="text-[14px] text-muted font-bold mt-2">Survival seasons</div></div>
+    <div class="mc-card border-t-4 border-t-grass p-5"><div class="pixel text-[28px] text-grass-hi">{{ len .Site.RegularPages }}</div><div class="text-[14px] text-muted font-bold mt-2">Wiki pages</div></div>
+  </div>
+
+  {{/* ── The Puzzles: skewed accordion banner of the three ARGs ───── */}}
+  <div class="flex items-center gap-2.5 mt-8 mb-4">
+    {{ partial "mc-icon.html" (dict "slug" "ender-eye" "lg" true) }}
+    <h2 class="section-h flex-1">The Puzzles</h2>
+  </div>
+  <div class="puzzle-strip mb-10">
+    {{ range slice
+      (dict "href" "/articles/the-disc-11-puzzle/" "title" "The Disc" "season" "Season 2" "img" "/images/articles/disc-arg-artwork.png")
+      (dict "href" "/articles/the-tunnel/" "title" "The Tunnel" "season" "Season 3" "img" "/images/articles/tunnel-arg-artwork.png")
+      (dict "href" "/articles/the-passage/" "title" "The Passage" "season" "Season 4" "img" "/images/articles/passage-arg-artwork.png")
+    }}
+    <a href="{{ .href }}" class="puzzle-panel no-underline" aria-label="{{ .title }}">
+      <div class="puzzle-img" style="background-image:url('{{ .img | relURL }}')"></div>
+      <div class="puzzle-overlay"></div>
+      <div class="puzzle-caption">
+        <span class="pixel-label">{{ .season }} · ARG</span>
+        <h3 class="pixel text-[15px] sm:text-[18px] mt-1">{{ .title }}</h3>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+
+  <div class="stripe-divider my-8"></div>
+
+  {{/* ── The Servers: the spine of the wiki ───────────────── */}}
+  <div class="flex items-center gap-2.5 mt-8 mb-4">
+    {{ partial "mc-icon.html" (dict "slug" "grass-block" "lg" true) }}
+    <h2 class="section-h flex-1">The Servers</h2>
+  </div>
+  <div class="grid gap-4 sm:grid-cols-2 mb-10">
+    {{ range $servers }}
+    {{ $sp := site.GetPage (printf "/%s" .slug) }}
+    {{ $quickSlugs := slice }}{{ range .quicklinks }}{{ $quickSlugs = $quickSlugs | append .slug }}{{ end }}
+    <a href="{{ printf "/%s" .slug | relURL }}" class="mc-card mc-card-hover no-underline p-5 flex flex-col gap-3 group">
+      <div class="flex items-center gap-3">
+        {{ partial "mc-icon.html" (dict "slug" .icon "lg" true) }}
+        <h3 class="pixel text-[17px] text-fg">{{ .title }}</h3>
+      </div>
+      {{ with $sp }}{{ with .Description }}<p class="text-sm text-muted line-clamp-2">{{ . }}</p>{{ end }}{{ end }}
+      <div class="flex flex-wrap items-center gap-1.5 mt-auto pt-1">
+        <span class="pixel-label text-faint text-[8px] mr-1">{{ .navLabel }}</span>
+        {{ with $sp }}{{ range sort .Pages "Weight" "desc" }}
+          {{ if in $quickSlugs (path.Base .Path) }}{{ continue }}{{ end }}
+          <span class="chip">{{ .LinkTitle }}</span>
+        {{ end }}{{ end }}
+      </div>
+    </a>
+    {{ end }}
+  </div>
+
+  {{/* ── A few featured builds ────────────────────────────── */}}
+  {{ with $featured }}
+  <div class="flex items-center gap-2.5 mt-8 mb-4">
+    {{ partial "mc-icon.html" (dict "slug" "map" "lg" true) }}
+    <h2 class="section-h flex-1">Featured builds</h2>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+    {{ range first 6 (sort . "Title") }}{{ partial "entry-card.html" . }}{{ end }}
+  </div>
+  {{ end }}
+
+  {{/* ── Recent changes: newest page edits, from page dates ── */}}
+  {{ with first 5 (sort .Site.RegularPages "Lastmod" "desc") }}
+  <div class="flex items-center gap-2.5 mt-8 mb-4">
+    {{ partial "mc-icon.html" (dict "slug" "clock" "lg" true) }}
+    <h2 class="section-h flex-1">Recent changes</h2>
+  </div>
+  <div class="mc-card">
+    {{ range . }}
+    <a href="{{ .RelPermalink }}" class="flex items-center gap-3 px-3.5 py-2.5 border-b-2 border-rowline last:border-b-0 no-underline hover:bg-surface-2">
+      {{ if .Lastmod.After (.Date.AddDate 0 0 1) }}<span class="mc-badge mc-badge-grass">edit</span>{{ else }}<span class="mc-badge mc-badge-gold">new</span>{{ end }}
+      <span class="font-extrabold text-fg text-sm">{{ .Title }}</span>
+      {{ with .CurrentSection }}{{ if .Title }}<span class="text-muted text-[13px] hidden sm:inline">in {{ .LinkTitle }}</span>{{ end }}{{ end }}
+      <span class="ml-auto text-muted text-xs whitespace-nowrap">{{ .Lastmod.Format "Jan 2" }}</span>
+    </a>
+    {{ end }}
+  </div>
+  {{ end }}
+</div>
+{{ end }}

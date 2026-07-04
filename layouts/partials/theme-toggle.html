@@ -1,0 +1,30 @@
+{{/* Theme toggle chip: shows the theme it will switch TO (🌙 DARK / ☀ LIGHT).
+     Persists in localStorage('slab-theme'); baseof's pre-paint script reads it. */}}
+<button id="theme-toggle" type="button" aria-label="Toggle theme"
+        class="mc-btn mc-btn-dark shrink-0 !text-[9px]">
+  <span id="theme-toggle-icon" class="text-[13px] leading-none">🌙</span>
+  <span id="theme-toggle-label">Dark</span>
+</button>
+<script>
+(function(){
+  var btn = document.getElementById('theme-toggle');
+  var icon = document.getElementById('theme-toggle-icon');
+  var label = document.getElementById('theme-toggle-label');
+  function current(){
+    return document.documentElement.getAttribute('data-theme')
+      || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  }
+  function sync(){
+    var light = current() === 'light';
+    icon.textContent = light ? '🌙' : '☀';
+    label.textContent = light ? 'Dark' : 'Light';
+  }
+  btn.addEventListener('click', function(){
+    var next = current() === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('slab-theme', next);
+    sync();
+  });
+  sync();
+})();
+</script>

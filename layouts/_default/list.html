@@ -1,0 +1,43 @@
+{{ define "main" }}
+{{ $sections := sort .Sections "Weight" "desc" }}
+{{ $pages := where .Pages "Kind" "page" }}
+<div class="page-sheet px-6 sm:px-8 py-8">
+  <div class="mb-5">
+    <h1 class="pixel text-[26px] md:text-[30px]">{{ .Title }}</h1>
+    {{ with .Description }}<p class="text-muted text-sm mt-1.5">{{ . }}</p>{{ end }}
+    <div class="stripe-divider mt-4"></div>
+  </div>
+  {{ with .Content }}<div class="prose mb-6">{{ . }}</div>{{ end }}
+
+  {{/* Child sections → hub cards (seasons, categories, games) */}}
+  {{ with $sections }}
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-8">
+    {{ range . }}
+    {{ $count := len .RegularPages }}
+    <a href="{{ .RelPermalink }}" class="mc-card mc-card-hover no-underline relative overflow-hidden min-h-[128px] flex flex-col justify-end group">
+      {{ with .Params.banner }}
+        <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-55 transition-opacity duration-300 pixelated" style="background-image:url('{{ . | relURL }}')"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-card via-card/80 to-transparent"></div>
+      {{ end }}
+      <div class="relative p-5 flex flex-col gap-1.5">
+        <div class="flex items-center gap-2.5">
+          {{ if not .Params.banner }}{{ with .Params.icon }}{{ partial "mc-icon.html" (dict "slug" . "lg" true) }}{{ end }}{{ end }}
+          <h3 class="pixel text-[15px] text-fg leading-tight">{{ .LinkTitle }}</h3>
+          {{ if .Params.current }}<span class="mc-badge mc-badge-gold">now</span>{{ end }}
+        </div>
+        {{ with .Description }}<p class="text-sm text-muted line-clamp-2">{{ . }}</p>{{ end }}
+        <div class="text-xs text-faint">{{ $count }} {{ cond (eq $count 1) "page" "pages" }}</div>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  {{/* Child pages → entry cards (articles in a category, game subpages) */}}
+  {{ with $pages }}
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+    {{ range .ByTitle }}{{ partial "entry-card.html" . }}{{ end }}
+  </div>
+  {{ end }}
+</div>
+{{ end }}
