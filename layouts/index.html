@@ -8,7 +8,7 @@
 {{ $featured := where $survivalPages "Params.infobox.image" "!=" nil }}
 <div class="page-sheet px-6 sm:px-8 py-8">
 
-  {{/* ── Hero: grass panel with stripe lip ─────────────────── */}}
+  {{/*  Hero: grass panel with stripe lip  */}}
   <section class="mc-panel mc-panel-grass relative px-7 pt-10 pb-8 sm:px-9">
     <div class="stripe-grass absolute top-0 left-0 right-0 h-2.5 border-b-[3px] border-line"></div>
     <span class="pixel-label text-[9px] text-[#d7ecc4]">Community wiki · All servers</span>
@@ -19,14 +19,14 @@
     {{ end }}
   </section>
 
-  {{/* ── Stat cards (computed scoreboard) ──────────────────── */}}
+  {{/*  Stat cards (computed scoreboard)  */}}
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
     <div class="mc-card border-t-4 border-t-grass p-5"><div class="pixel text-[28px] text-grass-hi">{{ len $servers }}</div><div class="text-[14px] text-muted font-bold mt-2">Servers documented</div></div>
     <div class="mc-card border-t-4 border-t-grass p-5"><div class="pixel text-[28px] text-grass-hi">{{ len $seasons }}</div><div class="text-[14px] text-muted font-bold mt-2">Survival seasons</div></div>
     <div class="mc-card border-t-4 border-t-grass p-5"><div class="pixel text-[28px] text-grass-hi">{{ len .Site.RegularPages }}</div><div class="text-[14px] text-muted font-bold mt-2">Wiki pages</div></div>
   </div>
 
-  {{/* ── The Puzzles: skewed accordion banner of the three ARGs ───── */}}
+  {{/*  The Puzzles: skewed accordion banner of the three ARGs  */}}
   <div class="flex items-center gap-2.5 mt-8 mb-4">
     {{ partial "mc-icon.html" (dict "slug" "ender-eye" "lg" true) }}
     <h2 class="section-h flex-1">The Puzzles</h2>
@@ -50,7 +50,7 @@
 
   <div class="stripe-divider my-8"></div>
 
-  {{/* ── The Servers: the spine of the wiki ───────────────── */}}
+  {{/*  The Servers: the spine of the wiki  */}}
   <div class="flex items-center gap-2.5 mt-8 mb-4">
     {{ partial "mc-icon.html" (dict "slug" "grass-block" "lg" true) }}
     <h2 class="section-h flex-1">The Servers</h2>
@@ -76,7 +76,7 @@
     {{ end }}
   </div>
 
-  {{/* ── A few featured builds ────────────────────────────── */}}
+  {{/*  A few featured builds  */}}
   {{ with $featured }}
   <div class="flex items-center gap-2.5 mt-8 mb-4">
     {{ partial "mc-icon.html" (dict "slug" "map" "lg" true) }}
@@ -87,7 +87,7 @@
   </div>
   {{ end }}
 
-  {{/* ── Recent changes: newest page edits, from page dates ── */}}
+  {{/*  Recent changes: newest page edits, from page dates  */}}
   {{ with first 5 (sort .Site.RegularPages "Lastmod" "desc") }}
   <div class="flex items-center gap-2.5 mt-8 mb-4">
     {{ partial "mc-icon.html" (dict "slug" "clock" "lg" true) }}

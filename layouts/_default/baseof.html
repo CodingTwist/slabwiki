@@ -23,9 +23,9 @@
 </head>
 <body class="checker-bg min-h-screen flex flex-col">
 
-  {{/* ── Sticky stack: top bar + breadcrumb strip stay pinned together ── */}}
+  {{/*  Sticky stack: top bar + breadcrumb strip stay pinned together  */}}
   <div id="sticky-stack" class="sticky top-0 z-30">
-    {{/* ── Top bar: full-width grass band, logo, worlds, search, toggle ── */}}
+    {{/*  Top bar: full-width grass band, logo, worlds, search, toggle  */}}
     <header class="mc-panel-grass border-b-4 border-line">
       <div class="mx-auto max-w-[1600px] w-full px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap sm:flex-nowrap items-center gap-x-4 gap-y-2">
         <a class="flex items-center gap-3 no-underline shrink-0" href="{{ "/" | relURL }}">
@@ -43,7 +43,7 @@
       </div>
     </header>
 
-    {{/* ── Breadcrumb strip (full width) ── */}}
+    {{/*  Breadcrumb strip (full width)  */}}
     <div class="bg-surface-2 border-b-[3px] border-line">
       <div class="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 py-2">
         {{ partial "breadcrumbs.html" . }}
@@ -51,7 +51,7 @@
     </div>
   </div>
 
-  {{/* ── Body: sidebar + content grouped and centered on the wallpaper ── */}}
+  {{/*  Body: sidebar + content grouped and centered on the wallpaper  */}}
   <div class="flex-1 w-full article-backdrop" style="--backdrop-url:url('{{ "images/misc/Spawn_Cover_Image.png" | relURL }}')">
     <div class="mx-auto max-w-[1600px] w-full flex flex-col lg:flex-row gap-5 px-4 lg:px-6 py-6">
       <aside class="lg:w-[260px] shrink-0">
@@ -63,7 +63,7 @@
     </div>
   </div>
 
-  {{/* ── Footer strip (full width) ── */}}
+  {{/*  Footer strip (full width)  */}}
   <footer class="bg-surface-2 border-t-[3px] border-line">
     <div class="px-4 sm:px-6 py-3.5 flex flex-wrap items-center gap-x-3 gap-y-1">
       <span class="pixel-label text-[8px] text-wood-l">Slabserver wiki</span>
@@ -73,7 +73,7 @@
     </div>
   </footer>
 
-  {{/* ── Site search: fetch the JSON index once, filter on keyup ── */}}
+  {{/*  Site search: fetch the JSON index once, filter on keyup  */}}
   <script>
   (function(){
     var input = document.getElementById('site-search');

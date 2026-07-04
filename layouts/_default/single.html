@@ -5,7 +5,7 @@
 <div class="w-full">
   <div class="grid lg:grid-cols-[1fr_300px] gap-6 items-start">
 
-      {{/* ── Article panel ─────────────────────────────────── */}}
+      {{/*  Article panel  */}}
       <article class="mc-panel min-w-0 px-6 py-6 sm:px-8 sm:pb-8">
         <div class="flex items-baseline gap-3 flex-wrap">
           <h1 class="pixel text-[26px] md:text-[30px] leading-[1.15]">{{ .Title }}</h1>
@@ -28,7 +28,7 @@
         {{ end }}
       </article>
 
-      {{/* ── Infobox ───────────────────────────────────────── */}}
+      {{/*  Infobox  */}}
       <aside class="mc-panel lg:sticky lg:top-[var(--sticky-h)] overflow-hidden">
         <div class="pixel bg-wood text-white text-center text-[12px] px-2.5 py-3 border-b-4 border-line [text-shadow:2px_2px_0_rgb(0_0_0/0.3)] uppercase">{{ .Title }}</div>
         {{ with .Params.infobox }}

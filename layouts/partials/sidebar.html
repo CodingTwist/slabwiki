@@ -11,7 +11,7 @@
 {{ range hugo.Data.servers.servers }}{{ if eq .title $server }}{{ $entry = . }}{{ end }}{{ end }}
 
 <div class="flex flex-col gap-4 lg:sticky lg:top-[var(--sticky-h)]">
-  {{/* ── Server switcher (always shown) ──────────────────── */}}
+  {{/*  Server switcher (always shown)  */}}
   <nav class="mc-nav px-4 py-4 lg:px-3 lg:py-4" aria-label="Servers">
     <div class="pixel-label text-wood-l px-2 pb-2.5 hidden lg:block">Servers</div>
     <ul class="flex lg:flex-col gap-0.5 overflow-x-auto lg:overflow-visible pb-1 lg:pb-0">
@@ -37,7 +37,7 @@
     </ul>
   </nav>
 
-  {{/* ── Quick links (always shown, across every server) ── */}}
+  {{/*  Quick links (always shown, across every server)  */}}
   <nav class="mc-nav px-3 py-4 hidden lg:block" aria-label="Quick links">
     <div class="pixel-label text-wood-l px-2 pb-2.5">Quick links</div>
     <ul class="flex flex-col gap-0.5">
@@ -63,7 +63,7 @@
   {{ $quickSlugs := slice }}
   {{ range $entry.quicklinks }}{{ $quickSlugs = $quickSlugs | append .slug }}{{ end }}
 
-  {{/* ── Primary group (seasons / games) ─────────────────── */}}
+  {{/*  Primary group (seasons / games)  */}}
   <nav class="mc-nav px-4 py-4 lg:px-3 lg:py-4" aria-label="{{ $entry.title }} navigation">
     <div class="pixel-label text-wood-l px-2 pb-2.5 hidden lg:block">{{ $entry.navLabel }}</div>
     <ul class="flex lg:flex-col gap-0.5 overflow-x-auto lg:overflow-visible pb-1 lg:pb-0">
@@ -89,12 +89,12 @@
     </ul>
   </nav>
 
-  {{/* ── Server status (already its own bordered box) ────── */}}
+  {{/*  Server status (already its own bordered box)  */}}
   <div class="hidden lg:block">
     {{ partial "server-status.html" . }}
   </div>
 {{ else }}
-  {{/* ── No server context: switcher box above already lists servers ─────── */}}
+  {{/*  No server context: switcher box above already lists servers  */}}
   <div class="hidden lg:block">
     {{ partial "server-status.html" . }}
   </div>

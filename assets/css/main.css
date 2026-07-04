@@ -4,7 +4,7 @@
    point it at the layouts explicitly. */
 @source "../../layouts";
 
-/* ── Theme tokens → Tailwind utilities ──────────────────────────────
+/*  Theme tokens → Tailwind utilities 
    `@theme` keeps the var() reference in the generated utilities, so
    flipping data-theme at runtime re-themes everything live.
    Palette: the "1B" design spec - grass green, wood brown, gold accent,
@@ -130,7 +130,7 @@
   ::selection { background: var(--color-grass); color: #10200a; }
 }
 
-/* ── Reusable component classes (Tailwind @apply) ─────────────────── */
+/*  Reusable component classes (Tailwind @apply)  */
 @layer components {
   /* Pixelated checkerboard page background - the "outside" of the frame. */
   .checker-bg {
@@ -317,7 +317,7 @@
   .prose th, .prose td { @apply border-2 border-rowline px-3 py-2 text-left; }
   .prose th { @apply bg-surface-2 text-fg; }
 
-  /* ── Puzzle strip: skewed accordion banner ──────────────────────────
+  /*  Puzzle strip: skewed accordion banner 
      Three panels sharing one skewX() transform so their shared edges
      read as continuous diagonal cuts (a parallelogram seam, not an
      overlay). A white border on the seam is the "cut glass" divider.
