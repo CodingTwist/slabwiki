@@ -31,6 +31,7 @@
         <a href="{{ "/server-info" | relURL }}"
            class="flex items-center gap-2.5 px-2 py-2 text-[15px] font-bold no-underline whitespace-nowrap border-l-4
                   {{ if $si }}border-grass text-grass-hi bg-[rgba(91,138,60,.16)]{{ else }}border-transparent text-fg hover:bg-[rgba(91,138,60,.08)]{{ end }}">
+          {{ partial "mc-icon.html" (dict "slug" "written-book" "lg" true) }}
           <span>Server Info</span>
         </a>
       </li>

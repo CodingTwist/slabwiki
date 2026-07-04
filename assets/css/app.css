@@ -6,7 +6,6 @@
     --font-sans: "Nunito Sans", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
     --text-xs: 0.75rem;
@@ -596,6 +595,9 @@
   .p-5 {
     padding: calc(var(--spacing) * 5);
   }
+  .\!px-2\.5 {
+    padding-inline: calc(var(--spacing) * 2.5) !important;
+  }
   .px-1\.5 {
     padding-inline: calc(var(--spacing) * 1.5);
   }
@@ -619,6 +621,9 @@
   }
   .px-7 {
     padding-inline: calc(var(--spacing) * 7);
+  }
+  .\!py-1\.5 {
+    padding-block: calc(var(--spacing) * 1.5) !important;
   }
   .py-1 {
     padding-block: var(--spacing);
@@ -801,6 +806,12 @@
   .underline {
     text-decoration-line: underline;
   }
+  .decoration-2 {
+    text-decoration-thickness: 2px;
+  }
+  .underline-offset-2 {
+    text-underline-offset: 2px;
+  }
   .opacity-40 {
     opacity: 40%;
   }
@@ -874,13 +885,6 @@
       }
     }
   }
-  .hover\:bg-surface-2 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-surface-2);
-      }
-    }
-  }
   .hover\:text-grass-hi {
     &:hover {
       @media (hover: hover) {
@@ -903,11 +907,6 @@
   .sm\:ml-auto {
     @media (width >= 40rem) {
       margin-left: auto;
-    }
-  }
-  .sm\:inline {
-    @media (width >= 40rem) {
-      display: inline;
     }
   }
   .sm\:w-60 {

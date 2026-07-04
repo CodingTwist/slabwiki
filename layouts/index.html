@@ -6,6 +6,7 @@
 {{ $current := "" }}{{ range $seasons }}{{ if .Params.current }}{{ $current = . }}{{ end }}{{ end }}
 {{ $survivalPages := where .Site.RegularPages "Params.server" "Survival" }}
 {{ $featured := where $survivalPages "Params.infobox.image" "!=" nil }}
+{{ $shops := where .Site.RegularPages "Params.shop" true }}
 <div class="page-sheet px-6 sm:px-8 py-8">
 
   {{/*  Hero: grass panel with stripe lip  */}}
@@ -13,42 +14,21 @@
     <div class="stripe-grass absolute top-0 left-0 right-0 h-2.5 border-b-[3px] border-line"></div>
     <span class="pixel-label text-[9px] text-[#d7ecc4]">Community wiki · All servers</span>
     <h1 class="pixel text-[26px] sm:text-[32px] text-white [text-shadow:3px_3px_0_rgb(0_0_0/0.35)] leading-[1.3] mt-2">Welcome to the<br>Slabserver Wiki</h1>
-    <p class="text-[#eaf4dd] text-[16px] mt-4 max-w-[600px] leading-[1.65]">A living directory of every Slabserver world - the Survival seasons, the Nexus games, spawn, public farms, shops and lore. Pick a server to explore, or search anything from the header.</p>
+    <p class="text-[#eaf4dd] text-[16px] mt-4 max-w-[600px] leading-[1.65]">A living directory of everything Slabserver - the Survival seasons, the Nexus games, spawn, public farms, the shop directory, tunnels and lots of lore. <a href="https://slabserver.org/" class="text-white underline decoration-2 underline-offset-2">slabserver.org</a> gets you connected; this is where the community keeps track of everything built along the way.</p>
+    <div class="flex flex-wrap items-center gap-3 mt-5">
     {{ with $current }}
-    <a href="{{ .RelPermalink }}" class="mc-btn mc-btn-gold mt-5">▸ Explore {{ .LinkTitle }}</a>
+    <a href="{{ .RelPermalink }}" class="mc-btn mc-btn-gold">▸ Explore {{ .LinkTitle }}</a>
     {{ end }}
+    <a href="https://slabserver.org/" class="mc-btn mc-btn-dark">← Back to slabserver.org</a>
+    </div>
   </section>
 
   {{/*  Stat cards (computed scoreboard)  */}}
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
-    <div class="mc-card border-t-4 border-t-grass p-5"><div class="pixel text-[28px] text-grass-hi">{{ len $servers }}</div><div class="text-[14px] text-muted font-bold mt-2">Servers documented</div></div>
-    <div class="mc-card border-t-4 border-t-grass p-5"><div class="pixel text-[28px] text-grass-hi">{{ len $seasons }}</div><div class="text-[14px] text-muted font-bold mt-2">Survival seasons</div></div>
     <div class="mc-card border-t-4 border-t-grass p-5"><div class="pixel text-[28px] text-grass-hi">{{ len .Site.RegularPages }}</div><div class="text-[14px] text-muted font-bold mt-2">Wiki pages</div></div>
+    <div class="mc-card border-t-4 border-t-grass p-5"><div class="pixel text-[28px] text-grass-hi">{{ len $shops }}</div><div class="text-[14px] text-muted font-bold mt-2">Shops in the directory</div></div>
+    <div class="mc-card border-t-4 border-t-grass p-5"><div class="pixel text-[28px] text-grass-hi">{{ len $featured }}</div><div class="text-[14px] text-muted font-bold mt-2">Featured builds</div></div>
   </div>
-
-  {{/*  The Puzzles: skewed accordion banner of the three ARGs  */}}
-  <div class="flex items-center gap-2.5 mt-8 mb-4">
-    {{ partial "mc-icon.html" (dict "slug" "ender-eye" "lg" true) }}
-    <h2 class="section-h flex-1">The Puzzles</h2>
-  </div>
-  <div class="puzzle-strip mb-10">
-    {{ range slice
-      (dict "href" "/articles/the-disc-11-puzzle/" "title" "The Disc" "season" "Season 2" "img" "/images/articles/disc-arg-artwork.png")
-      (dict "href" "/articles/the-tunnel/" "title" "The Tunnel" "season" "Season 3" "img" "/images/articles/tunnel-arg-artwork.png")
-      (dict "href" "/articles/the-passage/" "title" "The Passage" "season" "Season 4" "img" "/images/articles/passage-arg-artwork.png")
-    }}
-    <a href="{{ .href }}" class="puzzle-panel no-underline" aria-label="{{ .title }}">
-      <div class="puzzle-img" style="background-image:url('{{ .img | relURL }}')"></div>
-      <div class="puzzle-overlay"></div>
-      <div class="puzzle-caption">
-        <span class="pixel-label">{{ .season }} · ARG</span>
-        <h3 class="pixel text-[15px] sm:text-[18px] mt-1">{{ .title }}</h3>
-      </div>
-    </a>
-    {{ end }}
-  </div>
-
-  <div class="stripe-divider my-8"></div>
 
   {{/*  The Servers: the spine of the wiki  */}}
   <div class="flex items-center gap-2.5 mt-8 mb-4">
@@ -76,6 +56,30 @@
     {{ end }}
   </div>
 
+  <div class="stripe-divider my-8"></div>
+
+  {{/*  The Puzzles: skewed accordion banner of the three ARGs  */}}
+  <div class="flex items-center gap-2.5 mt-8 mb-4">
+    {{ partial "mc-icon.html" (dict "slug" "ender-eye" "lg" true) }}
+    <h2 class="section-h flex-1">The Puzzles</h2>
+  </div>
+  <div class="puzzle-strip mb-10">
+    {{ range slice
+      (dict "href" "/articles/the-disc-11-puzzle/" "title" "The Disc" "season" "Season 2" "img" "/images/articles/disc-arg-artwork.png")
+      (dict "href" "/articles/the-tunnel/" "title" "The Tunnel" "season" "Season 3" "img" "/images/articles/tunnel-arg-artwork.png")
+      (dict "href" "/articles/the-passage/" "title" "The Passage" "season" "Season 4" "img" "/images/articles/passage-arg-artwork.png")
+    }}
+    <a href="{{ .href }}" class="puzzle-panel no-underline" aria-label="{{ .title }}">
+      <div class="puzzle-img" style="background-image:url('{{ .img | relURL }}')"></div>
+      <div class="puzzle-overlay"></div>
+      <div class="puzzle-caption">
+        <span class="pixel-label">{{ .season }} · ARG</span>
+        <h3 class="pixel text-[15px] sm:text-[18px] mt-1">{{ .title }}</h3>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+
   {{/*  A few featured builds  */}}
   {{ with $featured }}
   <div class="flex items-center gap-2.5 mt-8 mb-4">
@@ -87,22 +91,5 @@
   </div>
   {{ end }}
 
-  {{/*  Recent changes: newest page edits, from page dates  */}}
-  {{ with first 5 (sort .Site.RegularPages "Lastmod" "desc") }}
-  <div class="flex items-center gap-2.5 mt-8 mb-4">
-    {{ partial "mc-icon.html" (dict "slug" "clock" "lg" true) }}
-    <h2 class="section-h flex-1">Recent changes</h2>
-  </div>
-  <div class="mc-card">
-    {{ range . }}
-    <a href="{{ .RelPermalink }}" class="flex items-center gap-3 px-3.5 py-2.5 border-b-2 border-rowline last:border-b-0 no-underline hover:bg-surface-2">
-      {{ if .Lastmod.After (.Date.AddDate 0 0 1) }}<span class="mc-badge mc-badge-grass">edit</span>{{ else }}<span class="mc-badge mc-badge-gold">new</span>{{ end }}
-      <span class="font-extrabold text-fg text-sm">{{ .Title }}</span>
-      {{ with .CurrentSection }}{{ if .Title }}<span class="text-muted text-[13px] hidden sm:inline">in {{ .LinkTitle }}</span>{{ end }}{{ end }}
-      <span class="ml-auto text-muted text-xs whitespace-nowrap">{{ .Lastmod.Format "Jan 2" }}</span>
-    </a>
-    {{ end }}
-  </div>
-  {{ end }}
 </div>
 {{ end }}
