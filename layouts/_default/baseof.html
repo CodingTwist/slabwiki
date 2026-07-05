@@ -52,6 +52,22 @@
     </div>
   </div>
 
+  <script>
+    // The header+breadcrumb stack's height changes with viewport width (search
+    // bar wraps to its own row below sm, breadcrumbs wrap on long titles), so
+    // --sticky-h can't be a fixed constant. Measure the real stack and keep it
+    // in sync so sticky sidebars AND anchor scroll-margins land just below it.
+    (function(){
+      var stack = document.getElementById('sticky-stack');
+      if(!stack) return;
+      function sync(){
+        document.documentElement.style.setProperty('--sticky-h', stack.offsetHeight + 'px');
+      }
+      new ResizeObserver(sync).observe(stack);
+      sync();
+    })();
+  </script>
+
   {{/*  Body: sidebar + content grouped and centered on the wallpaper  */}}
   <div class="flex-1 w-full article-backdrop" style="--backdrop-url:url('{{ "images/misc/Spawn_Cover_Image.png" | relURL }}')">
     <div class="mx-auto max-w-[1600px] w-full flex flex-col lg:flex-row gap-5 px-4 lg:px-6 py-6">
@@ -108,15 +124,6 @@
       links.forEach(function(l,i){ l.classList.toggle('sel', i===sel); });
     });
     document.addEventListener('click', function(e){ if(!e.target.closest('#site-search') && !e.target.closest('#search-results')) box.classList.remove('open'); });
-  })();
-
-  // Keep the sidebar's sticky offset in sync with the header+breadcrumb stack's real height.
-  (function(){
-    var stack = document.getElementById('sticky-stack');
-    if(!stack) return;
-    function sync(){ document.documentElement.style.setProperty('--sticky-h', (stack.offsetHeight + 16) + 'px'); }
-    sync();
-    new ResizeObserver(sync).observe(stack);
   })();
 
   // Copy coord chips to clipboard.

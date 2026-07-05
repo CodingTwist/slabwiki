@@ -1,0 +1,22 @@
+{{- /* ctx: dict "cfg" <data/maps.yaml season entry> "markers" <slice of dict title/url/x/z>
+     "id" <optional dom id> "height" <optional css height> "autofit" <bool, fit view to
+     markers instead of cfg center/zoom> "mini" <bool, small non-interactive preview>
+     "focus" <dict x/z, single point the mini preview centers on> */ -}}
+{{- $cfg := .cfg -}}
+{{- $markers := .markers | default slice -}}
+{{- $id := .id | default "slab-map" -}}
+{{- $mini := .mini | default false -}}
+<link rel="stylesheet" href="{{ "vendor/leaflet/leaflet.css" | relURL }}">
+<div id="{{ $id }}" class="slab-map{{ if $mini }} slab-map-mini{{ end }}"
+     {{ with .height }}style="height:{{ . }}"{{ end }}
+     data-tiles-base="{{ $cfg.tilesBase }}"
+     data-world="{{ $cfg.world }}"
+     data-center="{{ replace ($cfg.center | default "0 0") " " "," }}"
+     data-zoom="{{ $cfg.zoom | default 4 }}"
+     data-detail-zoom="{{ $cfg.detailZoom | default 7 }}"
+     {{ if $mini }}data-mini="true"{{ end }}
+     {{ if .autofit }}data-autofit="true"{{ end }}
+     {{ with .focus }}data-focus="{{ .x }},{{ .z }}"{{ end }}
+     data-markers='{{ jsonify $markers }}'></div>
+<script src="{{ "vendor/leaflet/leaflet.js" | relURL }}"></script>
+<script src="{{ "js/slab-map.js" | relURL }}"></script>

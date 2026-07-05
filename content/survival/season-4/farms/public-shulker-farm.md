@@ -4,7 +4,7 @@ infobox:
   image: '/images/articles/shulker-farm3.png'
   Status: 'Complete'
   Builders: 'MensCraft, yydragon'
-  Designers: 'Balllight, The Archivists'
+  Designers: 'Balllight, The_Archivists'
   World: 'Overworld'
   Started: '2024-08-17'
   Completed: '2024-08-18'

@@ -1,5 +1,16 @@
 {{ define "main" }}
 {{ $shops := .Pages }}
+{{ $mapCfg := index (index hugo.Data.maps "seasons") "season-4" }}
+{{ $markers := slice }}
+{{ range $shops }}
+  {{ $shop := . }}
+  {{ with $shop.Params.loc }}
+    {{ $xz := partial "coord-xz.html" . }}
+    {{ with $xz.x }}
+      {{ $markers = $markers | append (dict "t" $shop.Title "u" $shop.RelPermalink "x" $xz.x "z" $xz.z) }}
+    {{ end }}
+  {{ end }}
+{{ end }}
 <div class="page-sheet px-6 sm:px-8 py-8">
   <div class="mb-5">
     <span class="pixel-label text-gold">{{ .Site.Params.currentSeason }} · {{ len $shops }} shops</span>
@@ -7,6 +18,15 @@
     {{ with .Description }}<p class="text-muted text-sm mt-1.5">{{ . }}</p>{{ end }}
     <div class="stripe-divider mt-4"></div>
   </div>
+
+  {{ if and $mapCfg $markers }}
+  <div class="mc-panel mb-6 overflow-hidden">
+    <button type="button" id="shop-map-toggle" class="pixel bg-wood text-white text-[12px] px-2.5 py-3 border-b-4 border-line uppercase w-full text-left [text-shadow:2px_2px_0_rgb(0_0_0/0.3)]">▸ Show shops on map</button>
+    <div id="shop-map-wrap" class="hidden p-3">
+      {{ partial "slab-map.html" (dict "cfg" $mapCfg "markers" $markers "id" "shops-map" "height" "420px" "autofit" true) }}
+    </div>
+  </div>
+  {{ end }}
 
   <div class="flex flex-wrap items-center gap-3 mb-5">
     <label class="flex items-center gap-2 flex-1 min-w-[220px] mc-input !w-auto focus-within:border-grass">
@@ -31,7 +51,7 @@
         {{ with .Params.summary }}<p class="text-sm text-muted line-clamp-2">{{ . }}</p>{{ end }}
         <div class="flex flex-wrap items-center gap-1.5 mt-auto pt-1">
           {{ with .Params.owners }}<span class="chip">{{ partial "playerheads.html" . }}</span>{{ end }}
-          {{ with .Params.loc }}<span class="coord" data-coord="{{ . }}">{{ . }}</span>{{ end }}
+          {{ with .Params.loc }}{{ partial "coord-chip.html" (dict "coord" . "season" "season-4") }}{{ end }}
         </div>
       </div>
     </a>
@@ -58,6 +78,16 @@
     empty.classList.toggle('hidden', !!shown);
   }
   input.addEventListener('input', apply);
+})();
+
+(function () {
+  var btn = document.getElementById('shop-map-toggle');
+  var wrap = document.getElementById('shop-map-wrap');
+  if (!btn || !wrap) return;
+  btn.addEventListener('click', function () {
+    var open = wrap.classList.toggle('hidden') === false;
+    btn.textContent = (open ? '▾ Hide' : '▸ Show') + ' shops on map';
+  });
 })();
 </script>
 {{ end }}

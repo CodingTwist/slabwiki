@@ -1,6 +1,6 @@
 {{ define "main" }}
 <div class="w-full">
-  <div class="grid lg:grid-cols-[1fr_300px] gap-6 items-start">
+  <div class="grid lg:grid-cols-[1fr_300px] gap-5 items-start">
 
       <article class="mc-panel min-w-0 px-6 py-6 sm:px-8 sm:pb-8">
         <span class="pixel-label text-gold">{{ with .Site.Params.currentSeason }}{{ . }} · {{ end }}Shop</span>
@@ -25,9 +25,10 @@
         {{ end }}
         <dl class="text-[13.5px] py-1">
           {{ with .Params.owners }}<div class="flex justify-between gap-2 px-3.5 py-2 border-b-2 border-rowline"><dt class="text-wood-l font-bold shrink-0">Owners</dt><dd class="text-fg font-bold text-right min-w-0 [overflow-wrap:anywhere]">{{ partial "playerheads.html" . }}</dd></div>{{ end }}
-          {{ with .Params.loc }}<div class="flex justify-between gap-2 px-3.5 py-2 border-b-2 border-rowline"><dt class="text-wood-l font-bold shrink-0">Location</dt><dd class="min-w-0 text-right"><span class="coord" data-coord="{{ . }}">{{ . }}</span></dd></div>{{ end }}
+          {{ with .Params.loc }}<div class="flex justify-between gap-2 px-3.5 py-2 border-b-2 border-rowline"><dt class="text-wood-l font-bold shrink-0">Location</dt><dd class="min-w-0 text-right">{{ partial "coord-chip.html" (dict "coord" . "season" "season-4") }}</dd></div>{{ end }}
           {{ with .Params.updated }}<div class="flex justify-between gap-2 px-3.5 py-2"><dt class="text-wood-l font-bold shrink-0">Updated</dt><dd class="text-fg font-bold text-right min-w-0 [overflow-wrap:anywhere]">{{ . }}</dd></div>{{ end }}
         </dl>
+        {{ with .Params.loc }}{{ partial "location-map.html" (dict "coord" . "season" "season-4" "title" $.Title) }}{{ end }}
         <a href="{{ "/shops" | relURL }}" class="mc-panel-grass block border-t-4 text-center py-2.5 no-underline">
           <span class="pixel-label text-[8px] text-white">◂ All shops</span>
         </a>

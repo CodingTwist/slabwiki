@@ -8,6 +8,7 @@ servers:
     icon: grass-block
     navLabel: Seasons
     quicklinks:
+      - {title: Map, slug: season-4/map, icon: filled-map}
       - {title: Shops, slug: season-4/shops, icon: emerald}
       - {title: Tunnels, slug: season-4/tunnels, icon: rail}
   - title: Nexus

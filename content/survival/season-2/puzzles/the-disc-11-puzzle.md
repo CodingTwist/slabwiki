@@ -3,7 +3,7 @@ title: 'The Disc 11 Puzzle'
 infobox:
   image: '/images/articles/disc-arg-artwork.png'
   Status: 'Complete'
-  Builders: 'DaMarine, Felix J'
+  Builders: 'DaMarine, Felix_J'
   Designers: 'DaMarine'
   World: 'Overworld'
   Started: '2016-01-01'

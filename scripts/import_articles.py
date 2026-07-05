@@ -168,6 +168,10 @@ def extract_inline_templates(body):
             sign = params.get("sign") or params.get("cite") or (positional[1] if len(positional) > 1 else "")
             source = params.get("source") or (positional[2] if len(positional) > 2 else "")
             data = ("quote", text_, sign, source)
+        elif lname.startswith("infobox"):
+            # A per-section infobox embedded mid-body (the page-level leading
+            # infobox was already stripped by find_infobox before this runs).
+            data = ("infobox", params)
         else:
             continue
         token = f"XWIKITPLACEHOLDERX{len(placeholders)}X"
@@ -192,6 +196,55 @@ def item_html(arg):
     return f'{{{{< mcicon "{slug}" >}}}}'
 
 
+# Fields common to a {{Infobox ...}} template, in display order. Shared by
+# the page-level front-matter infobox and the inline {{< infobox >}}
+# shortcode used for per-section infoboxes embedded mid-body (e.g. a page
+# listing several builds, each with its own {{Infobox Project}}).
+INFOBOX_FIELD_MAP = [
+    ("status", "Status"), ("builders", "Builders"), ("designers", "Designers"),
+    ("world", "World"), ("date_started", "Started"), ("date_completed", "Completed"),
+    ("owners", "Owners"), ("project_type", "Type"),
+]
+
+
+def infobox_fields(fields, manifest_images):
+    out = []
+    img_field = fields.get("image", "")
+    if img_field:
+        local = resolve_image(img_field, manifest_images)
+        if local:
+            out.append(("image", local))
+    for k, label in INFOBOX_FIELD_MAP:
+        if fields.get(k):
+            v = re.sub(r"[\[\]]", "", fields[k])
+            # builders/designers/owners are literal IGNs (which may
+            # themselves start with an underscore, e.g. "_P0ny") - only
+            # other fields use "_" as a MediaWiki space encoding.
+            if k not in ("builders", "designers", "owners"):
+                v = v.replace("_", " ")
+            out.append((label, v))
+    coords = [fields[c] for c in ("world_x", "world_y", "world_z") if fields.get(c)]
+    if coords:
+        out.append(("Coordinates", " ".join(coords)))
+    return out
+
+
+def infobox_map(fields, manifest_images):
+    """Build an ordered {label: value} map for a per-section infobox, with a
+    leading `title` (the {{Infobox|name=...}}). Returns None if it has no
+    renderable fields at all (e.g. an empty {{Infobox}})."""
+    pairs = infobox_fields(fields, manifest_images)
+    if not pairs:
+        return None
+    box = {}
+    name = fields.get("name", "").strip().replace("_", " ")
+    if name:
+        box["title"] = name
+    for k, v in pairs:
+        box[k] = v
+    return box
+
+
 def resolve_placeholders(md, placeholders, manifest_images):
     def repl(m):
         data = placeholders[int(m.group(1))]
@@ -200,6 +253,10 @@ def resolve_placeholders(md, placeholders, manifest_images):
             return player_html(data[1])
         if kind == "item":
             return item_html(data[1])
+        if kind == "infobox":
+            # Pulled out of the body and rendered in the sidebar (see main);
+            # drop the placeholder from the prose entirely.
+            return ""
         # quote: recursively process the quoted text (it's raw wikitext -
         # may itself contain formatting or a nested {{Player}} signature)
         _, text_, sign, source = data
@@ -313,6 +370,9 @@ def main():
     for title, (category, season, fields, body, slug) in pages.items():
         body = NOISE.sub("", body)
         body, placeholders = extract_inline_templates(body)
+        section_boxes = [b for b in (infobox_map(p[1], manifest_images)
+                                     for p in placeholders if p[0] == "infobox")
+                         if b]
         md = to_markdown(body)
         md = resolve_placeholders(md, placeholders, manifest_images)
         md = rewrite_body_images(md, manifest_images)
@@ -322,31 +382,21 @@ def main():
             continue
 
         fm = {"title": title.replace("_", " ")}
-
-        img_field = fields.get("image", "")
-        infobox = {}
-        if img_field:
-            local = resolve_image(img_field, manifest_images)
-            if local:
-                infobox["image"] = local
-        for k, label in [("status", "Status"), ("builders", "Builders"),
-                         ("designers", "Designers"), ("world", "World"),
-                         ("date_started", "Started"), ("date_completed", "Completed"),
-                         ("owners", "Owners"), ("project_type", "Type")]:
-            if fields.get(k):
-                infobox[label] = re.sub(r"[\[\]]", "", fields[k]).replace("_", " ")
-        coords = []
-        for c in ("world_x", "world_y", "world_z"):
-            if fields.get(c):
-                coords.append(fields[c])
-        if coords:
-            infobox["Coordinates"] = " ".join(coords)
+        infobox = dict(infobox_fields(fields, manifest_images))
 
         lines = ["---", f"title: {yaml_val(fm['title'])}"]
         if infobox:
             lines.append("infobox:")
             for k, v in infobox.items():
                 lines.append(f"  {k}: {yaml_val(str(v))}")
+        if section_boxes:
+            lines.append("infoboxes:")
+            for box in section_boxes:
+                first = True
+                for k, v in box.items():
+                    prefix = "  - " if first else "    "
+                    lines.append(f"{prefix}{k}: {yaml_val(str(v))}")
+                    first = False
         lines.append("---\n")
         out = "\n".join(lines) + md + "\n"
 

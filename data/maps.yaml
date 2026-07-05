@@ -1,0 +1,26 @@
+# Pl3xMap tile servers, one per Survival season. Keyed by the season's
+# content section name (content/survival/<key>/). "tilesBase" is the host +
+# /tiles path; "world" is the Pl3xMap world name (spaces are percent-encoded
+# by the viewer) - the overworld world plus "_nether"/"_the_end" suffixes are
+# rendered as separate dimensions in the map viewer. "center"/"zoom" is where
+# the season-wide map opens; "detailZoom" is used for single-location deep
+# links (coord chips) and infobox mini-maps.
+seasons:
+  season-2:
+    tilesBase: 'https://s2map.slabserver.org/tiles'
+    world: 'Slabserver Prelease'
+    center: '0 0'
+    zoom: 3
+    detailZoom: 7
+  season-3:
+    tilesBase: 'https://s3map.slabserver.org/tiles'
+    world: 'Slabserver S3'
+    center: '250 0'
+    zoom: 4
+    detailZoom: 7
+  season-4:
+    tilesBase: 'https://map.slabserver.org/tiles'
+    world: 'SlabserverS4'
+    center: '-88 -22'
+    zoom: 4
+    detailZoom: 7

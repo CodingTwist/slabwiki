@@ -6,8 +6,10 @@
   "scripts": {
     "css": "tailwindcss -i assets/css/main.css -o assets/css/app.css",
     "css:watch": "tailwindcss -i assets/css/main.css -o assets/css/app.css --watch",
-    "build": "npm run css && hugo --gc --minify",
-    "dev": "npm run css && (npm run css:watch & hugo server -D)"
+    "ts": "tsc",
+    "ts:watch": "tsc --watch",
+    "build": "npm run css && npm run ts && hugo --gc --minify",
+    "dev": "npm run css && npm run ts && (npm run css:watch & npm run ts:watch & hugo server -D)"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +17,8 @@
   "type": "commonjs",
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.2",
-    "tailwindcss": "^4.3.2"
+    "@types/leaflet": "^1.9.21",
+    "tailwindcss": "^4.3.2",
+    "typescript": "^6.0.3"
   }
 }

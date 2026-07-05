@@ -12,7 +12,8 @@
 {{ $catTitle := "" }}{{ $catIcon := "" }}
 {{ with $sec }}{{ with .Params.icon }}{{ $catIcon = . }}{{ $catTitle = $sec.LinkTitle }}{{ end }}{{ end }}
 {{ $season := "" }}
-{{ with $sec.Parent }}{{ if hasPrefix .LinkTitle "Season" }}{{ $season = .LinkTitle }}{{ end }}{{ end }}
+{{ $seasonKey := "" }}
+{{ with $sec.Parent }}{{ if hasPrefix .LinkTitle "Season" }}{{ $season = .LinkTitle }}{{ $seasonKey = path.Base .RelPermalink }}{{ end }}{{ end }}
 <a href="{{ .RelPermalink }}" class="mc-card mc-card-hover flex flex-col no-underline overflow-hidden group">
   {{ with $img }}
   <div class="aspect-[16/10] overflow-hidden bg-surface-2 border-b-[3px] border-line relative">
@@ -29,7 +30,7 @@
     <div class="flex flex-wrap items-center gap-1.5 mt-auto pt-1">
       {{ with $catTitle }}<span class="chip inline-flex items-center gap-1">{{ with $catIcon }}{{ partial "mc-icon.html" . }}{{ end }}{{ . }}</span>{{ end }}
       {{ if not $img }}{{ with $season }}<span class="chip chip-season">{{ . }}</span>{{ end }}{{ end }}
-      {{ with $coord }}<span class="coord" data-coord="{{ . }}">{{ . }}</span>{{ end }}
+      {{ with $coord }}{{ partial "coord-chip.html" (dict "coord" . "season" $seasonKey) }}{{ end }}
     </div>
   </div>
 </a>

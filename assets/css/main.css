@@ -32,8 +32,8 @@
 }
 
 :root {
-  /* Fallback before JS measures the real header+breadcrumb stack height. */
-  --sticky-h: 84px;
+  /* Offset that pins the sidebars just below the sticky header+breadcrumb stack. */
+  --sticky-h: 140px;
 }
 
 /* Dark: night soil & lantern light. */
@@ -143,12 +143,22 @@
   }
 
   /* Darkened cover-image backdrop behind the whole content row. Content
-     sits on a centered .page-sheet, so the image shows in the gutters. */
+     sits on a centered .page-sheet, so the image shows in the gutters.
+     The image lives on a fixed, composited ::before rather than
+     `background-attachment: fixed` - the latter repaints the whole backdrop
+     every scroll frame, which makes the sticky sidebars inside it stutter. */
   .article-backdrop {
+    position: relative;
+    isolation: isolate;
+  }
+  .article-backdrop::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
     background-image: linear-gradient(rgb(0 0 0 / .40), rgb(0 0 0 / .55)), var(--backdrop-url);
     background-size: cover;
     background-position: center 42%;
-    background-attachment: fixed;
     image-rendering: pixelated;
   }
 
@@ -280,6 +290,35 @@
   .coord.copied { @apply border-grass text-grass-hi; }
   .coord.copied::after { content: " ✓ copied"; }
 
+  /* Link from a coord chip to its spot on the season map. */
+  .coord-map-link {
+    @apply inline-flex items-center justify-center w-6 h-6 border-2 border-line
+           bg-surface-2 text-muted no-underline transition-colors shrink-0;
+  }
+  .coord-map-link:hover { @apply border-grass text-grass-hi; }
+
+  /* Leaflet map embed. */
+  .slab-map {
+    @apply w-full border-4 border-line bg-surface-2;
+    height: 500px;
+  }
+  .slab-map .leaflet-tile { image-rendering: pixelated; }
+  .slab-map-mini {
+    @apply border-b-0 cursor-default;
+    height: 160px;
+  }
+
+  /* Dimension (overworld/nether/end) switcher control. */
+  .slab-dimension-control {
+    @apply flex! flex-col! overflow-hidden;
+  }
+  .slab-dimension-control a {
+    @apply text-[9px] uppercase text-center px-2 py-1.5 bg-surface-2 text-muted
+           no-underline border-b-2 border-line last:border-b-0 whitespace-nowrap font-bold;
+  }
+  .slab-dimension-control a:hover { @apply text-fg; }
+  .slab-dimension-control a.active { @apply bg-wood text-white; }
+
   /* Pill/tag chips (non-pixel, for inline metadata). */
   .chip {
     @apply inline-flex items-center gap-1 text-xs px-2 py-0.5
@@ -290,6 +329,11 @@
 
   /* Prose (article body) - themed typographic defaults. */
   .prose { @apply max-w-none leading-[1.75] text-body text-[16.5px]; }
+  .prose h2, .prose h3 {
+    /* Leave room for the sticky header+breadcrumb stack so "On This Page"
+       anchor jumps don't land the heading underneath it. */
+    scroll-margin-top: calc(var(--sticky-h) + 10px);
+  }
   .prose h2 {
     @apply text-[17px] text-grass-hi border-b-[3px] border-divider pb-2 mt-8 mb-3;
     font-family: var(--font-pixel);

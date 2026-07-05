@@ -1,0 +1,9 @@
+{{- /* ctx: a "x y z" or "x z" coordinate string. Returns dict "x" "z" (floats) or an empty dict if unparseable. */ -}}
+{{- $parts := split (trim . " ") " " -}}
+{{- $result := dict -}}
+{{- if eq (len $parts) 3 -}}
+  {{- $result = dict "x" (float (index $parts 0)) "z" (float (index $parts 2)) -}}
+{{- else if eq (len $parts) 2 -}}
+  {{- $result = dict "x" (float (index $parts 0)) "z" (float (index $parts 1)) -}}
+{{- end -}}
+{{- return $result -}}

@@ -1,0 +1,33 @@
+{{ define "main" }}
+{{ $season := .Params.season }}
+{{ $cfg := index (index hugo.Data.maps "seasons") $season }}
+{{ $seasonPage := .Parent }}
+
+{{ $markers := slice }}
+{{ if $seasonPage }}
+{{ range $seasonPage.RegularPagesRecursive }}
+  {{ $page := . }}
+  {{ $coord := "" }}
+  {{ with $page.Params.loc }}{{ $coord = . }}{{ end }}
+  {{ with $page.Params.infobox }}{{ with .Coordinates }}{{ $coord = . }}{{ end }}{{ end }}
+  {{ with $coord }}
+    {{ $xz := partial "coord-xz.html" . }}
+    {{ with $xz.x }}
+      {{ $markers = $markers | append (dict "t" $page.Title "u" $page.RelPermalink "x" $xz.x "z" $xz.z) }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ end }}
+
+<div class="mc-panel px-6 py-6 sm:px-8 sm:py-8">
+  <h1 class="pixel text-[26px] md:text-[30px]">{{ .Title }}</h1>
+  {{ with .Description }}<p class="text-muted text-sm mt-1.5">{{ . }}</p>{{ end }}
+  <div class="stripe-divider my-4"></div>
+  {{ if $cfg }}
+  {{ partial "slab-map.html" (dict "cfg" $cfg "markers" $markers "id" "season-map" "height" "70vh" "autofit" true) }}
+  <p class="text-xs text-faint mt-2">{{ len $markers }} documented locations plotted. Click the map to copy world coordinates.</p>
+  {{ else }}
+  <p class="text-muted">No map is configured for this season yet.</p>
+  {{ end }}
+</div>
+{{ end }}
