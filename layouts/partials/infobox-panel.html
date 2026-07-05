@@ -7,7 +7,7 @@
   <div class="pixel bg-wood text-white text-center text-[12px] px-2.5 py-3 border-b-4 border-line [text-shadow:2px_2px_0_rgb(0_0_0/0.3)] uppercase">{{ $title }}</div>
   {{ with $box.image }}
   <div class="relative border-b-4 border-line">
-    <img src="{{ . | relURL }}" alt="{{ $title }}" class="w-full h-[150px] object-cover pixelated block">
+    <img src="{{ . | strings.TrimPrefix "/" | relURL }}" alt="{{ $title }}" class="w-full h-[150px] object-cover pixelated block">
     <span class="pixel absolute bottom-2 left-2 text-[7px] uppercase text-white bg-[rgba(42,38,32,.7)] px-1.5 py-1">{{ $title }}</span>
   </div>
   {{ end }}

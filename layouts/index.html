@@ -39,7 +39,7 @@
     {{ range $servers }}
     {{ $sp := site.GetPage (printf "/%s" .slug) }}
     {{ $quickSlugs := slice }}{{ range .quicklinks }}{{ $quickSlugs = $quickSlugs | append .slug }}{{ end }}
-    <a href="{{ printf "/%s" .slug | relURL }}" class="mc-card mc-card-hover no-underline p-5 flex flex-col gap-3 group">
+    <a href="{{ $sp.RelPermalink }}" class="mc-card mc-card-hover no-underline p-5 flex flex-col gap-3 group">
       <div class="flex items-center gap-3">
         {{ partial "mc-icon.html" (dict "slug" .icon "lg" true) }}
         <h3 class="pixel text-[17px] text-fg">{{ .title }}</h3>
@@ -66,12 +66,12 @@
   <div class="puzzle-strip mb-10">
     <div class="puzzle-track">
     {{ range slice
-      (dict "href" "/survival/season-2/puzzles/the-disc-11-puzzle/" "title" "The Disc" "season" "Season 2" "img" "/images/articles/disc-arg-banner.webp")
-      (dict "href" "/survival/season-3/puzzles/the-tunnel/" "title" "The Tunnel" "season" "Season 3" "img" "/images/articles/tunnel-arg-banner.webp")
-      (dict "href" "/survival/season-4/puzzles/the-passage/" "title" "The Passage" "season" "Season 4" "img" "/images/articles/passage-arg-banner.webp")
+      (dict "page" (site.GetPage "/survival/season-2/puzzles/the-disc-11-puzzle") "title" "The Disc" "season" "Season 2" "img" "/images/articles/disc-arg-banner.webp")
+      (dict "page" (site.GetPage "/survival/season-3/puzzles/the-tunnel") "title" "The Tunnel" "season" "Season 3" "img" "/images/articles/tunnel-arg-banner.webp")
+      (dict "page" (site.GetPage "/survival/season-4/puzzles/the-passage") "title" "The Passage" "season" "Season 4" "img" "/images/articles/passage-arg-banner.webp")
     }}
-    <a href="{{ .href }}" class="puzzle-panel no-underline" aria-label="{{ .title }}">
-      <div class="puzzle-img" style="background-image:url('{{ .img | relURL }}')"></div>
+    <a href="{{ .page.RelPermalink }}" class="puzzle-panel no-underline" aria-label="{{ .title }}">
+      <div class="puzzle-img" style="background-image:url('{{ .img | strings.TrimPrefix "/" | relURL }}')"></div>
       <div class="puzzle-overlay"></div>
       <div class="puzzle-caption">
         <span class="pixel-label">{{ .season }} · ARG</span>

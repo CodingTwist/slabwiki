@@ -1,6 +1,6 @@
 /* Minecraft item icons - sprite ported from wiki.slabserver.org Template:Item.
    Sprite sheet 1024x1664, 32px cells (16px for .icon-minecraft-sm). */
-.icon-minecraft, .icon-minecraft-sm { background-image: url("/img/mc-items.png"); }
+.icon-minecraft, .icon-minecraft-sm { background-image: url("../img/mc-items.png"); }
 .icon-minecraft, .icon-minecraft-sm {
     display: inline-block;
     vertical-align: middle;

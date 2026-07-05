@@ -16,7 +16,7 @@
     {{ $count := len .RegularPages }}
     <a href="{{ .RelPermalink }}" class="mc-card mc-card-hover no-underline relative overflow-hidden min-h-[128px] flex flex-col justify-end group">
       {{ with .Params.banner }}
-        <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-55 transition-opacity duration-300 pixelated" style="background-image:url('{{ . | relURL }}')"></div>
+        <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-55 transition-opacity duration-300 pixelated" style="background-image:url('{{ . | strings.TrimPrefix "/" | relURL }}')"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-card via-card/80 to-transparent"></div>
       {{ end }}
       <div class="relative p-5 flex flex-col gap-1.5">

@@ -65,7 +65,7 @@
         <div class="pixel bg-wood text-white text-center text-[12px] px-2.5 py-3 border-b-4 border-line [text-shadow:2px_2px_0_rgb(0_0_0/0.3)] uppercase">{{ .Title }}</div>
         {{ with .Params.image }}
         <div class="border-b-4 border-line">
-          <img src="{{ . | relURL }}" alt="{{ $.Title }}" class="w-full h-[150px] object-cover pixelated block">
+          <img src="{{ . | strings.TrimPrefix "/" | relURL }}" alt="{{ $.Title }}" class="w-full h-[150px] object-cover pixelated block">
         </div>
         {{ else }}
         <div class="border-b-4 border-line h-[150px] flex items-center justify-center bg-surface-2 text-muted gap-2">

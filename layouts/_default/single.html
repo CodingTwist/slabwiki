@@ -70,7 +70,7 @@
           {{ with .Params.infobox }}
           {{ with .image }}
           <div class="relative border-b-4 border-line">
-            <img src="{{ . | relURL }}" alt="{{ $.Title }}" class="w-full h-[150px] object-cover pixelated block">
+            <img src="{{ . | strings.TrimPrefix "/" | relURL }}" alt="{{ $.Title }}" class="w-full h-[150px] object-cover pixelated block">
             <span class="pixel absolute bottom-2 left-2 text-[7px] uppercase text-white bg-[rgba(42,38,32,.7)] px-1.5 py-1">{{ $.Title }}</span>
           </div>
           {{ end }}

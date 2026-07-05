@@ -6,7 +6,8 @@
   {{- if $season -}}
     {{- $xz := partial "coord-xz.html" $coord -}}
     {{- with $xz.x -}}
-    <a class="coord-map-link" href="{{ printf "/survival/%s/map/?x=%v&z=%v" $season $xz.x $xz.z | relURL }}" title="View on map">🗺</a>
+    {{- $mapPage := site.GetPage (printf "/survival/%s/map" $season) -}}
+    <a class="coord-map-link" href="{{ printf "%s?x=%v&z=%v" $mapPage.RelPermalink $xz.x $xz.z }}" title="View on map">🗺</a>
     {{- end -}}
   {{- end -}}
 </span>

@@ -22,7 +22,7 @@
 <div class="mc-card mc-card-hover flex flex-col overflow-hidden group relative">
   {{ with $img }}
   <div class="aspect-[16/10] overflow-hidden bg-surface-2 border-b-[3px] border-line relative">
-    <img src="{{ . | relURL }}" alt="" loading="lazy" class="w-full h-full object-cover">
+    <img src="{{ . | strings.TrimPrefix "/" | relURL }}" alt="" loading="lazy" class="w-full h-full object-cover">
     {{ with $season }}
     <span class="pixel absolute top-2 left-2 text-[7px] uppercase text-white bg-[rgba(0,0,0,.4)] px-1.5 py-1">{{ . }}</span>
     {{ end }}

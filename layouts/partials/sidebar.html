@@ -18,7 +18,7 @@
       {{ range hugo.Data.servers.servers }}
         {{ $active := eq $server .title }}
         <li class="shrink-0">
-          <a href="{{ printf "/%s" .slug | relURL }}"
+          <a href="{{ with site.GetPage (printf "/%s" .slug) }}{{ .RelPermalink }}{{ end }}"
              class="flex items-center gap-2.5 px-2 py-2 text-[15px] font-bold no-underline whitespace-nowrap border-l-4
                     {{ if $active }}border-grass text-grass-hi bg-[rgba(91,138,60,.16)]{{ else }}border-transparent text-fg hover:bg-[rgba(91,138,60,.08)]{{ end }}">
             {{ partial "mc-icon.html" (dict "slug" .icon "lg" true) }}
@@ -26,9 +26,10 @@
           </a>
         </li>
       {{ end }}
-      {{ $si := hasPrefix $curPerm (relURL "/server-info") }}
+      {{ $serverInfoPage := site.GetPage "/server-info" }}
+      {{ $si := hasPrefix $curPerm $serverInfoPage.RelPermalink }}
       <li class="shrink-0">
-        <a href="{{ "/server-info" | relURL }}"
+        <a href="{{ $serverInfoPage.RelPermalink }}"
            class="flex items-center gap-2.5 px-2 py-2 text-[15px] font-bold no-underline whitespace-nowrap border-l-4
                   {{ if $si }}border-grass text-grass-hi bg-[rgba(91,138,60,.16)]{{ else }}border-transparent text-fg hover:bg-[rgba(91,138,60,.08)]{{ end }}">
           {{ partial "mc-icon.html" (dict "slug" "written-book" "lg" true) }}
@@ -45,10 +46,10 @@
       {{ range hugo.Data.servers.servers }}
         {{ $srv := . }}
         {{ range .quicklinks }}
-          {{ $url := printf "/%s/%s" $srv.slug .slug }}
-          {{ $active := hasPrefix $curPerm ($url | relURL) }}
+          {{ $page := site.GetPage (printf "/%s/%s" $srv.slug .slug) }}
+          {{ $active := and $page (hasPrefix $curPerm $page.RelPermalink) }}
           <li>
-            <a href="{{ $url | relURL }}"
+            <a href="{{ with $page }}{{ .RelPermalink }}{{ end }}"
                class="flex items-center gap-2.5 px-2 py-1.5 no-underline whitespace-nowrap border-l-4
                       {{ if $active }}border-grass bg-[rgba(91,138,60,.16)]{{ else }}border-transparent hover:bg-[rgba(91,138,60,.08)]{{ end }}">
               {{ partial "mc-icon.html" (dict "slug" .icon "lg" true) }}

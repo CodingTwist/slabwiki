@@ -72,7 +72,7 @@
        class="mc-card mc-card-hover flex flex-col no-underline overflow-hidden group">
       {{ with .Params.image }}
       <div class="aspect-[16/10] overflow-hidden bg-surface-2 border-b-[3px] border-line">
-        <img src="{{ . | relURL }}" alt="" loading="lazy" class="w-full h-full object-cover">
+        <img src="{{ . | strings.TrimPrefix "/" | relURL }}" alt="" loading="lazy" class="w-full h-full object-cover">
       </div>
       {{ else }}
       <div class="aspect-[16/10] overflow-hidden bg-surface-2 border-b-[3px] border-line flex items-center justify-center gap-1.5 text-muted">
