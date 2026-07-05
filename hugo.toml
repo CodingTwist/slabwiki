@@ -1,4 +1,4 @@
-baseURL = 'https://wiki.slabserver.org/'
+baseURL = 'https://CodingTwist.github.io/slabwiki/'
 locale = 'en-us'
 title = 'SlabWiki'
 enableGitInfo = false
