@@ -64,10 +64,11 @@
     <h2 class="section-h flex-1">The Puzzles</h2>
   </div>
   <div class="puzzle-strip mb-10">
+    <div class="puzzle-track">
     {{ range slice
-      (dict "href" "/survival/season-2/puzzles/the-disc-11-puzzle/" "title" "The Disc" "season" "Season 2" "img" "/images/articles/disc-arg-artwork.png")
-      (dict "href" "/survival/season-3/puzzles/the-tunnel/" "title" "The Tunnel" "season" "Season 3" "img" "/images/articles/tunnel-arg-artwork.png")
-      (dict "href" "/survival/season-4/puzzles/the-passage/" "title" "The Passage" "season" "Season 4" "img" "/images/articles/passage-arg-artwork.png")
+      (dict "href" "/survival/season-2/puzzles/the-disc-11-puzzle/" "title" "The Disc" "season" "Season 2" "img" "/images/articles/disc-arg-banner.webp")
+      (dict "href" "/survival/season-3/puzzles/the-tunnel/" "title" "The Tunnel" "season" "Season 3" "img" "/images/articles/tunnel-arg-banner.webp")
+      (dict "href" "/survival/season-4/puzzles/the-passage/" "title" "The Passage" "season" "Season 4" "img" "/images/articles/passage-arg-banner.webp")
     }}
     <a href="{{ .href }}" class="puzzle-panel no-underline" aria-label="{{ .title }}">
       <div class="puzzle-img" style="background-image:url('{{ .img | relURL }}')"></div>
@@ -78,6 +79,7 @@
       </div>
     </a>
     {{ end }}
+    </div>
   </div>
 
   {{/*  A few featured builds  */}}

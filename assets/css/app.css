@@ -16,6 +16,7 @@
     --font-weight-extrabold: 800;
     --leading-tight: 1.25;
     --leading-snug: 1.375;
+    --radius-sm: 0.25rem;
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
@@ -451,6 +452,9 @@
       margin-block-end: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
+  .gap-x-2\.5 {
+    column-gap: calc(var(--spacing) * 2.5);
+  }
   .gap-x-3 {
     column-gap: calc(var(--spacing) * 3);
   }
@@ -468,6 +472,9 @@
   }
   .overflow-x-auto {
     overflow-x: auto;
+  }
+  .rounded-sm {
+    border-radius: var(--radius-sm);
   }
   .border {
     border-style: var(--tw-border-style);
@@ -678,6 +685,9 @@
   }
   .text-right {
     text-align: right;
+  }
+  .align-middle {
+    vertical-align: middle;
   }
   .text-sm {
     font-size: var(--text-sm);
@@ -1500,67 +1510,55 @@
     border-style: var(--tw-border-style);
     border-width: 4px;
     border-color: var(--color-line);
-    display: flex;
-    height: 300px;
+    height: 420px;
     overflow: hidden;
     background: var(--color-line);
     box-shadow: 8px 8px 0 var(--c-shadow);
+  }
+  .puzzle-track {
+    display: flex;
+    height: 100%;
+    margin: 0 -4.5rem 0 -4.5rem;
+    transform: skewX(-9deg);
+    transform-origin: bottom;
   }
   .puzzle-panel {
     position: relative;
     flex: 1 1 0%;
     min-width: 0;
     overflow: hidden;
-    transform: skewX(-9deg);
     cursor: pointer;
-    transition: flex-grow .5s cubic-bezier(.22,.85,.2,1), transform .5s cubic-bezier(.22,.85,.2,1);
+    transition: flex-grow .45s cubic-bezier(.22,.85,.2,1);
   }
   .puzzle-panel + .puzzle-panel {
-    border-left: 5px solid #fff;
-    margin-left: -3px;
+    border-left: 4px solid #fff;
   }
-  .puzzle-strip:hover .puzzle-panel {
-    flex-grow: 1;
-  }
-  .puzzle-strip:hover .puzzle-panel:hover {
-    flex-grow: 3.2;
-  }
-  .puzzle-panel:hover {
-    transform: skewX(0deg);
+  .puzzle-panel:hover, .puzzle-panel:focus-visible {
+    flex-grow: 1.75;
   }
   .puzzle-img {
     position: absolute;
-    top: -15%;
-    bottom: -15%;
-    left: -25%;
-    right: -25%;
+    inset: -75% -4.5rem 0;
     background-size: cover;
-    background-position: center;
-    transform: skewX(9deg) scale(1.18);
-    transition: transform .5s cubic-bezier(.22,.85,.2,1), filter .3s ease;
-    image-rendering: pixelated;
+    background-position: center bottom;
+    transform: skewX(9deg);
+    transform-origin: bottom;
+    transition: filter .3s ease;
   }
-  .puzzle-panel:hover .puzzle-img {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-size: contain;
-    background-repeat: no-repeat;
-    transform: skewX(0deg) scale(1);
-    filter: brightness(1.05);
+  .puzzle-panel:hover .puzzle-img, .puzzle-panel:focus-visible .puzzle-img {
+    filter: brightness(1.15);
   }
   .puzzle-overlay {
     position: absolute;
-    inset: -15% -25%;
+    inset: 0 -4.5rem;
     transform: skewX(9deg);
-    background: linear-gradient(to top, rgb(0 0 0 / .82) 0%, rgb(0 0 0 / .25) 60%, transparent 85%);
-    transition: opacity .4s ease;
+    transform-origin: bottom;
+    background: linear-gradient(to top, rgb(0 0 0 / .78) 0%, rgb(0 0 0 / .2) 55%, transparent 80%);
+    transition: opacity .3s ease;
+    pointer-events: none;
   }
-  .puzzle-panel:hover .puzzle-overlay {
-    inset: 0;
-    transform: skewX(0deg);
-    opacity: .55;
+  .puzzle-panel:hover .puzzle-overlay, .puzzle-panel:focus-visible .puzzle-overlay {
+    opacity: .65;
   }
   .puzzle-caption {
     position: absolute;
@@ -1569,13 +1567,9 @@
     bottom: 0;
     transform: skewX(9deg);
     transform-origin: bottom left;
-    padding: 1rem 1.25rem;
+    padding: 1rem 1.75rem;
     white-space: nowrap;
     color: #fff;
-    transition: transform .5s cubic-bezier(.22,.85,.2,1);
-  }
-  .puzzle-panel:hover .puzzle-caption {
-    transform: skewX(0deg);
   }
   .puzzle-caption .pixel-label {
     color: var(--c-gold);
@@ -1583,6 +1577,38 @@
   }
   .puzzle-caption h3 {
     text-shadow: 2px 2px 0 rgb(0 0 0 / .5);
+  }
+  .puzzle-panel:first-child .puzzle-caption {
+    padding-left: 6.25rem;
+  }
+  @media (max-width: 640px) {
+    .puzzle-strip {
+      height: auto;
+    }
+    .puzzle-track {
+      flex-direction: column;
+      margin: 0;
+      transform: none;
+    }
+    .puzzle-panel {
+      flex: none;
+      height: 96px;
+    }
+    .puzzle-panel + .puzzle-panel {
+      border-left: 0;
+      border-top: 4px solid #fff;
+    }
+    .puzzle-img, .puzzle-overlay {
+      inset: 0;
+      transform: none;
+    }
+    .puzzle-caption {
+      transform: none;
+      padding: .75rem 1rem;
+    }
+    .puzzle-panel:first-child .puzzle-caption {
+      padding-left: 1rem;
+    }
   }
   .search-results {
     position: absolute;

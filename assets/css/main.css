@@ -317,80 +317,96 @@
   .prose th, .prose td { @apply border-2 border-rowline px-3 py-2 text-left; }
   .prose th { @apply bg-surface-2 text-fg; }
 
-  /*  Puzzle strip: skewed accordion banner 
-     Three panels sharing one skewX() transform so their shared edges
-     read as continuous diagonal cuts (a parallelogram seam, not an
-     overlay). A white border on the seam is the "cut glass" divider.
-     Content is skewed back the opposite amount and overscaled so it
-     stays upright and gap-free, then gets cropped by the parent's
-     overflow:hidden - that crop is what sells the masking illusion. */
+  /*  Puzzle strip: skewed accordion banner
+     One inner track carries the single skewX(); the panels inside it
+     are plain flex children, so their seams are always parallel
+     diagonals - even mid-animation - and gaps are impossible. The
+     track's transform-origin sits on the bottom edge, so only the top
+     edge shifts (right, by height*tan9°); the negative left margin
+     hides the resulting top-left gap and the strip crops the right
+     overhang. Images, overlay and captions counter-skew once and
+     never change angle; hover only re-weights flex-grow and lifts
+     brightness - the artwork itself never moves or zooms. */
   .puzzle-strip {
     @apply border-4 border-line;
-    display: flex;
-    height: 300px;
+    height: 420px;
     overflow: hidden;
     background: var(--color-line);
     box-shadow: 8px 8px 0 var(--c-shadow);
+  }
+  .puzzle-track {
+    display: flex;
+    height: 100%;
+    /* 420px * tan(9°) ≈ 67px: how far the top edge shifts right */
+    margin: 0 -4.5rem 0 -4.5rem;
+    transform: skewX(-9deg);
+    transform-origin: bottom;
   }
   .puzzle-panel {
     position: relative;
     flex: 1 1 0%;
     min-width: 0;
     overflow: hidden;
-    transform: skewX(-9deg);
     cursor: pointer;
-    transition: flex-grow .5s cubic-bezier(.22,.85,.2,1), transform .5s cubic-bezier(.22,.85,.2,1);
+    transition: flex-grow .45s cubic-bezier(.22,.85,.2,1);
   }
-  .puzzle-panel + .puzzle-panel {
-    border-left: 5px solid #fff;
-    margin-left: -3px;
-  }
-  .puzzle-strip:hover .puzzle-panel { flex-grow: 1; }
-  .puzzle-strip:hover .puzzle-panel:hover { flex-grow: 3.2; }
-  /* Hovered panel straightens into a clean rectangle so the whole
-     square artwork can be shown (contain), instead of a skewed crop. */
-  .puzzle-panel:hover { transform: skewX(0deg); }
+  .puzzle-panel + .puzzle-panel { border-left: 4px solid #fff; }
+  .puzzle-panel:hover,
+  .puzzle-panel:focus-visible { flex-grow: 1.75; }
   .puzzle-img {
     position: absolute;
-    top: -15%; bottom: -15%; left: -25%; right: -25%;
+    /* wider than the panel so the counter-skewed corners stay covered,
+       and 75% taller so `cover` must overscan vertically: the artwork's
+       baked-in title (top ~30% of each square) always lands above the
+       frame; we supply our own caption at the bottom instead */
+    inset: -75% -4.5rem 0;
     background-size: cover;
-    background-position: center;
-    transform: skewX(9deg) scale(1.18);
-    transition: transform .5s cubic-bezier(.22,.85,.2,1), filter .3s ease;
-    image-rendering: pixelated;
+    background-position: center bottom;
+    transform: skewX(9deg);
+    transform-origin: bottom;
+    transition: filter .3s ease;
   }
-  .puzzle-panel:hover .puzzle-img {
-    top: 0; bottom: 0; left: 0; right: 0;
-    background-size: contain;
-    background-repeat: no-repeat;
-    transform: skewX(0deg) scale(1);
-    filter: brightness(1.05);
-  }
+  .puzzle-panel:hover .puzzle-img,
+  .puzzle-panel:focus-visible .puzzle-img { filter: brightness(1.15); }
   .puzzle-overlay {
     position: absolute;
-    inset: -15% -25%;
+    inset: 0 -4.5rem;
     transform: skewX(9deg);
-    background: linear-gradient(to top, rgb(0 0 0 / .82) 0%, rgb(0 0 0 / .25) 60%, transparent 85%);
-    transition: opacity .4s ease;
+    transform-origin: bottom;
+    background: linear-gradient(to top, rgb(0 0 0 / .78) 0%, rgb(0 0 0 / .2) 55%, transparent 80%);
+    transition: opacity .3s ease;
+    pointer-events: none;
   }
-  .puzzle-panel:hover .puzzle-overlay {
-    inset: 0;
-    transform: skewX(0deg);
-    opacity: .55;
-  }
+  .puzzle-panel:hover .puzzle-overlay,
+  .puzzle-panel:focus-visible .puzzle-overlay { opacity: .65; }
   .puzzle-caption {
     position: absolute;
     left: 0; right: 0; bottom: 0;
     transform: skewX(9deg);
+    /* pin the bottom-left corner so the counter-skew can't drift the
+       text off the left edge of the (leftmost) panel */
     transform-origin: bottom left;
-    padding: 1rem 1.25rem;
+    padding: 1rem 1.75rem;
     white-space: nowrap;
     color: #fff;
-    transition: transform .5s cubic-bezier(.22,.85,.2,1);
   }
-  .puzzle-panel:hover .puzzle-caption { transform: skewX(0deg); }
   .puzzle-caption .pixel-label { color: var(--c-gold); opacity: .9; }
   .puzzle-caption h3 { text-shadow: 2px 2px 0 rgb(0 0 0 / .5); }
+  /* the track's negative margin pulls the first panel's bottom-left
+     corner 4.5rem past the strip's left edge, so nudge its caption
+     inward by that much to keep the text fully in frame */
+  .puzzle-panel:first-child .puzzle-caption { padding-left: 6.25rem; }
+  /* Small screens: three skewed slivers are unusable, so stack the
+     panels as straight horizontal banners instead. */
+  @media (max-width: 640px) {
+    .puzzle-strip { height: auto; }
+    .puzzle-track { flex-direction: column; margin: 0; transform: none; }
+    .puzzle-panel { flex: none; height: 96px; }
+    .puzzle-panel + .puzzle-panel { border-left: 0; border-top: 4px solid #fff; }
+    .puzzle-img, .puzzle-overlay { inset: 0; transform: none; }
+    .puzzle-caption { transform: none; padding: .75rem 1rem; }
+    .puzzle-panel:first-child .puzzle-caption { padding-left: 1rem; }
+  }
 
   /* Header search dropdown (JS toggles .open; JS builds the inner markup). */
   .search-results {

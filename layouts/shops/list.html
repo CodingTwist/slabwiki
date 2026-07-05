@@ -30,7 +30,7 @@
         <h3 class="pixel text-[12px] uppercase text-fg leading-snug">{{ .Title }}</h3>
         {{ with .Params.summary }}<p class="text-sm text-muted line-clamp-2">{{ . }}</p>{{ end }}
         <div class="flex flex-wrap items-center gap-1.5 mt-auto pt-1">
-          {{ with .Params.owners }}<span class="chip">👤 {{ . }}</span>{{ end }}
+          {{ with .Params.owners }}<span class="chip">{{ partial "playerheads.html" . }}</span>{{ end }}
           {{ with .Params.loc }}<span class="coord" data-coord="{{ . }}">{{ . }}</span>{{ end }}
         </div>
       </div>

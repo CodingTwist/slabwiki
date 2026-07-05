@@ -1,0 +1,6 @@
+{{- /* Renders a comma-separated "owners" string as a row of playerhead avatars. */ -}}
+<span class="inline-flex flex-wrap items-center gap-x-2.5 gap-y-1">
+  {{- range $i, $name := split . "," -}}
+    {{- partial "playerhead.html" $name -}}
+  {{- end -}}
+</span>

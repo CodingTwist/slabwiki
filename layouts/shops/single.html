@@ -24,7 +24,7 @@
         </div>
         {{ end }}
         <dl class="text-[13.5px] py-1">
-          {{ with .Params.owners }}<div class="flex justify-between gap-2 px-3.5 py-2 border-b-2 border-rowline"><dt class="text-wood-l font-bold shrink-0">Owners</dt><dd class="text-fg font-bold text-right min-w-0 [overflow-wrap:anywhere]">{{ . }}</dd></div>{{ end }}
+          {{ with .Params.owners }}<div class="flex justify-between gap-2 px-3.5 py-2 border-b-2 border-rowline"><dt class="text-wood-l font-bold shrink-0">Owners</dt><dd class="text-fg font-bold text-right min-w-0 [overflow-wrap:anywhere]">{{ partial "playerheads.html" . }}</dd></div>{{ end }}
           {{ with .Params.loc }}<div class="flex justify-between gap-2 px-3.5 py-2 border-b-2 border-rowline"><dt class="text-wood-l font-bold shrink-0">Location</dt><dd class="min-w-0 text-right"><span class="coord" data-coord="{{ . }}">{{ . }}</span></dd></div>{{ end }}
           {{ with .Params.updated }}<div class="flex justify-between gap-2 px-3.5 py-2"><dt class="text-wood-l font-bold shrink-0">Updated</dt><dd class="text-fg font-bold text-right min-w-0 [overflow-wrap:anywhere]">{{ . }}</dd></div>{{ end }}
         </dl>
