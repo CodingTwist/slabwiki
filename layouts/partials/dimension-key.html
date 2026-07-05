@@ -1,0 +1,10 @@
+{{- /* ctx: a "World" string (e.g. "Overworld", "Nether", "End", "The End"). Returns
+     one of "overworld" | "nether" | "the_end", defaulting to "overworld". */ -}}
+{{- $w := lower (. | default "") -}}
+{{- $result := "overworld" -}}
+{{- if in $w "nether" -}}
+  {{- $result = "nether" -}}
+{{- else if in $w "end" -}}
+  {{- $result = "the_end" -}}
+{{- end -}}
+{{- return $result -}}

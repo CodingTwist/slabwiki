@@ -264,7 +264,7 @@ def resolve_placeholders(md, placeholders, manifest_images):
         inner_md = resolve_placeholders(to_markdown(inner_body), inner_ph, manifest_images)
         lines = ["> " + ln for ln in inner_md.splitlines()] or ["> "]
         if sign:
-            attrib = f"— {sign}" + (f", {source}" if source else "")
+            attrib = f" {sign}" + (f", {source}" if source else "")
             lines += [">", "> " + attrib]
         # the {{Quote}} template may appear mid-sentence in the source
         # wikitext; blockquotes are block-level, so force paragraph breaks

@@ -11,6 +11,7 @@ servers:
       - {title: Map, slug: season-4/map, icon: filled-map}
       - {title: Shops, slug: season-4/shops, icon: emerald}
       - {title: Tunnels, slug: season-4/tunnels, icon: rail}
+      - {title: Public Resources, slug: season-4/public-resources, icon: beacon}
       - {title: The Passage, slug: season-4/puzzles/the-passage/, icon: candle}
   - title: Nexus
     slug: nexus

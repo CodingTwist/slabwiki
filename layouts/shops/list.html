@@ -65,7 +65,7 @@
     {{ $inStockItems := where .Params.items "inStock" true }}
     {{ $previewItems := first 6 (cond (gt (len $inStockItems) 0) $inStockItems .Params.items) }}
     {{ $moreCount := sub (len .Params.items) (len $previewItems) }}
-    {{/* NOTE: coord-chip's map link is an <a> — never pass "season" here, the
+    {{/* NOTE: coord-chip's map link is an <a>  never pass "season" here, the
          card itself is an <a>, and nested anchors get silently split apart
          by the browser's HTML parser (that was the broken-card bug). */}}
     <a href="{{ .RelPermalink }}" data-search="{{ lower (printf "%s %s %s %s %s" .Title .Params.owners .Params.summary .Params.loc (delimit $itemNames " ")) }}"

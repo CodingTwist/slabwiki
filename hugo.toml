@@ -11,6 +11,10 @@ enableGitInfo = false
   shopsCsvUrl = 'https://docs.google.com/spreadsheets/d/1tVqO1Z_EbCM7iZ2kseCXIA_iDk-8j-BJTWPxvY4lG3Q/export?format=csv&gid=758267300'
   # Same spreadsheet, "Items" sheet: one row per item a shop has for sale.
   itemsCsvUrl = 'https://docs.google.com/spreadsheets/d/1tVqO1Z_EbCM7iZ2kseCXIA_iDk-8j-BJTWPxvY4lG3Q/export?format=csv&gid=1606177661'
+  # Same spreadsheet, "Tunnels" sheet: one row per nether-hub tunnel portal.
+  tunnelsCsvUrl = 'https://docs.google.com/spreadsheets/d/1tVqO1Z_EbCM7iZ2kseCXIA_iDk-8j-BJTWPxvY4lG3Q/export?format=csv&gid=426731592'
+  # Same spreadsheet, "Public Resources" sheet: public/semi-public farms and setups.
+  publicResourcesCsvUrl = 'https://docs.google.com/spreadsheets/d/1tVqO1Z_EbCM7iZ2kseCXIA_iDk-8j-BJTWPxvY4lG3Q/export?format=csv&gid=2012835751'
   currentSeason = 'Season 4'
   # Minecraft server address for the live sidebar status panel (mcsrvstat.us).
   serverAddress = 'slabserver.org'

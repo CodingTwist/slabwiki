@@ -8,12 +8,14 @@
 {{ range $seasonPage.RegularPagesRecursive }}
   {{ $page := . }}
   {{ $coord := "" }}
+  {{ $world := "" }}
   {{ with $page.Params.loc }}{{ $coord = . }}{{ end }}
-  {{ with $page.Params.infobox }}{{ with .Coordinates }}{{ $coord = . }}{{ end }}{{ end }}
+  {{ with $page.Params.infobox }}{{ with .Coordinates }}{{ $coord = . }}{{ end }}{{ with .World }}{{ $world = . }}{{ end }}{{ end }}
   {{ with $coord }}
     {{ $xz := partial "coord-xz.html" . }}
     {{ with $xz.x }}
-      {{ $markers = $markers | append (dict "t" $page.Title "u" $page.RelPermalink "x" $xz.x "z" $xz.z) }}
+      {{ $dim := partial "dimension-key.html" $world }}
+      {{ $markers = $markers | append (dict "t" $page.Title "u" $page.RelPermalink "x" $xz.x "z" $xz.z "d" $dim) }}
     {{ end }}
   {{ end }}
 {{ end }}

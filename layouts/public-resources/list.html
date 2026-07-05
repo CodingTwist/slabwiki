@@ -1,0 +1,122 @@
+{{ define "main" }}
+{{/* Public/semi-public farms & setups directory, fetched live from the sheet CSV.
+     Flat card grid, no sub-pages - each row is a resource, not an article. */}}
+{{ $rows := slice }}
+{{ $fetchErr := "" }}
+{{ $types := slice }}
+{{ with try (resources.GetRemote site.Params.publicResourcesCsvUrl) }}
+  {{ with .Err }}
+    {{ $fetchErr = . }}
+  {{ else with .Value }}
+    {{ $csv := transform.Unmarshal (dict "delimiter" ",") .Content }}
+    {{ $header := index $csv 0 }}
+    {{ $idx := dict }}
+    {{ range $i, $h := $header }}{{ $idx = merge $idx (dict (lower (trim $h " ")) $i) }}{{ end }}
+    {{ range after 1 $csv }}
+      {{ $name := trim (index . (index $idx "location name")) " " }}
+      {{ if $name }}
+        {{ $state := trim (index . (index $idx "state")) " " }}
+        {{ $usage := trim (index . (index $idx "usage method")) " " }}
+        {{ $type  := trim (index . (index $idx "type")) " " }}
+        {{ $items := trim (index . (index $idx "items")) " " }}
+        {{ $info  := trim (index . (index $idx "more info")) " " }}
+        {{ $loc   := trim (index . (index $idx "location")) " " }}
+        {{ $rows = $rows | append (dict
+          "name" $name "state" $state "usage" $usage "type" $type
+          "items" $items "info" $info "loc" $loc
+        ) }}
+        {{ if and $type (not (in $types $type)) }}{{ $types = $types | append $type }}{{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ $types = sort $types }}
+
+<div class="page-sheet px-6 sm:px-8 py-8">
+  <div class="mb-5">
+    <span class="pixel-label text-gold">{{ .Site.Params.currentSeason }} · {{ len $rows }} resources</span>
+    <h1 class="pixel text-[26px] md:text-[30px] mt-1.5">{{ .Title }}</h1>
+    {{ with .Description }}<p class="text-muted text-sm mt-1.5">{{ . }}</p>{{ end }}
+    <div class="stripe-divider mt-4"></div>
+  </div>
+
+  {{ if $fetchErr }}
+  <p class="text-muted text-sm">The public resources directory couldn't be fetched right now. Try again shortly.</p>
+  {{ else if not $rows }}
+  <p class="text-muted text-sm">No resources in the sheet yet.</p>
+  {{ else }}
+
+  <div class="flex flex-wrap items-center gap-3 mb-5">
+    <label class="flex items-center gap-2 mc-input !w-auto flex-1 min-w-[220px] focus-within:border-grass">
+      {{ partial "mc-icon.html" "beacon" }}
+      <input id="pr-search" type="search" placeholder="Search resources, items, locations…" autocomplete="off"
+             class="w-full bg-transparent outline-none text-sm text-fg placeholder:text-muted">
+    </label>
+    {{ if gt (len $types) 1 }}
+    <select id="pr-type" class="mc-input !w-auto text-sm">
+      <option value="">All types</option>
+      {{ range $types }}<option value="{{ lower . }}">{{ . }}</option>{{ end }}
+    </select>
+    {{ end }}
+    <span class="text-sm text-faint"><span id="pr-count">{{ len $rows }}</span> shown</span>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4" id="pr-grid">
+    {{ range sort $rows "name" }}
+    <div class="mc-card flex flex-col gap-2 p-3.5" data-type="{{ lower .type }}"
+         data-search="{{ lower (printf "%s %s %s %s %s" .name .items .loc .usage .type) }}">
+      <div class="flex items-start justify-between gap-2">
+        <h3 class="pixel text-[12px] uppercase text-fg leading-snug">{{ .name }}</h3>
+        {{ with .state }}
+        <span class="mc-badge {{ if in (lower .) "semi" }}mc-badge-gold{{ else }}mc-badge-grass{{ end }} shrink-0 whitespace-nowrap">{{ . }}</span>
+        {{ end }}
+      </div>
+      <div class="flex flex-wrap items-center gap-1.5">
+        {{ with .type }}<span class="chip">{{ . }}</span>{{ end }}
+        {{ with .usage }}<span class="chip">{{ . }}</span>{{ end }}
+      </div>
+      {{ with .items }}<p class="text-sm text-muted">{{ . }}</p>{{ end }}
+      <div class="flex flex-wrap items-center gap-1.5 mt-auto pt-1">
+        {{ with .loc }}<span class="inline-flex items-center gap-1.5 text-xs text-faint">{{ partial "mc-icon.html" "compass" }}{{ . }}</span>{{ end }}
+        {{ with .info }}<a href="{{ . }}" target="_blank" rel="noopener" class="chip">More info ↗</a>{{ end }}
+      </div>
+    </div>
+    {{ end }}
+  </div>
+  <p class="text-muted mt-6 hidden" id="no-results">No resources match your search.</p>
+  {{ end }}
+</div>
+
+<script>
+(function () {
+  var input = document.getElementById('pr-search');
+  if (!input) return;
+  var typeSel = document.getElementById('pr-type');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('#pr-grid > div'));
+  var countEl = document.getElementById('pr-count');
+  var empty = document.getElementById('no-results');
+
+  function apply() {
+    var q = input.value.trim().toLowerCase();
+    var t = typeSel ? typeSel.value : '';
+    var shown = 0;
+    cards.forEach(function (c) {
+      var hit = (!q || c.getAttribute('data-search').indexOf(q) !== -1) &&
+                (!t || c.getAttribute('data-type') === t);
+      c.style.display = hit ? '' : 'none';
+      if (hit) shown++;
+    });
+    countEl.textContent = shown;
+    empty.classList.toggle('hidden', !!shown);
+  }
+
+  var initialQ = new URLSearchParams(location.search).get('q');
+  if (initialQ) {
+    input.value = initialQ;
+  }
+  input.addEventListener('input', apply);
+  if (typeSel) typeSel.addEventListener('change', apply);
+  apply();
+})();
+</script>
+{{ end }}

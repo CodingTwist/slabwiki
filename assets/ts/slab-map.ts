@@ -5,14 +5,15 @@
 // (overworld / nether / end) that share a base name with `_nether` /
 // `_the_end` suffixes. CRS.Simple maps a Minecraft world coordinate (x, z)
 // 1:1 onto Leaflet's (lng, lat).
+type Dimension = 'overworld' | 'nether' | 'the_end';
+
 interface SlabMapMarker {
   t: string; // title
   u: string; // link (page URL)
   x: number;
   z: number;
+  d?: Dimension; // dimension the marker's location is in, defaults to overworld
 }
-
-type Dimension = 'overworld' | 'nether' | 'the_end';
 
 const DIMENSION_SUFFIX: Record<Dimension, string> = {
   overworld: '',
@@ -24,6 +25,12 @@ const DIMENSION_LABEL: Record<Dimension, string> = {
   overworld: 'Overworld',
   nether: 'Nether',
   the_end: 'The End',
+};
+
+const DIMENSION_ICON: Record<Dimension, string> = {
+  overworld: 'grass-block',
+  nether: 'netherrack',
+  the_end: 'end-stone',
 };
 
 const SCALE_FACTOR = 0.0625; // matches Pl3xMap's default world-to-pixel ratio
@@ -47,6 +54,15 @@ function initMap(el: HTMLElement): void {
   const params = new URLSearchParams(window.location.search);
   const qx = params.has('x') ? Number(params.get('x')) : null;
   const qz = params.has('z') ? Number(params.get('z')) : null;
+
+  const isDimension = (v: string | null): v is Dimension =>
+    v === 'overworld' || v === 'nether' || v === 'the_end';
+  const qDim = params.get('dim');
+  const initialDim: Dimension = isDimension(qDim)
+    ? qDim
+    : isDimension(el.dataset.dim ?? null)
+      ? (el.dataset.dim as Dimension)
+      : 'overworld';
 
   const focusAttr = el.dataset.focus;
   const [fx, fz] = focusAttr ? focusAttr.split(',').map(Number) : [NaN, NaN];
@@ -76,6 +92,7 @@ function initMap(el: HTMLElement): void {
     `${tilesBase}/${encodeURIComponent(world + DIMENSION_SUFFIX[dim])}/{z}/vanilla/{x}_{y}.png`;
 
   let currentLayer: L.TileLayer | null = null;
+  let markerLayer: L.LayerGroup | null = null;
   function setDimension(dim: Dimension): void {
     if (currentLayer) map.removeLayer(currentLayer);
     currentLayer = L.tileLayer(tileUrl(dim), {
@@ -89,8 +106,22 @@ function initMap(el: HTMLElement): void {
       tms: true,
       attribution: '<a href="https://modrinth.com/plugin/pl3xmap/">Pl3xMap</a>',
     }).addTo(map);
+
+    if (markerLayer) map.removeLayer(markerLayer);
+    markerLayer = L.layerGroup(
+      markers
+        .filter((m) => (m.d ?? 'overworld') === dim)
+        .map((m) => {
+          const marker = L.marker(worldToLatLng(m.x, m.z));
+          if (!mini) {
+            const label = m.u ? `<a href="${m.u}">${m.t}</a>` : m.t;
+            marker.bindPopup(`${label}<br><span class="text-faint">${m.x}, ${m.z}</span>`);
+          }
+          return marker;
+        }),
+    ).addTo(map);
   }
-  setDimension('overworld');
+  setDimension(initialDim);
 
   L.control.scale({ imperial: false }).addTo(map);
 
@@ -102,8 +133,12 @@ function initMap(el: HTMLElement): void {
         (Object.keys(DIMENSION_SUFFIX) as Dimension[]).forEach((dim) => {
           const btn = L.DomUtil.create('a', '', wrap);
           btn.href = '#';
-          btn.textContent = DIMENSION_LABEL[dim];
-          if (dim === 'overworld') btn.classList.add('active');
+          btn.title = DIMENSION_LABEL[dim];
+          L.DomUtil.create('span', `icon-minecraft icon-minecraft-${DIMENSION_ICON[dim]}`, btn).setAttribute(
+            'aria-hidden',
+            'true',
+          );
+          if (dim === initialDim) btn.classList.add('active');
           L.DomEvent.on(btn, 'click', (e: Event) => {
             L.DomEvent.preventDefault(e);
             wrap.querySelectorAll('a').forEach((a) => a.classList.remove('active'));
@@ -117,22 +152,16 @@ function initMap(el: HTMLElement): void {
     new DimensionControl({ position: 'topright' }).addTo(map);
   }
 
-  markers.forEach((m) => {
-    const marker = L.marker(worldToLatLng(m.x, m.z)).addTo(map);
-    if (!mini) {
-      const label = m.u ? `<a href="${m.u}">${m.t}</a>` : m.t;
-      marker.bindPopup(`${label}<br><span class="text-faint">${m.x}, ${m.z}</span>`);
-    }
-  });
-
   // getBoundsZoom degenerates to maxZoom if the container is still
   // display:none (e.g. a collapsed toggle) when this runs, since it measures
   // a 0x0 viewport - only autofit once the container has real dimensions.
   function applyAutofit(): void {
-    if (!autofit || qx !== null || !markers.length) return;
+    if (!autofit || qx !== null) return;
+    const dimMarkers = markers.filter((m) => (m.d ?? 'overworld') === initialDim);
+    if (!dimMarkers.length) return;
     map.stop();
     map.invalidateSize({ animate: false });
-    const bounds = L.latLngBounds(markers.map((m) => worldToLatLng(m.x, m.z)));
+    const bounds = L.latLngBounds(dimMarkers.map((m) => worldToLatLng(m.x, m.z)));
     map.fitBounds(bounds, { padding: [4, 4], animate: false });
   }
 

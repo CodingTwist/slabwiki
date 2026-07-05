@@ -1,15 +1,17 @@
-{{- /* ctx: dict "coord" <"x y z" or "x z" string> "season" <season key from data/maps.yaml> "title" <optional marker label> */ -}}
+{{- /* ctx: dict "coord" <"x y z" or "x z" string> "season" <season key from data/maps.yaml>
+     "title" <optional marker label> "world" <optional World string, e.g. "Nether"> */ -}}
 {{- $coord := .coord -}}
 {{- $season := .season -}}
 {{- $title := .title | default "Location" -}}
+{{- $dim := partial "dimension-key.html" .world -}}
 {{- with $season -}}
 {{- $xz := partial "coord-xz.html" $coord -}}
 {{- with $xz.x -}}
 {{- $mapCfg := index (index hugo.Data.maps "seasons") $season -}}
 {{- with $mapCfg -}}
 <div class="border-t-4 border-line">
-  {{ partial "slab-map.html" (dict "cfg" . "markers" (slice (dict "t" $title "u" "" "x" $xz.x "z" $xz.z)) "id" (printf "loc-map-%s" (md5 (printf "%s-%v-%v" $season $xz.x $xz.z))) "height" "160px" "mini" true "focus" $xz) }}
-  <a href="{{ printf "/survival/%s/map/?x=%v&z=%v" $season $xz.x $xz.z | relURL }}" class="block text-center text-[11px] text-faint py-1.5 hover:text-fg no-underline">Open full map ↗</a>
+  {{ partial "slab-map.html" (dict "cfg" . "markers" (slice (dict "t" $title "u" "" "x" $xz.x "z" $xz.z "d" $dim)) "id" (printf "loc-map-%s" (md5 (printf "%s-%v-%v" $season $xz.x $xz.z))) "height" "160px" "mini" true "focus" $xz "dim" $dim) }}
+  <a href="{{ printf "/survival/%s/map/?x=%v&z=%v&dim=%s" $season $xz.x $xz.z $dim | relURL }}" class="block text-center text-[11px] text-faint py-1.5 hover:text-fg no-underline">Open full map ↗</a>
 </div>
 {{ end }}
 {{ end }}

@@ -25,5 +25,5 @@
       {{ end }}
     {{ end }}
   </dl>
-  {{ with $coordVal }}{{ partial "location-map.html" (dict "coord" . "season" $season "title" $title) }}{{ end }}
+  {{ with $coordVal }}{{ partial "location-map.html" (dict "coord" . "season" $season "title" $title "world" $box.World) }}{{ end }}
 </div>

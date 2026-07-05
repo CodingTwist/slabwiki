@@ -1,8 +1,6 @@
 ---
 title: Tunnels
+type: tunnels
 icon: rail
-description: The Survival tunnel network - destinations, coordinates and links. Synced from the live directory sheet (coming soon).
+description: Every portal off the nether hub tunnels - destination, side, distance and notes. Synced from the live directory sheet.
 ---
-The tunnel directory isn't wired up yet. Like the shops list, it will be synced
-from the live directory spreadsheet - destinations, coordinates and who to thank
-for digging. Check back once it's connected.

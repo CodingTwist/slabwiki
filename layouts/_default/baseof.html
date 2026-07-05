@@ -91,12 +91,6 @@
   {{/*  Footer strip (full width)  */}}
   <footer class="bg-surface-2 border-t-[3px] border-line">
     <div class="px-4 sm:px-6 py-3.5 flex flex-wrap items-center gap-x-3 gap-y-1">
-      <span class="pixel-label text-[8px] text-wood-l">Slabserver wiki</span>
-      <span class="text-xs text-muted">· © {{ now.Year }} Slabserver community · Companion archive to <a class="text-grass-hi no-underline hover:underline" href="https://slabserver.org/">slabserver.org</a></span>
-      <a href="{{ "/server-info" | relURL }}" class="text-xs text-grass-hi no-underline hover:underline">Server Info</a>
-      <span class="ml-auto text-xs text-muted">Shops synced from the live directory sheet</span>
-    </div>
-    <div class="px-4 sm:px-6 pb-3.5 border-t border-line/40 pt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
       <span class="text-[11px] text-muted">Not affiliated with Mojang Studios or Microsoft. Minecraft is a trademark of Mojang Synergies AB.</span>
       <span class="ml-auto text-[11px] text-muted">Built with <a class="text-grass-hi no-underline hover:underline" href="https://gohugo.io/">Hugo</a> &amp; <a class="text-grass-hi no-underline hover:underline" href="https://tailwindcss.com/">Tailwind CSS</a> · Fonts: <a class="text-grass-hi no-underline hover:underline" href="https://fonts.google.com/specimen/Silkscreen">Silkscreen</a> &amp; <a class="text-grass-hi no-underline hover:underline" href="https://fonts.google.com/specimen/Nunito+Sans">Nunito Sans</a> via Google Fonts</span>
     </div>
@@ -149,5 +143,12 @@
     setTimeout(function(){ c.classList.remove('copied'); }, 1200);
   });
   </script>
+
+  {{/*  Leaflet + slab-map.js, loaded once here (not per slab-map.html call)
+        so a page with multiple maps (e.g. several infoboxes) only runs
+        slab-map.js's init pass once, after every .slab-map div exists.  */}}
+  <link rel="stylesheet" href="{{ "vendor/leaflet/leaflet.css" | relURL }}">
+  <script src="{{ "vendor/leaflet/leaflet.js" | relURL }}"></script>
+  <script src="{{ "js/slab-map.js" | relURL }}"></script>
 </body>
 </html>

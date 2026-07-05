@@ -1,0 +1,138 @@
+{{ define "main" }}
+{{/* Nether hub tunnel directory, fetched live from the published sheet CSV.
+     No sub-pages here (a tunnel entry is a table row, not an article) -
+     the whole thing renders straight off the fetch, like shops but flatter. */}}
+{{ $rows := slice }}
+{{ $fetchErr := "" }}
+{{ with try (resources.GetRemote site.Params.tunnelsCsvUrl) }}
+  {{ with .Err }}
+    {{ $fetchErr = . }}
+  {{ else with .Value }}
+    {{ $csv := transform.Unmarshal (dict "delimiter" ",") .Content }}
+    {{ $header := index $csv 0 }}
+    {{ $idx := dict }}
+    {{ range $i, $h := $header }}{{ $idx = merge $idx (dict (lower (trim $h " \n")) $i) }}{{ end }}
+    {{ range after 1 $csv }}
+      {{ $dest := trim (index . (index $idx "destination")) " " }}
+      {{ if $dest }}
+        {{ $tunnel   := lower (trim (index . (index $idx "tunnel")) " ") }}
+        {{ $side     := lower (trim (index . (index $idx "direction")) " ") }}
+        {{ $distance := trim (index . (index $idx "distance from hub")) " " }}
+        {{ $owners   := trim (index . (index $idx "owners\n(optional)")) " " }}
+        {{ $loc      := trim (index . (index $idx "location\n(optional)")) " " }}
+        {{ $notes    := trim (index . (index $idx "notes")) " " }}
+        {{ $updated  := trim (index . (index $idx "review notes")) " " }}
+        {{ $rows = $rows | append (dict
+          "dest" $dest "tunnel" $tunnel "side" $side "distance" (int (default "0" $distance))
+          "owners" $owners "loc" $loc "notes" $notes "updated" $updated
+        ) }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ $directions := slice "north" "east" "south" "west" }}
+<div class="page-sheet px-6 sm:px-8 py-8">
+  <div class="mb-5">
+    <span class="pixel-label text-gold">{{ .Site.Params.currentSeason }} · {{ len $rows }} portals</span>
+    <h1 class="pixel text-[26px] md:text-[30px] mt-1.5">{{ .Title }}</h1>
+    {{ with .Description }}<p class="text-muted text-sm mt-1.5">{{ . }}</p>{{ end }}
+    <div class="stripe-divider mt-4"></div>
+  </div>
+
+  {{ if $fetchErr }}
+  <p class="text-muted text-sm">The tunnel directory couldn't be fetched right now. Try again shortly.</p>
+  {{ else if not $rows }}
+  <p class="text-muted text-sm">No tunnels in the sheet yet.</p>
+  {{ else }}
+
+  <div class="flex flex-wrap items-center gap-3 mb-5">
+    <label class="flex items-center gap-2 mc-input !w-auto flex-1 min-w-[220px] focus-within:border-grass">
+      {{ partial "mc-icon.html" "compass" }}
+      <input id="tunnel-search" type="search" placeholder="Search destinations, owners, notes…" autocomplete="off"
+             class="w-full bg-transparent outline-none text-sm text-fg placeholder:text-muted">
+    </label>
+    <span class="text-sm text-faint"><span id="tunnel-count">{{ len $rows }}</span> shown</span>
+  </div>
+
+  {{ range $directions }}
+  {{ $dir := . }}
+  {{ $group := where $rows "tunnel" $dir }}
+  {{ if $group }}
+  {{ $group = sort $group "distance" "asc" }}
+  <div class="mc-panel mb-5 overflow-hidden" data-tunnel-group>
+    <div class="pixel bg-wood text-white text-[12px] px-3.5 py-3 border-b-4 border-line uppercase flex items-center gap-2 [text-shadow:2px_2px_0_rgb(0_0_0/0.3)]">
+      {{ partial "mc-icon.html" "rail" }} {{ title $dir }} tunnel <span class="opacity-70 normal-case font-normal">· {{ len $group }}</span>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b-2 border-rowline text-left text-faint uppercase text-[11px]">
+            <th class="px-3 py-2 whitespace-nowrap">Dist.</th>
+            <th class="px-3 py-2 whitespace-nowrap">Side</th>
+            <th class="px-3 py-2">Destination</th>
+            <th class="px-3 py-2">Owners</th>
+            <th class="px-3 py-2">Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ range $group }}
+          <tr class="border-b border-rowline last:border-b-0 hover:bg-surface-2 tunnel-row"
+              data-search="{{ lower (printf "%s %s %s" .dest .owners .notes) }}">
+            <td class="px-3 py-2 whitespace-nowrap text-faint">{{ .distance }}</td>
+            <td class="px-3 py-2 whitespace-nowrap">
+              {{ if eq .side "left" }}<span class="chip">◂ left</span>
+              {{ else if eq .side "right" }}<span class="chip">right ▸</span>
+              {{ else }}<span class="text-faint"></span>{{ end }}
+            </td>
+            <td class="px-3 py-2 text-fg">{{ .dest }}{{ with .loc }} <span class="text-faint text-xs">({{ . }})</span>{{ end }}</td>
+            <td class="px-3 py-2 text-muted">{{ with .owners }}{{ partial "playerheads.html" . }}{{ else }}<span class="text-faint"></span>{{ end }}</td>
+            <td class="px-3 py-2 text-muted">{{ with .notes }}{{ . }}{{ else }}<span class="text-faint"></span>{{ end }}</td>
+          </tr>
+          {{ end }}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {{ end }}
+  {{ end }}
+  <p class="text-muted mt-2 hidden" id="no-results">No tunnels match your search.</p>
+  {{ end }}
+</div>
+
+<script>
+(function () {
+  var input = document.getElementById('tunnel-search');
+  if (!input) return;
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.tunnel-row'));
+  var groups = Array.prototype.slice.call(document.querySelectorAll('[data-tunnel-group]'));
+  var countEl = document.getElementById('tunnel-count');
+  var empty = document.getElementById('no-results');
+
+  function apply() {
+    var q = input.value.trim().toLowerCase();
+    var shown = 0;
+    rows.forEach(function (r) {
+      var hit = !q || r.getAttribute('data-search').indexOf(q) !== -1;
+      r.style.display = hit ? '' : 'none';
+      if (hit) shown++;
+    });
+    groups.forEach(function (g) {
+      var anyVisible = Array.prototype.slice.call(g.querySelectorAll('.tunnel-row')).some(function (r) {
+        return r.style.display !== 'none';
+      });
+      g.style.display = anyVisible ? '' : 'none';
+    });
+    countEl.textContent = shown;
+    empty.classList.toggle('hidden', !!shown);
+  }
+
+  var initialQ = new URLSearchParams(location.search).get('q');
+  if (initialQ) {
+    input.value = initialQ;
+    apply();
+  }
+  input.addEventListener('input', apply);
+})();
+</script>
+{{ end }}

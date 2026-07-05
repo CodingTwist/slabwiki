@@ -1,12 +1,18 @@
-{{- /* ctx: dict "cfg" <data/maps.yaml season entry> "markers" <slice of dict title/url/x/z>
+{{- /* ctx: dict "cfg" <data/maps.yaml season entry> "markers" <slice of dict title/url/x/z/d>
      "id" <optional dom id> "height" <optional css height> "autofit" <bool, fit view to
      markers instead of cfg center/zoom> "mini" <bool, small non-interactive preview>
-     "focus" <dict x/z, single point the mini preview centers on> */ -}}
+     "focus" <dict x/z, single point the mini preview centers on> "dim" <optional initial
+     dimension key: overworld/nether/the_end, defaults to overworld> */ -}}
 {{- $cfg := .cfg -}}
 {{- $markers := .markers | default slice -}}
 {{- $id := .id | default "slab-map" -}}
 {{- $mini := .mini | default false -}}
-<link rel="stylesheet" href="{{ "vendor/leaflet/leaflet.css" | relURL }}">
+{{/* leaflet.css/js and slab-map.js are loaded once from baseof.html, not
+     here - a page can render several maps (e.g. multiple infoboxes), and
+     re-including the scripts per map re-runs slab-map.js's
+     querySelectorAll('.slab-map').forEach(initMap) over already-initialized
+     divs, which throws "Map container is already initialized" and leaves
+     later maps on the page uninitialized. */}}
 <div id="{{ $id }}" class="slab-map{{ if $mini }} slab-map-mini{{ end }}"
      {{ with .height }}style="height:{{ . }}"{{ end }}
      data-tiles-base="{{ $cfg.tilesBase }}"
@@ -14,9 +20,8 @@
      data-center="{{ replace ($cfg.center | default "0 0") " " "," }}"
      data-zoom="{{ $cfg.zoom | default 4 }}"
      data-detail-zoom="{{ $cfg.detailZoom | default 7 }}"
+     data-dim="{{ .dim | default "overworld" }}"
      {{ if $mini }}data-mini="true"{{ end }}
      {{ if .autofit }}data-autofit="true"{{ end }}
      {{ with .focus }}data-focus="{{ .x }},{{ .z }}"{{ end }}
      data-markers='{{ jsonify $markers }}'></div>
-<script src="{{ "vendor/leaflet/leaflet.js" | relURL }}"></script>
-<script src="{{ "js/slab-map.js" | relURL }}"></script>

@@ -66,6 +66,7 @@
         {{/*  Main panel: page title + page-level infobox + section nav.  */}}
         <div class="mc-panel overflow-hidden">
           <div class="pixel bg-wood text-white text-center text-[12px] px-2.5 py-3 border-b-4 border-line [text-shadow:2px_2px_0_rgb(0_0_0/0.3)] uppercase">{{ .Title }}</div>
+          {{ $infoboxCoord := "" }}
           {{ with .Params.infobox }}
           {{ with .image }}
           <div class="relative border-b-4 border-line">
@@ -79,7 +80,7 @@
               <div class="flex justify-between gap-2 px-3.5 py-2 border-b-2 border-rowline last:border-b-0">
                 <dt class="text-wood-l font-bold shrink-0">{{ $k | humanize | title }}</dt>
                 <dd class="text-fg font-bold text-right min-w-0 [overflow-wrap:anywhere]">
-                  {{ if eq (lower $k) "coordinates" }}{{ partial "coord-chip.html" (dict "coord" $v "season" $seasonKey) }}
+                  {{ if eq (lower $k) "coordinates" }}{{ partial "coord-chip.html" (dict "coord" $v "season" $seasonKey) }}{{ $infoboxCoord = $v }}
                   {{ else if in (slice "builders" "designers" "owners") (lower $k) }}{{ partial "playerheads.html" $v }}
                   {{ else }}{{ $v }}{{ end }}
                 </dd>
@@ -87,6 +88,7 @@
               {{ end }}
             {{ end }}
           </dl>
+          {{ with $infoboxCoord }}{{ partial "location-map.html" (dict "coord" . "season" $seasonKey "title" $.Title "world" $.Params.infobox.World) }}{{ end }}
           {{ end }}
 
           {{ if $isCat }}
