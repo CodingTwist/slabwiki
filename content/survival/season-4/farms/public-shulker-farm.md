@@ -1,7 +1,5 @@
 ---
 title: 'Public Shulker Farm'
-aliases: ['/articles/public-shulker-farm/']
-description: 'The public shulker farm is designed for AFK farming and once the lever in the AFK box is activated it requires no further interaction, other than ensuring that it is turned off at'
 infobox:
   image: '/images/articles/shulker-farm3.png'
   Status: 'Complete'

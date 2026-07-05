@@ -1,7 +1,5 @@
 ---
 title: 'Public Iron Farm'
-aliases: ['/articles/public-iron-farm/']
-description: 'This public iron farm requires no interaction from the player and while it is a safe place to AFK, it often contains enough iron for a player to grab what they need upon arrival. A'
 infobox:
   image: '/images/articles/iron-farm2.png'
   Status: 'Complete'

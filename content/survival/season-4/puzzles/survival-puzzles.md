@@ -1,7 +1,5 @@
 ---
 title: 'Survival Puzzles'
-aliases: ['/articles/survival-puzzles/']
-description: 'DaUltraTrilogy'
 ---
 # DaUltraTrilogy
 
@@ -55,7 +53,7 @@ description: 'DaUltraTrilogy'
 
 <div class="card-image-container">
 
-`    `![`Passage_ARG_Artwork.png`](Passage_ARG_Artwork.png "Passage_ARG_Artwork.png")
+`    `![`Passage_ARG_Artwork.png`](/images/articles/passage-arg-artwork.png "Passage_ARG_Artwork.png")
 
 </div>
 

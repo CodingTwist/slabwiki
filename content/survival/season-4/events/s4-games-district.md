@@ -1,6 +1,5 @@
 ---
 title: 'S4 Games District'
-aliases: ['/articles/s4-games-district/']
 infobox:
   Status: 'Building'
   Builders: '8138763, ClockworksHero'

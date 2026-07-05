@@ -1,7 +1,5 @@
 ---
 title: 'S4Spawn'
-aliases: ['/articles/s4spawn/']
-description: 'Spawn is the first thing you seen once you login so it needed to be grand. Designed over the course of many months by numerous players, creating a work of art.'
 infobox:
   image: '/images/articles/s4spawn.png'
   Status: 'Building'

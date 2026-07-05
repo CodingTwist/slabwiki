@@ -1,6 +1,5 @@
 ---
 title: Season 3
-aliases: ['/seasons/season-3/']
 weight: 3
 completed: '2025-04-21'
 dates: 'ended Apr 2025'

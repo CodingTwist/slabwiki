@@ -1,7 +1,5 @@
 ---
 title: 'S4Spawn/Storage'
-aliases: ['/articles/s4spawn-storage/']
-description: 'Spawn storage is a community storage. Built to assist with building the Spawn and Nether Hub. The build was done by and the filter item were collected by , , , and . !Storage built'
 infobox:
   image: '/images/articles/spawn-storage.png'
   Status: 'Complete'
@@ -13,143 +11,45 @@ infobox:
   Type: 'community project'
   Coordinates: '-143 -39'
 ---
-Spawn storage is a community storage. Built to assist with building the Spawn and Nether Hub. The build was done by and the filter item were collected by , , , and . ![Storage built before spawn](Spawn_Storage_Survival.png "Storage built before spawn")
+Spawn storage is a community storage. Built to assist with building the Spawn and Nether Hub. The build was done by {{< playerhead "GamingTwist" >}} and the filter item were collected by {{< playerhead "marbou9" >}}, {{< playerhead "NerdCatBuilds" >}}, {{< playerhead "GamingTwist" >}}, {{< playerhead "_P0ny" >}} and {{< playerhead "Maketues" >}}. ![Storage built before spawn](/images/articles/spawn-storage-survival.png "Storage built before spawn")
 
 ## Design
 
-![Storage on the design server](Copper_Spawn_Storage.png "Storage on the design server") This design is by and who have made a incredible storage room Called [J-M-IS](https://www.youtube.com/watch?v=q05hMTvzzH0).T his design was chosen for its simplicity and ease of repair in case of any issues, which aligns with the plan. converted it to copper blocks, due to it being positioned front and center of the server.
+![Storage on the design server](/images/articles/copper-spawn-storage.png "Storage on the design server") This design is by {{< playerhead "JayRoi" >}} and {{< playerhead "MoonyInspired" >}} who have made a incredible storage room Called [J-M-IS](https://www.youtube.com/watch?v=q05hMTvzzH0).T his design was chosen for its simplicity and ease of repair in case of any issues, which aligns with the plan. {{< playerhead "GamingTwist" >}} converted it to copper blocks, due to it being positioned front and center of the server.
 
 ## Categories
 
 Here listed is the item sets for the multi item sorter
 
-<table>
-<thead>
-<tr>
-<th><p>Display Block</p></th>
-<th><p>List of Items Inside</p></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td><p>Chest, Furnace, Soul Campfire, Damaged Anvil, Lodestone, Smoker, Composter, Shears, Ender Chest, Loom, Fletching Table, Grindstone, Redstone Lamp, Chiseled Bookshelf, Campfire, Blast Furnace, Note Block, Honey Block, Jukebox, Daylight Detector, Ladder, Block of Redstone, Anvil, Bookshelf, Lectern, Stonecutter, Beehive, Lightning Rod, Cauldron, Barrel, Crafting Table, Chipped Anvil, Scaffolding, Brewing Stand, Smithing Table, Cartography Table</p></td>
-</tr>
-<tr>
-<td></td>
-<td><p>Prismarine Stairs, Snowball, Prismarine, Fire Coral Block, Ice, Tube Coral, Bubble Coral, Dead Fire Coral Block, Dead Bubble Coral Fan, Dark Prismarine Stairs, Horn Coral, Shears, Dead Brain Coral, Dead Fire Coral, Dark Prismarine, Dead Fire Coral Fan, Fire Coral, Dead Horn Coral, Tube Coral Fan, Dead Tube Coral Fan, Dark Prismarine Slab, Prismarine Brick Stairs, Brain Coral, Brain Coral Block, Brain Coral Fan, Dead Horn Coral Block, Bubble Coral Fan, Horn Coral Fan, Snow, Dead Horn Coral Fan, Tube Coral Block, Dead Tube Coral, Bubble Coral Block, Prismarine Wall, Prismarine Slab, Packed Ice, Dead Bubble Coral Block, Dead Brain Coral Block, Dead Bubble Coral, Blue Ice, Sea Lantern, Dead Tube Coral Block, Snow Block, Fire Coral Fan, Horn Coral Block, Dead Brain Coral Fan, Prismarine Bricks, Prismarine Brick Slab</p></td>
-</tr>
-<tr>
-<td></td>
-<td><p>Purpur Slab, Cut Sandstone Slab, Red Sand, End Stone Brick Wall, Chorus Fruit, Popped Chorus Fruit, Sandstone Wall, Cut Sandstone, Smooth Sandstone Slab, Shears, Chorus Flower, Red Sandstone Wall, Smooth Sandstone Stairs, Sandstone Slab, Sandstone, Purpur Block, Cut Red Sandstone Slab, Cut Red Sandstone, Smooth Sandstone, Smooth Red Sandstone Slab, End Stone, Red Sandstone Slab, End Stone Brick Stairs, Purpur Pillar, End Rod, Smooth Red Sandstone, Smooth Red Sandstone Stairs, Chiseled Red Sandstone, End Stone Brick Slab, Purpur Stairs, Red Sandstone Stairs, Red Sandstone, Chiseled Sandstone, Sandstone Stairs, End Stone Bricks</p></td>
-</tr>
-<tr>
-<td><p>Oxidized Cut Copper</p></td>
-<td><p>Waxed Weathered Chiseled Copper, Waxed Copper Bulb, Waxed Oxidized Copper Bulb, Waxed Weathered Cut Copper Stairs, Waxed Weathered Copper Door, Shears, Waxed Copper Grate, Waxed Chiseled Copper, Waxed Oxidized Copper Trapdoor, Waxed Weathered Copper Trapdoor, Waxed Cut Copper, Waxed Exposed Chiseled Copper, Waxed Weathered Copper Grate, Waxed Oxidized Cut Copper Slab, Waxed Copper Trapdoor, Waxed Weathered Cut Copper, Waxed Oxidized Cut Copper Stairs, Waxed Oxidized Copper Door, Waxed Cut Copper Slab, Waxed Exposed Copper, Waxed Block of Copper, Waxed Oxidized Copper, Waxed Copper Door, Waxed Exposed Copper Grate, Waxed Exposed Cut Copper Stairs, Waxed Exposed Copper Door, Waxed Weathered Cut Copper Slab, Waxed Oxidized Copper Grate, Waxed Exposed Copper Bulb, Waxed Exposed Copper Trapdoor, Waxed Oxidized Cut Copper, Waxed Exposed Cut Copper Slab, Waxed Weathered Copper, Waxed Oxidized Chiseled Copper, Waxed Cut Copper Stairs, Waxed Exposed Cut Copper, Waxed Weathered Copper Bulb</p></td>
-</tr>
-<tr>
-<td><p>Polished Tuff</p></td>
-<td><p>Tuff Stairs, Polished Tuff, Polished Tuff Wall, Tuff Brick Wall, Chiseled Tuff, Tuff Wall, Tuff Brick Slab, Tuff Bricks, Shears, Polished Tuff Stairs, Chiseled Tuff Bricks, Tuff Brick Stairs, Tuff Slab, Polished Tuff Slab</p></td>
-</tr>
-<tr>
-<td><p>Polished Granite</p></td>
-<td><p>Granite Slab, Brick Stairs, Shears, Granite, Mud Brick Wall, Brick, Polished Granite Slab, Granite Stairs, Mud Brick Stairs, Packed Mud, Bricks, Clay Ball, Brick Wall, Mud Bricks, Brick Slab, Polished Granite, Mud Brick Slab, Clay, Granite Wall, Polished Granite Stairs</p></td>
-</tr>
-<tr>
-<td><p>Stone Bricks</p></td>
-<td><p>Shears, Chiseled Stone Bricks, Cracked Stone Bricks, Mossy Stone Bricks, Mossy Stone Brick Wall, Smooth Stone Slab, Cobblestone Stairs, Stone Stairs, Mossy Cobblestone Wall, Mossy Cobblestone Stairs, Stone Brick Wall, Mossy Cobblestone, Mossy Cobblestone Slab, Stone Brick Slab, Cobblestone Wall, Mossy Stone Brick Slab, Smooth Stone, Cobblestone Slab, Stone Slab, Stone Brick Stairs, Mossy Stone Brick Stairs, Stone Bricks</p></td>
-</tr>
-<tr>
-<td><p>Spruce Planks</p></td>
-<td><p>Spruce Door, Spruce Fence, Stripped Spruce Wood, Spruce Sapling, Spruce Trapdoor, Spruce Fence Gate, Shears, Spruce Planks, Spruce Sign, Spruce Hanging Sign, Spruce Pressure Plate, Spruce Wood, Spruce Leaves, Stripped Spruce Log, Spruce Stairs, Spruce Slab, Spruce Button</p></td>
-</tr>
-<tr>
-<td><p>Jungle Planks</p></td>
-<td><p>Jungle Slab, Stripped Jungle Wood, Jungle Wood, Stripped Jungle Log, Jungle Stairs, Jungle Door, Jungle Leaves, Jungle Hanging Sign, Jungle Fence Gate, Jungle Pressure Plate, Shears, Jungle Sign, Jungle Button, Jungle Sapling, Jungle Trapdoor, Jungle Planks, Jungle Fence</p></td>
-</tr>
-<tr>
-<td><p>Dark Oak Planks</p></td>
-<td><p>Dark Oak Pressure Plate, Dark Oak Fence Gate, Dark Oak Leaves, Dark Oak Button, Dark Oak Sapling, Dark Oak Hanging Sign, Stripped Dark Oak Log, Dark Oak Slab, Shears, Dark Oak Stairs, Dark Oak Door, Stripped Dark Oak Wood, Dark Oak Trapdoor, Dark Oak Fence, Dark Oak Wood, Dark Oak Planks, Dark Oak Sign</p></td>
-</tr>
-<tr>
-<td><p>Cherry Planks</p></td>
-<td><p>Cherry Planks, Cherry Sapling, Cherry Sign, Cherry Button, Cherry Fence Gate, Cherry Slab, Cherry Pressure Plate, Cherry Leaves, Cherry Trapdoor, Cherry Fence, Cherry Stairs, Cherry Wood, Cherry Hanging Sign, Stripped Cherry Wood, Shears, Stripped Cherry Log, Cherry Door</p></td>
-</tr>
-<tr>
-<td><p>Warped Planks</p></td>
-<td><p>Stripped Crimson Hyphae, Nether Wart Block, Warped Button, Shears, Warped Hanging Sign, Warped Trapdoor, Warped Fence Gate, Crimson Fence, Warped Fence, Crimson Door, Crimson Hyphae, Crimson Button, Warped Fungus, Crimson Hanging Sign, Crimson Pressure Plate, Warped Hyphae, Stripped Crimson Stem, Crimson Planks, Warped Planks, Warped Pressure Plate, Stripped Warped Stem, Crimson Fungus, Crimson Slab, Crimson Fence Gate, Crimson Sign, Crimson Trapdoor, Crimson Stairs, Warped Sign, Warped Slab, Warped Stairs, Warped Door, Stripped Warped Hyphae, Warped Wart Block</p></td>
-</tr>
-<tr>
-<td><p>White Concrete Powder</p></td>
-<td><p>Black Concrete Powder, Yellow Concrete Powder, Shears, White Concrete Powder, Blue Concrete, Lime Concrete Powder, Green Concrete Powder, Pink Concrete Powder, Pink Concrete, Gray Concrete Powder, Light Gray Concrete, Brown Concrete Powder, Light Blue Concrete Powder, Light Gray Concrete Powder, Yellow Concrete, Red Concrete Powder, Black Concrete, Brown Concrete, Purple Concrete, Red Concrete, Magenta Concrete, Cyan Concrete Powder, Gray Concrete, Lime Concrete, Orange Concrete Powder, Cyan Concrete, Orange Concrete, Green Concrete, Magenta Concrete Powder, Blue Concrete Powder, Light Blue Concrete, Purple Concrete Powder</p></td>
-</tr>
-<tr>
-<td><p>Tinted Glass</p></td>
-<td><p>Purple Stained Glass, Magenta Stained Glass, Blue Stained Glass, Brown Stained Glass Pane, Cyan Stained Glass Pane, Shears, Yellow Stained Glass, Orange Stained Glass, Purple Stained Glass Pane, Green Stained Glass Pane, Orange Stained Glass Pane, Gray Stained Glass Pane, Cyan Stained Glass, Pink Stained Glass, Light Blue Stained Glass Pane, Light Blue Stained Glass, Gray Stained Glass, Glass Pane, Green Stained Glass, Lime Stained Glass, Light Gray Stained Glass Pane, Magenta Stained Glass Pane, White Stained Glass, Red Stained Glass Pane, Red Stained Glass, Lime Stained Glass Pane, Yellow Stained Glass Pane, Pink Stained Glass Pane, White Stained Glass Pane, Light Gray Stained Glass, Blue Stained Glass Pane, Black Stained Glass, Brown Stained Glass, Tinted Glass, Black Stained Glass Pane</p></td>
-</tr>
-<tr>
-<td><p>Sculk Shrieker</p></td>
-<td><p>Iron Bars, Orange Candle, Glow Item Frame, Torch, Soul Lantern, Bucket, Chain, Purple Candle, Sponge, Shears, Blue Candle, Lead, Item Frame, Name Tag, Yellow Candle, Light Blue Candle, Stick, Light Gray Candle, Paper, Empty Map, White Candle, Lime Candle, Black Candle, Magenta Candle, Glass Bottle, Soul Torch, Lantern, Flower Pot, Clock, Wet Sponge, Cyan Candle, Compass, Green Candle, Brown Candle, Pink Candle, Gray Candle, Bowl, Book, Candle, Painting, Red Candle</p></td>
-</tr>
-<tr>
-<td><p>Honeycomb</p></td>
-<td><p>Slimeball, Leather, Bone Meal, Blaze Rod, Shears, Feather, String, Ochre Froglight, Verdant Froglight, Glow Ink Sac, Ghast Tear, Glowstone Dust, Bone, Honeycomb, Prismarine Crystals, Fire Charge, Ender Pearl, Egg, Phantom Membrane, Blaze Powder, Sugar, Rotten Flesh, Spectral Arrow, Magma Cream, Pearlescent Froglight, Spider Eye, Prismarine Shard, Bone Block, Arrow, Honeycomb Block</p></td>
-</tr>
-<tr>
-<td><p>Mushroom Block</p></td>
-<td><p>Kelp, Podzol, Mycelium, Short Grass, Shears, Mud, Spore Blossom, Sugar Cane, Melon, Red Mushroom, Jack o'Lantern, Mushroom Stem, Hanging Roots, Cocoa Beans, Flowering Azalea, Brown Mushroom Block, Lily Pad, Seagrass, Hay Bale, Fern, Dead Bush, Cactus, Moss Block, Bamboo, Flowering Azalea Leaves, Pumpkin, Brown Mushroom, Azalea Leaves, Pumpkin Seeds, Coarse Dirt, Melon Seeds, Red Mushroom Block, Sea Pickle, Rooted Dirt, Azalea, Small Dripleaf, Flint, Wheat Crops, Wheat Seeds, Beetroot Seeds, Carved Pumpkin, Big Dripleaf, Vines, Glow Lichen, Moss Carpet</p></td>
-</tr>
-<tr>
-<td><p>Quartz Block</p></td>
-<td><p>Smooth Quartz Slab, Polished Blackstone Brick Wall, Basalt, Polished Blackstone Slab, Polished Blackstone, Nether Sprouts, Chiseled Polished Blackstone, Soul Soil, Polished Blackstone Wall, Quartz Pillar, Polished Blackstone Stairs, Shears, Nether Brick Stairs, Nether Bricks, Gilded Blackstone, Glowstone, Polished Basalt, Cracked Nether Bricks, Red Nether Brick Wall, Soul Sand, Crimson Roots, Twisting Vines, Blackstone Wall, Block of Quartz, Blackstone, Red Nether Brick Stairs, Smooth Basalt, Chiseled Nether Bricks, Blackstone Slab, Polished Blackstone Brick Slab, Smooth Quartz Block, Weeping Vines, Warped Roots, Chiseled Quartz Block, Polished Blackstone Bricks, Cracked Polished Blackstone Bricks, Red Nether Bricks, Crimson Nylium, Shroomlight, Nether Brick, Nether Brick Fence, Blackstone Stairs, Warped Nylium, Crying Obsidian, Nether Wart, Quartz Stairs, Nether Brick Wall, Smooth Quartz Stairs, Polished Blackstone Brick Stairs, Magma Block, Red Nether Brick Slab, Nether Brick Slab, Quartz Slab, Quartz Bricks</p></td>
-</tr>
-<tr>
-<td><p>Deepslate Tiltes</p></td>
-<td><p>Polished Deepslate Stairs, Block of Amethyst, Sculk Vein, Deepslate Brick Slab, Cobbled Deepslate Wall, Cracked Deepslate Tiles, Sculk Shrieker, Sculk Catalyst, Shears, Deepslate Tiles, Amethyst Shard, Deepslate Tile Slab, Cobbled Deepslate, Deepslate Bricks, Sculk, Deepslate Brick Wall, Large Amethyst Bud, Deepslate Tile Stairs, Deepslate Brick Stairs, Small Amethyst Bud, Cobbled Deepslate Slab, Cracked Deepslate Bricks, Amethyst Cluster, Polished Deepslate, Polished Deepslate Slab, Polished Deepslate Wall, Chiseled Deepslate, Deepslate Tile Wall, Cobbled Deepslate Stairs, Medium Amethyst Bud</p></td>
-</tr>
-<tr>
-<td><p>Waxed Copper Block</p></td>
-<td><p>Oxidized Copper, Exposed Copper Bulb, Cut Copper Stairs, Weathered Copper Door, Shears, Weathered Cut Copper Stairs, Cut Copper Slab, Block of Copper, Weathered Cut Copper Slab, Exposed Copper, Exposed Cut Copper Slab, Exposed Copper Trapdoor, Exposed Copper Grate, Weathered Chiseled Copper, Exposed Copper Door, Oxidized Copper Trapdoor, Oxidized Chiseled Copper, Oxidized Copper Bulb, Oxidized Copper Door, Copper Door, Copper Grate, Exposed Cut Copper, Copper Bulb, Cut Copper, Oxidized Cut Copper, Chiseled Copper, Oxidized Cut Copper Stairs, Oxidized Cut Copper Slab, Copper Trapdoor, Weathered Copper, Exposed Cut Copper Stairs, Oxidized Copper Grate, Weathered Copper Grate, Exposed Chiseled Copper, Weathered Copper Bulb, Weathered Cut Copper, Weathered Copper Trapdoor</p></td>
-</tr>
-<tr>
-<td><p>Copper Ore</p></td>
-<td><p>Iron Nugget, Block of Coal, Raw Iron, Iron Ore, Deepslate Redstone Ore, Deepslate Diamond Ore, Diamond, Block of Diamond, Shears, Redstone Ore, Charcoal, Copper Ore, Emerald, Diamond Ore, Block of Raw Gold, Deepslate Gold Ore, Lapis Lazuli, Coal, Netherite Scrap, Coal Ore, Raw Gold, Copper Ingot, Deepslate Lapis Lazuli Ore, Lapis Lazuli Ore, Block of Raw Copper, Deepslate Iron Ore, Ancient Debris, Raw Copper, Block of Gold, Block of Emerald, Gold Ore, Nether Gold Ore, Nether Quartz, Block of Lapis Lazuli, Deepslate Coal Ore, Nether Quartz Ore, Block of Raw Iron, Gold Nugget, Block of Iron, Deepslate Copper Ore, Emerald Ore</p></td>
-</tr>
-<tr>
-<td><p>Polished Andersite</p></td>
-<td><p>Polished Andesite Stairs, Shears, Diorite, Pointed Dripstone, Calcite, Polished Andesite Slab, Polished Diorite, Tuff, Dripstone Block, Andesite Slab, Polished Diorite Slab, Diorite Stairs, Andesite Wall, Polished Diorite Stairs, Diorite Wall, Andesite Stairs, Andesite, Polished Andesite, Diorite Slab</p></td>
-</tr>
-<tr>
-<td><p>Oak Planks</p></td>
-<td><p>Oak Door, Oak Button, Oak Sign, Oak Hanging Sign, Oak Planks, Oak Leaves, Oak Fence, Oak Wood, Oak Stairs, Oak Trapdoor, Shears, Oak Slab, Oak Sapling, Oak Fence Gate, Stripped Oak Log, Stripped Oak Wood, Oak Pressure Plate</p></td>
-</tr>
-<tr>
-<td><p>Birch Planks</p></td>
-<td><p>Birch Planks, Birch Pressure Plate, Birch Fence Gate, Birch Sign, Birch Trapdoor, Stripped Birch Log, Birch Button, Birch Leaves, Shears, Birch Hanging Sign, Birch Door, Birch Sapling, Stripped Birch Wood, Birch Wood, Birch Slab, Birch Stairs, Birch Fence</p></td>
-</tr>
-<tr>
-<td><p>Acacia Planks</p></td>
-<td><p>Acacia Planks, Acacia Stairs, Acacia Sign, Acacia Fence Gate, Stripped Acacia Log, Acacia Wood, Acacia Sapling, Acacia Button, Acacia Hanging Sign, Acacia Door, Shears, Acacia Pressure Plate, Stripped Acacia Wood, Acacia Leaves, Acacia Trapdoor, Acacia Fence, Acacia Slab</p></td>
-</tr>
-<tr>
-<td><p>Mangrove Planks</p></td>
-<td><p>Stripped Mangrove Log, Mangrove Wood, Mangrove Roots, Shears, Mangrove Button, Mangrove Door, Stripped Mangrove Wood, Muddy Mangrove Roots, Mangrove Sign, Mangrove Slab, Mangrove Planks, Mangrove Stairs, Mangrove Fence, Mangrove Propagule, Mangrove Pressure Plate, Mangrove Fence Gate, Mangrove Hanging Sign, Mangrove Trapdoor, Mangrove Leaves</p></td>
-</tr>
-<tr>
-<td><p>Bamboo Planks</p></td>
-<td><p>Bamboo Stairs, Bamboo Trapdoor, Block of Stripped Bamboo, Bamboo Mosaic Slab, Bamboo Hanging Sign, Bamboo Pressure Plate, Bamboo Mosaic Stairs, Bamboo Planks, Bamboo Sign, Shears, Bamboo Button, Bamboo Fence Gate, Bamboo Fence, Bamboo Mosaic, Bamboo Door, Bamboo Slab</p></td>
-</tr>
-<tr>
-<td><p>White Terracotta</p></td>
-<td><p>Black Terracotta, Blue Terracotta, Light Gray Glazed Terracotta, Pink Glazed Terracotta, Yellow Terracotta, Cyan Terracotta, Green Glazed Terracotta, Shears, Yellow Glazed Terracotta, Blue Glazed Terracotta, Purple Terracotta, Red Glazed Terracotta, Orange Terracotta, Pink Terracotta, Black Glazed Terracotta, Brown Glazed Terracotta, Orange Glazed Terracotta, Purple Glazed Terracotta, Magenta Terracotta, Brown Terracotta, Gray Terracotta, Light Blue Glazed Terracotta, Green Terracotta, Light Gray Terracotta, Lime Glazed Terracotta, White Terracotta, Magenta Glazed Terracotta, Cyan Glazed Terracotta, Gray Glazed Terracotta, White Glazed Terracotta, Light Blue Terracotta, Red Terracotta, Lime Terracotta</p></td>
-</tr>
-<tr>
-<td><p>White Wool</p></td>
-<td><p>Purple Wool, Yellow Wool, Red Carpet, Black Wool, Lime Carpet, Shears, Red Banner, Orange Wool, Black Carpet, Lime Wool, Light Gray Banner, White Wool, Yellow Banner, Red Wool, Brown Wool, Pink Wool, Gray Banner, Gray Carpet, Light Blue Carpet, Magenta Banner, Light Gray Carpet, Purple Banner, Light Blue Banner, Cyan Carpet, Black Banner, Green Wool, Brown Carpet, Magenta Carpet, Magenta Wool, Light Blue Wool, White Carpet, Cyan Banner, Orange Banner, Orange Carpet, Blue Banner, Lime Banner, Green Banner, Yellow Carpet, Purple Carpet, White Banner, Cyan Wool, Light Gray Wool, Brown Banner, Pink Banner, Blue Carpet, Blue Wool, Pink Carpet, Gray Wool, Green Carpet</p></td>
-</tr>
-<tr>
-<td><p>Bone Meal</p></td>
-<td><p>Oxeye Daisy, Sunflower, Orange Tulip, Purple Dye, Blue Dye, Poppy, Wither Rose, Lime Dye, Rose Bush, Shears, White Tulip, Pink Tulip, Cyan Dye, Red Tulip, Allium, Torchflower Seeds, Pitcher Pod, Cornflower, Pitcher Plant, Torchflower, Lilac, Black Dye, Gray Dye, Green Dye, Azure Bluet, Light Gray Dye, Brown Dye, Magenta Dye, Lily of the Valley, Dandelion, Blue Orchid, Yellow Dye, Pink Dye, Peony, Light Blue Dye, Orange Dye, Red Dye</p></td>
-</tr>
-</tbody>
-</table>
+| Display Block | List of Items Inside |
+|----|----|
+| {{< mcicon "lodestone" >}} | Chest, Furnace, Soul Campfire, Damaged Anvil, Lodestone, Smoker, Composter, Shears, Ender Chest, Loom, Fletching Table, Grindstone, Redstone Lamp, Chiseled Bookshelf, Campfire, Blast Furnace, Note Block, Honey Block, Jukebox, Daylight Detector, Ladder, Block of Redstone, Anvil, Bookshelf, Lectern, Stonecutter, Beehive, Lightning Rod, Cauldron, Barrel, Crafting Table, Chipped Anvil, Scaffolding, Brewing Stand, Smithing Table, Cartography Table |
+| {{< mcicon "prismarine" >}} | Prismarine Stairs, Snowball, Prismarine, Fire Coral Block, Ice, Tube Coral, Bubble Coral, Dead Fire Coral Block, Dead Bubble Coral Fan, Dark Prismarine Stairs, Horn Coral, Shears, Dead Brain Coral, Dead Fire Coral, Dark Prismarine, Dead Fire Coral Fan, Fire Coral, Dead Horn Coral, Tube Coral Fan, Dead Tube Coral Fan, Dark Prismarine Slab, Prismarine Brick Stairs, Brain Coral, Brain Coral Block, Brain Coral Fan, Dead Horn Coral Block, Bubble Coral Fan, Horn Coral Fan, Snow, Dead Horn Coral Fan, Tube Coral Block, Dead Tube Coral, Bubble Coral Block, Prismarine Wall, Prismarine Slab, Packed Ice, Dead Bubble Coral Block, Dead Brain Coral Block, Dead Bubble Coral, Blue Ice, Sea Lantern, Dead Tube Coral Block, Snow Block, Fire Coral Fan, Horn Coral Block, Dead Brain Coral Fan, Prismarine Bricks, Prismarine Brick Slab |
+| {{< mcicon "sandstone" >}} | Purpur Slab, Cut Sandstone Slab, Red Sand, End Stone Brick Wall, Chorus Fruit, Popped Chorus Fruit, Sandstone Wall, Cut Sandstone, Smooth Sandstone Slab, Shears, Chorus Flower, Red Sandstone Wall, Smooth Sandstone Stairs, Sandstone Slab, Sandstone, Purpur Block, Cut Red Sandstone Slab, Cut Red Sandstone, Smooth Sandstone, Smooth Red Sandstone Slab, End Stone, Red Sandstone Slab, End Stone Brick Stairs, Purpur Pillar, End Rod, Smooth Red Sandstone, Smooth Red Sandstone Stairs, Chiseled Red Sandstone, End Stone Brick Slab, Purpur Stairs, Red Sandstone Stairs, Red Sandstone, Chiseled Sandstone, Sandstone Stairs, End Stone Bricks |
+| Oxidized Cut Copper | Waxed Weathered Chiseled Copper, Waxed Copper Bulb, Waxed Oxidized Copper Bulb, Waxed Weathered Cut Copper Stairs, Waxed Weathered Copper Door, Shears, Waxed Copper Grate, Waxed Chiseled Copper, Waxed Oxidized Copper Trapdoor, Waxed Weathered Copper Trapdoor, Waxed Cut Copper, Waxed Exposed Chiseled Copper, Waxed Weathered Copper Grate, Waxed Oxidized Cut Copper Slab, Waxed Copper Trapdoor, Waxed Weathered Cut Copper, Waxed Oxidized Cut Copper Stairs, Waxed Oxidized Copper Door, Waxed Cut Copper Slab, Waxed Exposed Copper, Waxed Block of Copper, Waxed Oxidized Copper, Waxed Copper Door, Waxed Exposed Copper Grate, Waxed Exposed Cut Copper Stairs, Waxed Exposed Copper Door, Waxed Weathered Cut Copper Slab, Waxed Oxidized Copper Grate, Waxed Exposed Copper Bulb, Waxed Exposed Copper Trapdoor, Waxed Oxidized Cut Copper, Waxed Exposed Cut Copper Slab, Waxed Weathered Copper, Waxed Oxidized Chiseled Copper, Waxed Cut Copper Stairs, Waxed Exposed Cut Copper, Waxed Weathered Copper Bulb |
+| Polished Tuff | Tuff Stairs, Polished Tuff, Polished Tuff Wall, Tuff Brick Wall, Chiseled Tuff, Tuff Wall, Tuff Brick Slab, Tuff Bricks, Shears, Polished Tuff Stairs, Chiseled Tuff Bricks, Tuff Brick Stairs, Tuff Slab, Polished Tuff Slab |
+| Polished Granite | Granite Slab, Brick Stairs, Shears, Granite, Mud Brick Wall, Brick, Polished Granite Slab, Granite Stairs, Mud Brick Stairs, Packed Mud, Bricks, Clay Ball, Brick Wall, Mud Bricks, Brick Slab, Polished Granite, Mud Brick Slab, Clay, Granite Wall, Polished Granite Stairs |
+| Stone Bricks | Shears, Chiseled Stone Bricks, Cracked Stone Bricks, Mossy Stone Bricks, Mossy Stone Brick Wall, Smooth Stone Slab, Cobblestone Stairs, Stone Stairs, Mossy Cobblestone Wall, Mossy Cobblestone Stairs, Stone Brick Wall, Mossy Cobblestone, Mossy Cobblestone Slab, Stone Brick Slab, Cobblestone Wall, Mossy Stone Brick Slab, Smooth Stone, Cobblestone Slab, Stone Slab, Stone Brick Stairs, Mossy Stone Brick Stairs, Stone Bricks |
+| Spruce Planks | Spruce Door, Spruce Fence, Stripped Spruce Wood, Spruce Sapling, Spruce Trapdoor, Spruce Fence Gate, Shears, Spruce Planks, Spruce Sign, Spruce Hanging Sign, Spruce Pressure Plate, Spruce Wood, Spruce Leaves, Stripped Spruce Log, Spruce Stairs, Spruce Slab, Spruce Button |
+| Jungle Planks | Jungle Slab, Stripped Jungle Wood, Jungle Wood, Stripped Jungle Log, Jungle Stairs, Jungle Door, Jungle Leaves, Jungle Hanging Sign, Jungle Fence Gate, Jungle Pressure Plate, Shears, Jungle Sign, Jungle Button, Jungle Sapling, Jungle Trapdoor, Jungle Planks, Jungle Fence |
+| Dark Oak Planks | Dark Oak Pressure Plate, Dark Oak Fence Gate, Dark Oak Leaves, Dark Oak Button, Dark Oak Sapling, Dark Oak Hanging Sign, Stripped Dark Oak Log, Dark Oak Slab, Shears, Dark Oak Stairs, Dark Oak Door, Stripped Dark Oak Wood, Dark Oak Trapdoor, Dark Oak Fence, Dark Oak Wood, Dark Oak Planks, Dark Oak Sign |
+| Cherry Planks | Cherry Planks, Cherry Sapling, Cherry Sign, Cherry Button, Cherry Fence Gate, Cherry Slab, Cherry Pressure Plate, Cherry Leaves, Cherry Trapdoor, Cherry Fence, Cherry Stairs, Cherry Wood, Cherry Hanging Sign, Stripped Cherry Wood, Shears, Stripped Cherry Log, Cherry Door |
+| Warped Planks | Stripped Crimson Hyphae, Nether Wart Block, Warped Button, Shears, Warped Hanging Sign, Warped Trapdoor, Warped Fence Gate, Crimson Fence, Warped Fence, Crimson Door, Crimson Hyphae, Crimson Button, Warped Fungus, Crimson Hanging Sign, Crimson Pressure Plate, Warped Hyphae, Stripped Crimson Stem, Crimson Planks, Warped Planks, Warped Pressure Plate, Stripped Warped Stem, Crimson Fungus, Crimson Slab, Crimson Fence Gate, Crimson Sign, Crimson Trapdoor, Crimson Stairs, Warped Sign, Warped Slab, Warped Stairs, Warped Door, Stripped Warped Hyphae, Warped Wart Block |
+| White Concrete Powder | Black Concrete Powder, Yellow Concrete Powder, Shears, White Concrete Powder, Blue Concrete, Lime Concrete Powder, Green Concrete Powder, Pink Concrete Powder, Pink Concrete, Gray Concrete Powder, Light Gray Concrete, Brown Concrete Powder, Light Blue Concrete Powder, Light Gray Concrete Powder, Yellow Concrete, Red Concrete Powder, Black Concrete, Brown Concrete, Purple Concrete, Red Concrete, Magenta Concrete, Cyan Concrete Powder, Gray Concrete, Lime Concrete, Orange Concrete Powder, Cyan Concrete, Orange Concrete, Green Concrete, Magenta Concrete Powder, Blue Concrete Powder, Light Blue Concrete, Purple Concrete Powder |
+| Tinted Glass | Purple Stained Glass, Magenta Stained Glass, Blue Stained Glass, Brown Stained Glass Pane, Cyan Stained Glass Pane, Shears, Yellow Stained Glass, Orange Stained Glass, Purple Stained Glass Pane, Green Stained Glass Pane, Orange Stained Glass Pane, Gray Stained Glass Pane, Cyan Stained Glass, Pink Stained Glass, Light Blue Stained Glass Pane, Light Blue Stained Glass, Gray Stained Glass, Glass Pane, Green Stained Glass, Lime Stained Glass, Light Gray Stained Glass Pane, Magenta Stained Glass Pane, White Stained Glass, Red Stained Glass Pane, Red Stained Glass, Lime Stained Glass Pane, Yellow Stained Glass Pane, Pink Stained Glass Pane, White Stained Glass Pane, Light Gray Stained Glass, Blue Stained Glass Pane, Black Stained Glass, Brown Stained Glass, Tinted Glass, Black Stained Glass Pane |
+| Sculk Shrieker | Iron Bars, Orange Candle, Glow Item Frame, Torch, Soul Lantern, Bucket, Chain, Purple Candle, Sponge, Shears, Blue Candle, Lead, Item Frame, Name Tag, Yellow Candle, Light Blue Candle, Stick, Light Gray Candle, Paper, Empty Map, White Candle, Lime Candle, Black Candle, Magenta Candle, Glass Bottle, Soul Torch, Lantern, Flower Pot, Clock, Wet Sponge, Cyan Candle, Compass, Green Candle, Brown Candle, Pink Candle, Gray Candle, Bowl, Book, Candle, Painting, Red Candle |
+| Honeycomb | Slimeball, Leather, Bone Meal, Blaze Rod, Shears, Feather, String, Ochre Froglight, Verdant Froglight, Glow Ink Sac, Ghast Tear, Glowstone Dust, Bone, Honeycomb, Prismarine Crystals, Fire Charge, Ender Pearl, Egg, Phantom Membrane, Blaze Powder, Sugar, Rotten Flesh, Spectral Arrow, Magma Cream, Pearlescent Froglight, Spider Eye, Prismarine Shard, Bone Block, Arrow, Honeycomb Block |
+| Mushroom Block | Kelp, Podzol, Mycelium, Short Grass, Shears, Mud, Spore Blossom, Sugar Cane, Melon, Red Mushroom, Jack o'Lantern, Mushroom Stem, Hanging Roots, Cocoa Beans, Flowering Azalea, Brown Mushroom Block, Lily Pad, Seagrass, Hay Bale, Fern, Dead Bush, Cactus, Moss Block, Bamboo, Flowering Azalea Leaves, Pumpkin, Brown Mushroom, Azalea Leaves, Pumpkin Seeds, Coarse Dirt, Melon Seeds, Red Mushroom Block, Sea Pickle, Rooted Dirt, Azalea, Small Dripleaf, Flint, Wheat Crops, Wheat Seeds, Beetroot Seeds, Carved Pumpkin, Big Dripleaf, Vines, Glow Lichen, Moss Carpet |
+| Quartz Block | Smooth Quartz Slab, Polished Blackstone Brick Wall, Basalt, Polished Blackstone Slab, Polished Blackstone, Nether Sprouts, Chiseled Polished Blackstone, Soul Soil, Polished Blackstone Wall, Quartz Pillar, Polished Blackstone Stairs, Shears, Nether Brick Stairs, Nether Bricks, Gilded Blackstone, Glowstone, Polished Basalt, Cracked Nether Bricks, Red Nether Brick Wall, Soul Sand, Crimson Roots, Twisting Vines, Blackstone Wall, Block of Quartz, Blackstone, Red Nether Brick Stairs, Smooth Basalt, Chiseled Nether Bricks, Blackstone Slab, Polished Blackstone Brick Slab, Smooth Quartz Block, Weeping Vines, Warped Roots, Chiseled Quartz Block, Polished Blackstone Bricks, Cracked Polished Blackstone Bricks, Red Nether Bricks, Crimson Nylium, Shroomlight, Nether Brick, Nether Brick Fence, Blackstone Stairs, Warped Nylium, Crying Obsidian, Nether Wart, Quartz Stairs, Nether Brick Wall, Smooth Quartz Stairs, Polished Blackstone Brick Stairs, Magma Block, Red Nether Brick Slab, Nether Brick Slab, Quartz Slab, Quartz Bricks |
+| Deepslate Tiltes | Polished Deepslate Stairs, Block of Amethyst, Sculk Vein, Deepslate Brick Slab, Cobbled Deepslate Wall, Cracked Deepslate Tiles, Sculk Shrieker, Sculk Catalyst, Shears, Deepslate Tiles, Amethyst Shard, Deepslate Tile Slab, Cobbled Deepslate, Deepslate Bricks, Sculk, Deepslate Brick Wall, Large Amethyst Bud, Deepslate Tile Stairs, Deepslate Brick Stairs, Small Amethyst Bud, Cobbled Deepslate Slab, Cracked Deepslate Bricks, Amethyst Cluster, Polished Deepslate, Polished Deepslate Slab, Polished Deepslate Wall, Chiseled Deepslate, Deepslate Tile Wall, Cobbled Deepslate Stairs, Medium Amethyst Bud |
+| Waxed Copper Block | Oxidized Copper, Exposed Copper Bulb, Cut Copper Stairs, Weathered Copper Door, Shears, Weathered Cut Copper Stairs, Cut Copper Slab, Block of Copper, Weathered Cut Copper Slab, Exposed Copper, Exposed Cut Copper Slab, Exposed Copper Trapdoor, Exposed Copper Grate, Weathered Chiseled Copper, Exposed Copper Door, Oxidized Copper Trapdoor, Oxidized Chiseled Copper, Oxidized Copper Bulb, Oxidized Copper Door, Copper Door, Copper Grate, Exposed Cut Copper, Copper Bulb, Cut Copper, Oxidized Cut Copper, Chiseled Copper, Oxidized Cut Copper Stairs, Oxidized Cut Copper Slab, Copper Trapdoor, Weathered Copper, Exposed Cut Copper Stairs, Oxidized Copper Grate, Weathered Copper Grate, Exposed Chiseled Copper, Weathered Copper Bulb, Weathered Cut Copper, Weathered Copper Trapdoor |
+| Copper Ore | Iron Nugget, Block of Coal, Raw Iron, Iron Ore, Deepslate Redstone Ore, Deepslate Diamond Ore, Diamond, Block of Diamond, Shears, Redstone Ore, Charcoal, Copper Ore, Emerald, Diamond Ore, Block of Raw Gold, Deepslate Gold Ore, Lapis Lazuli, Coal, Netherite Scrap, Coal Ore, Raw Gold, Copper Ingot, Deepslate Lapis Lazuli Ore, Lapis Lazuli Ore, Block of Raw Copper, Deepslate Iron Ore, Ancient Debris, Raw Copper, Block of Gold, Block of Emerald, Gold Ore, Nether Gold Ore, Nether Quartz, Block of Lapis Lazuli, Deepslate Coal Ore, Nether Quartz Ore, Block of Raw Iron, Gold Nugget, Block of Iron, Deepslate Copper Ore, Emerald Ore |
+| Polished Andersite | Polished Andesite Stairs, Shears, Diorite, Pointed Dripstone, Calcite, Polished Andesite Slab, Polished Diorite, Tuff, Dripstone Block, Andesite Slab, Polished Diorite Slab, Diorite Stairs, Andesite Wall, Polished Diorite Stairs, Diorite Wall, Andesite Stairs, Andesite, Polished Andesite, Diorite Slab |
+| Oak Planks | Oak Door, Oak Button, Oak Sign, Oak Hanging Sign, Oak Planks, Oak Leaves, Oak Fence, Oak Wood, Oak Stairs, Oak Trapdoor, Shears, Oak Slab, Oak Sapling, Oak Fence Gate, Stripped Oak Log, Stripped Oak Wood, Oak Pressure Plate |
+| Birch Planks | Birch Planks, Birch Pressure Plate, Birch Fence Gate, Birch Sign, Birch Trapdoor, Stripped Birch Log, Birch Button, Birch Leaves, Shears, Birch Hanging Sign, Birch Door, Birch Sapling, Stripped Birch Wood, Birch Wood, Birch Slab, Birch Stairs, Birch Fence |
+| Acacia Planks | Acacia Planks, Acacia Stairs, Acacia Sign, Acacia Fence Gate, Stripped Acacia Log, Acacia Wood, Acacia Sapling, Acacia Button, Acacia Hanging Sign, Acacia Door, Shears, Acacia Pressure Plate, Stripped Acacia Wood, Acacia Leaves, Acacia Trapdoor, Acacia Fence, Acacia Slab |
+| Mangrove Planks | Stripped Mangrove Log, Mangrove Wood, Mangrove Roots, Shears, Mangrove Button, Mangrove Door, Stripped Mangrove Wood, Muddy Mangrove Roots, Mangrove Sign, Mangrove Slab, Mangrove Planks, Mangrove Stairs, Mangrove Fence, Mangrove Propagule, Mangrove Pressure Plate, Mangrove Fence Gate, Mangrove Hanging Sign, Mangrove Trapdoor, Mangrove Leaves |
+| Bamboo Planks | Bamboo Stairs, Bamboo Trapdoor, Block of Stripped Bamboo, Bamboo Mosaic Slab, Bamboo Hanging Sign, Bamboo Pressure Plate, Bamboo Mosaic Stairs, Bamboo Planks, Bamboo Sign, Shears, Bamboo Button, Bamboo Fence Gate, Bamboo Fence, Bamboo Mosaic, Bamboo Door, Bamboo Slab |
+| White Terracotta | Black Terracotta, Blue Terracotta, Light Gray Glazed Terracotta, Pink Glazed Terracotta, Yellow Terracotta, Cyan Terracotta, Green Glazed Terracotta, Shears, Yellow Glazed Terracotta, Blue Glazed Terracotta, Purple Terracotta, Red Glazed Terracotta, Orange Terracotta, Pink Terracotta, Black Glazed Terracotta, Brown Glazed Terracotta, Orange Glazed Terracotta, Purple Glazed Terracotta, Magenta Terracotta, Brown Terracotta, Gray Terracotta, Light Blue Glazed Terracotta, Green Terracotta, Light Gray Terracotta, Lime Glazed Terracotta, White Terracotta, Magenta Glazed Terracotta, Cyan Glazed Terracotta, Gray Glazed Terracotta, White Glazed Terracotta, Light Blue Terracotta, Red Terracotta, Lime Terracotta |
+| White Wool | Purple Wool, Yellow Wool, Red Carpet, Black Wool, Lime Carpet, Shears, Red Banner, Orange Wool, Black Carpet, Lime Wool, Light Gray Banner, White Wool, Yellow Banner, Red Wool, Brown Wool, Pink Wool, Gray Banner, Gray Carpet, Light Blue Carpet, Magenta Banner, Light Gray Carpet, Purple Banner, Light Blue Banner, Cyan Carpet, Black Banner, Green Wool, Brown Carpet, Magenta Carpet, Magenta Wool, Light Blue Wool, White Carpet, Cyan Banner, Orange Banner, Orange Carpet, Blue Banner, Lime Banner, Green Banner, Yellow Carpet, Purple Carpet, White Banner, Cyan Wool, Light Gray Wool, Brown Banner, Pink Banner, Blue Carpet, Blue Wool, Pink Carpet, Gray Wool, Green Carpet |
+| Bone Meal | Oxeye Daisy, Sunflower, Orange Tulip, Purple Dye, Blue Dye, Poppy, Wither Rose, Lime Dye, Rose Bush, Shears, White Tulip, Pink Tulip, Cyan Dye, Red Tulip, Allium, Torchflower Seeds, Pitcher Pod, Cornflower, Pitcher Plant, Torchflower, Lilac, Black Dye, Gray Dye, Green Dye, Azure Bluet, Light Gray Dye, Brown Dye, Magenta Dye, Lily of the Valley, Dandelion, Blue Orchid, Yellow Dye, Pink Dye, Peony, Light Blue Dye, Orange Dye, Red Dye |

@@ -1,7 +1,5 @@
 ---
 title: 'Season3 Spawn'
-aliases: ['/articles/season3-spawn/']
-description: 'This is spawn season 3'
 infobox:
   Status: 'Complete'
   World: 'Overworld'
@@ -16,4 +14,4 @@ test test
 
 ### HELLO WORLD
 
-[S4Spawn/Storage](/survival/season-4/builds/s4spawn-storage/)
+[S4Spawn/Storage](/survival/season-4/builds/spawn-storage/)

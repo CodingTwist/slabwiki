@@ -1,7 +1,5 @@
 ---
 title: 'Decked Out'
-aliases: ['/articles/decked-out/']
-description: 'What is Decked Out?'
 infobox:
   image: '/images/articles/clockfinland.png'
   Status: 'Complete'

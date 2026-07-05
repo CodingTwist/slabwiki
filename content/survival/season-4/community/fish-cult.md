@@ -1,7 +1,5 @@
 ---
 title: 'Fish Cult'
-aliases: ['/articles/fish-cult/']
-description: '<uCurrent Members List:</u'
 infobox:
   image: '/images/articles/2025-02-16-19-51-21.png'
   Status: 'Building'
@@ -13,14 +11,10 @@ infobox:
 ---
 <u>Current Members List:</u>
 
-- 
-
-- 
-
-- 
-
-- 
-
-- 
+- {{< playerhead "yydragon" >}}
+- {{< playerhead "_P0ny" >}}
+- {{< playerhead "WoMspace" >}}
+- {{< playerhead "HeeKari" >}}
+- {{< playerhead "MC_security" >}}
 
 Only found by the worthy, Free refishments at the meeting floor for those who make the trip and find the cult

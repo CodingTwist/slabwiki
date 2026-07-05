@@ -1,6 +1,5 @@
 ---
 title: Season 4
-aliases: ['/seasons/season-4/']
 weight: 4
 current: true
 started: '2024-11-02'

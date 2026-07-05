@@ -1,7 +1,5 @@
 ---
 title: 'Public Blaze farm'
-aliases: ['/articles/public-blaze-farm/']
-description: 'This public blaze farm may be manual, but it is well designed for those who want to combine collecting blaze rods with enchanting their gear. Operated through the use of noteblocks'
 infobox:
   image: '/images/articles/blaze-farm.png'
   Status: 'Complete'
