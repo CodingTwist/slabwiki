@@ -38,6 +38,9 @@
     --color-gold: var(--c-gold);
     --color-divider: var(--c-divider);
     --color-rowline: var(--c-rowline);
+    --color-ice: var(--c-ice);
+    --color-mesa: var(--c-mesa);
+    --color-stone: var(--c-stone);
     --font-pixel: "Silkscreen", ui-monospace, "Cascadia Code", monospace;
   }
 }
@@ -638,6 +641,15 @@
   .bg-grass {
     background-color: var(--color-grass);
   }
+  .bg-ice {
+    background-color: var(--color-ice);
+  }
+  .bg-mesa {
+    background-color: var(--color-mesa);
+  }
+  .bg-stone {
+    background-color: var(--color-stone);
+  }
   .bg-surface-2 {
     background-color: var(--color-surface-2);
   }
@@ -993,6 +1005,10 @@
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
+  .duration-150 {
+    --tw-duration: 150ms;
+    transition-duration: 150ms;
+  }
   .duration-300 {
     --tw-duration: 300ms;
     transition-duration: 300ms;
@@ -1000,6 +1016,10 @@
   .outline-none {
     --tw-outline-style: none;
     outline-style: none;
+  }
+  .select-none {
+    -webkit-user-select: none;
+    user-select: none;
   }
   .\[text-shadow\:2px_2px_0_rgb\(0_0_0\/0\.3\)\] {
     text-shadow: 2px 2px 0 rgb(0 0 0/0.3);
@@ -1228,6 +1248,11 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
+  .\[\&\:\:-webkit-details-marker\]\:hidden {
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
 }
 :root {
   --sticky-h: 140px;
@@ -1248,6 +1273,9 @@
   --c-grass-hi: #7cc24a;
   --c-wood: #8a5e35;
   --c-wood-l: #c49a63;
+  --c-ice: #4f83b3;
+  --c-mesa: #b5651d;
+  --c-stone: #6e6e68;
   --c-gold: #e0a92e;
   --c-shadow: rgba(0, 0, 0, .6);
   --c-card-sh: rgba(0, 0, 0, .5);
@@ -1270,6 +1298,9 @@
   --c-grass-hi: #3f6d2a;
   --c-wood: #7a5230;
   --c-wood-l: #9c6b3f;
+  --c-ice: #4f83b3;
+  --c-mesa: #b5651d;
+  --c-stone: #6e6e68;
   --c-gold: #e0a92e;
   --c-shadow: rgba(42, 38, 32, .35);
   --c-card-sh: rgba(42, 38, 32, .22);
@@ -1293,6 +1324,9 @@
     --c-grass-hi: #3f6d2a;
     --c-wood: #7a5230;
     --c-wood-l: #9c6b3f;
+    --c-ice: #4f83b3;
+    --c-mesa: #b5651d;
+    --c-stone: #6e6e68;
     --c-gold: #e0a92e;
     --c-shadow: rgba(42, 38, 32, .35);
     --c-card-sh: rgba(42, 38, 32, .22);
@@ -1331,8 +1365,11 @@
   }
   .article-backdrop::before {
     content: "";
-    position: absolute;
-    inset: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
     z-index: -1;
     background-image: linear-gradient(rgb(0 0 0 / .40), rgb(0 0 0 / .55)), var(--backdrop-url);
     background-size: cover;

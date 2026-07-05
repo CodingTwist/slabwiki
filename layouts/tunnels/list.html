@@ -19,7 +19,7 @@
         {{ $side     := lower (trim (index . (index $idx "direction")) " ") }}
         {{ $distance := trim (index . (index $idx "distance from hub")) " " }}
         {{ $owners   := trim (index . (index $idx "owners\n(optional)")) " " }}
-        {{ $loc      := trim (index . (index $idx "location\n(optional)")) " " }}
+        {{ $loc      := replace (trim (index . (index $idx "location\n(optional)")) " ") "," "" }}
         {{ $notes    := trim (index . (index $idx "notes")) " " }}
         {{ $updated  := trim (index . (index $idx "review notes")) " " }}
         {{ $rows = $rows | append (dict
@@ -60,10 +60,28 @@
   {{ $group := where $rows "tunnel" $dir }}
   {{ if $group }}
   {{ $group = sort $group "distance" "asc" }}
-  <div class="mc-panel mb-5 overflow-hidden" data-tunnel-group>
-    <div class="pixel bg-wood text-white text-[12px] px-3.5 py-3 border-b-4 border-line uppercase flex items-center gap-2 [text-shadow:2px_2px_0_rgb(0_0_0/0.3)]">
-      {{ partial "mc-icon.html" "rail" }} {{ title $dir }} tunnel <span class="opacity-70 normal-case font-normal">· {{ len $group }}</span>
-    </div>
+  <details class="mc-panel mb-5 overflow-hidden group" data-tunnel-group open>
+    {{ if eq $dir "north" }}
+    <summary class="pixel bg-ice text-white text-[12px] px-3.5 py-3 border-b-4 border-line uppercase flex items-center gap-2 [text-shadow:2px_2px_0_rgb(0_0_0/0.3)] cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden">
+      <span class="inline-block transition-transform duration-150 group-open:rotate-90">▸</span>
+      {{ partial "mc-icon.html" "packed-ice" }} {{ title $dir }} tunnel <span class="opacity-70 normal-case font-normal">· {{ len $group }}</span>
+    </summary>
+    {{ else if eq $dir "west" }}
+    <summary class="pixel bg-mesa text-white text-[12px] px-3.5 py-3 border-b-4 border-line uppercase flex items-center gap-2 [text-shadow:2px_2px_0_rgb(0_0_0/0.3)] cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden">
+      <span class="inline-block transition-transform duration-150 group-open:rotate-90">▸</span>
+      {{ partial "mc-icon.html" "orange-terracotta" }} {{ title $dir }} tunnel <span class="opacity-70 normal-case font-normal">· {{ len $group }}</span>
+    </summary>
+    {{ else if eq $dir "south" }}
+    <summary class="pixel bg-stone text-white text-[12px] px-3.5 py-3 border-b-4 border-line uppercase flex items-center gap-2 [text-shadow:2px_2px_0_rgb(0_0_0/0.3)] cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden">
+      <span class="inline-block transition-transform duration-150 group-open:rotate-90">▸</span>
+      {{ partial "mc-icon.html" "stone" }} {{ title $dir }} tunnel <span class="opacity-70 normal-case font-normal">· {{ len $group }}</span>
+    </summary>
+    {{ else }}
+    <summary class="pixel bg-grass text-white text-[12px] px-3.5 py-3 border-b-4 border-line uppercase flex items-center gap-2 [text-shadow:2px_2px_0_rgb(0_0_0/0.3)] cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden">
+      <span class="inline-block transition-transform duration-150 group-open:rotate-90">▸</span>
+      {{ partial "mc-icon.html" "moss-block" }} {{ title $dir }} tunnel <span class="opacity-70 normal-case font-normal">· {{ len $group }}</span>
+    </summary>
+    {{ end }}
     <div class="overflow-x-auto">
       <table class="w-full text-sm">
         <thead>
@@ -85,7 +103,10 @@
               {{ else if eq .side "right" }}<span class="chip">right ▸</span>
               {{ else }}<span class="text-faint"></span>{{ end }}
             </td>
-            <td class="px-3 py-2 text-fg">{{ .dest }}{{ with .loc }} <span class="text-faint text-xs">({{ . }})</span>{{ end }}</td>
+            <td class="px-3 py-2 text-fg">
+              {{ .dest }}
+              {{ with .loc }}<div class="mt-1">{{ partial "coord-chip.html" (dict "coord" . "season" "season-4") }}</div>{{ end }}
+            </td>
             <td class="px-3 py-2 text-muted">{{ with .owners }}{{ partial "playerheads.html" . }}{{ else }}<span class="text-faint"></span>{{ end }}</td>
             <td class="px-3 py-2 text-muted">{{ with .notes }}{{ . }}{{ else }}<span class="text-faint"></span>{{ end }}</td>
           </tr>
@@ -93,7 +114,7 @@
         </tbody>
       </table>
     </div>
-  </div>
+  </details>
   {{ end }}
   {{ end }}
   <p class="text-muted mt-2 hidden" id="no-results">No tunnels match your search.</p>
@@ -122,6 +143,7 @@
         return r.style.display !== 'none';
       });
       g.style.display = anyVisible ? '' : 'none';
+      if (q && anyVisible) g.open = true;
     });
     countEl.textContent = shown;
     empty.classList.toggle('hidden', !!shown);
