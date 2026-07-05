@@ -3,8 +3,8 @@
      data/servers.yaml. Primary group = the server landing's children minus its
      quicklink slugs (Survival → seasons, Nexus → games); then quicklinks; then
      server status. Each section is its own bordered box, stacked with a gap. On
-     pages with no server (home, server-info) it renders a compact server
-     directory instead. Icons use the crisp 32px sprite. */}}
+     pages with no server (home) it renders a compact server directory
+     instead. Icons use the crisp 32px sprite. */}}
 {{ $curPerm := .RelPermalink }}
 {{ $server := .Params.server }}
 {{ $entry := "" }}
@@ -26,16 +26,6 @@
           </a>
         </li>
       {{ end }}
-      {{ $serverInfoPage := site.GetPage "/server-info" }}
-      {{ $si := hasPrefix $curPerm $serverInfoPage.RelPermalink }}
-      <li class="shrink-0">
-        <a href="{{ $serverInfoPage.RelPermalink }}"
-           class="flex items-center gap-2.5 px-2 py-2 text-[15px] font-bold no-underline whitespace-nowrap border-l-4
-                  {{ if $si }}border-grass text-grass-hi bg-[rgba(91,138,60,.16)]{{ else }}border-transparent text-fg hover:bg-[rgba(91,138,60,.08)]{{ end }}">
-          {{ partial "mc-icon.html" (dict "slug" "written-book" "lg" true) }}
-          <span>Server Info</span>
-        </a>
-      </li>
     </ul>
   </nav>
 
