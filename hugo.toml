@@ -9,6 +9,8 @@ enableGitInfo = false
   # Published Google Sheet (Directory - Slabserver Season 4), exported as CSV.
   # File > Share > Publish to web > CSV, or the /export?format=csv&gid=... form.
   shopsCsvUrl = 'https://docs.google.com/spreadsheets/d/1tVqO1Z_EbCM7iZ2kseCXIA_iDk-8j-BJTWPxvY4lG3Q/export?format=csv&gid=758267300'
+  # Same spreadsheet, "Items" sheet: one row per item a shop has for sale.
+  itemsCsvUrl = 'https://docs.google.com/spreadsheets/d/1tVqO1Z_EbCM7iZ2kseCXIA_iDk-8j-BJTWPxvY4lG3Q/export?format=csv&gid=1606177661'
   currentSeason = 'Season 4'
   # Minecraft server address for the live sidebar status panel (mcsrvstat.us).
   serverAddress = 'slabserver.org'

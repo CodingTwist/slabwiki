@@ -34,6 +34,10 @@
 :root {
   /* Offset that pins the sidebars just below the sticky header+breadcrumb stack. */
   --sticky-h: 140px;
+  /* Sticky sidebar/panel floating offset: --sticky-h plus the same 24px gap
+     the main content column has (its container's py-6). JS keeps both in
+     sync with the real stack height. */
+  --sticky-top: 164px;
 }
 
 /* Dark: night soil & lantern light. */
@@ -208,6 +212,16 @@
     box-shadow: 7px 7px 0 var(--c-card-sh);
   }
 
+  /* Full-card link overlay: lets a card contain its own nested, independently
+     clickable controls (e.g. a coord-chip's map link) without nesting <a>
+     inside <a>, which browsers repair by splitting the outer anchor apart. */
+  .stretched-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
   /* Heavier panel for hero / article / infobox. */
   .mc-panel {
     @apply bg-card border-4 border-line;
@@ -285,14 +299,13 @@
            border-2 border-line bg-surface-2 text-muted cursor-pointer
            select-none transition-colors;
   }
-  .coord::before { content: "📍"; font-size: 0.85em; }
   .coord:hover { @apply border-grass text-fg; }
   .coord.copied { @apply border-grass text-grass-hi; }
   .coord.copied::after { content: " ✓ copied"; }
 
   /* Link from a coord chip to its spot on the season map. */
   .coord-map-link {
-    @apply inline-flex items-center justify-center w-6 h-6 border-2 border-line
+    @apply relative z-10 inline-flex items-center justify-center w-6 h-6 border-2 border-line
            bg-surface-2 text-muted no-underline transition-colors shrink-0;
   }
   .coord-map-link:hover { @apply border-grass text-grass-hi; }

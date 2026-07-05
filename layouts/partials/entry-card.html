@@ -14,7 +14,12 @@
 {{ $season := "" }}
 {{ $seasonKey := "" }}
 {{ with $sec.Parent }}{{ if hasPrefix .LinkTitle "Season" }}{{ $season = .LinkTitle }}{{ $seasonKey = path.Base .RelPermalink }}{{ end }}{{ end }}
-<a href="{{ .RelPermalink }}" class="mc-card mc-card-hover flex flex-col no-underline overflow-hidden group">
+{{/* Container is a div, not an <a>: coord-chip's map link is a real nested
+     <a>, and browsers repair <a> nested inside <a> by splitting the outer
+     anchor into fragments (each keeping the mc-card styling), shattering the
+     card. Instead the title carries a stretched-link overlay for the main
+     click target, leaving the map link independently clickable above it. */}}
+<div class="mc-card mc-card-hover flex flex-col overflow-hidden group relative">
   {{ with $img }}
   <div class="aspect-[16/10] overflow-hidden bg-surface-2 border-b-[3px] border-line relative">
     <img src="{{ . | relURL }}" alt="" loading="lazy" class="w-full h-full object-cover">
@@ -24,7 +29,9 @@
   </div>
   {{ end }}
   <div class="p-4 flex flex-col gap-2 flex-1">
-    <h3 class="pixel text-[13px] uppercase text-fg leading-snug">{{ .Title }}</h3>
+    <h3 class="pixel text-[13px] uppercase text-fg leading-snug">
+      <a href="{{ .RelPermalink }}" class="stretched-link no-underline text-fg">{{ .Title }}</a>
+    </h3>
     {{ with .Params.summary }}<p class="text-sm text-muted line-clamp-2">{{ . }}</p>
     {{ else }}{{ with .Description }}<p class="text-sm text-muted line-clamp-2">{{ . }}</p>{{ end }}{{ end }}
     <div class="flex flex-wrap items-center gap-1.5 mt-auto pt-1">
@@ -33,4 +40,4 @@
       {{ with $coord }}{{ partial "coord-chip.html" (dict "coord" . "season" $seasonKey) }}{{ end }}
     </div>
   </div>
-</a>
+</div>

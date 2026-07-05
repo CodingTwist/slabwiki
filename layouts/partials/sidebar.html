@@ -10,7 +10,7 @@
 {{ $entry := "" }}
 {{ range hugo.Data.servers.servers }}{{ if eq .title $server }}{{ $entry = . }}{{ end }}{{ end }}
 
-<div class="flex flex-col gap-4 lg:sticky lg:top-[var(--sticky-h)]">
+<div class="flex flex-col gap-4 lg:sticky lg:top-[var(--sticky-top)]">
   {{/*  Server switcher (always shown)  */}}
   <nav class="mc-nav px-4 py-4 lg:px-3 lg:py-4" aria-label="Servers">
     <div class="pixel-label text-wood-l px-2 pb-2.5 hidden lg:block">Servers</div>

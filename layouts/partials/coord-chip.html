@@ -2,7 +2,7 @@
 {{- $coord := .coord -}}
 {{- $season := .season -}}
 <span class="inline-flex items-center gap-1.5">
-  <span class="coord" data-coord="{{ $coord }}">{{ $coord }}</span>
+  <span class="coord" data-coord="{{ $coord }}">{{ partial "mc-icon.html" "compass" }}{{ $coord }}</span>
   {{- if $season -}}
     {{- $xz := partial "coord-xz.html" $coord -}}
     {{- with $xz.x -}}

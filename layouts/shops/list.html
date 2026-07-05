@@ -11,6 +11,17 @@
     {{ end }}
   {{ end }}
 {{ end }}
+
+{{/* Unique items across all shops, for the item-search dropdown. */}}
+{{ $itemLookup := dict }}
+{{ range $shops }}
+  {{ range .Params.items }}
+    {{ $itemLookup = merge $itemLookup (dict (lower .name) (dict "name" .name "material" .material)) }}
+  {{ end }}
+{{ end }}
+{{ $allItems := slice }}
+{{ range $k, $v := $itemLookup }}{{ $allItems = $allItems | append $v }}{{ end }}
+{{ $allItems = sort $allItems "name" }}
 <div class="page-sheet px-6 sm:px-8 py-8">
   <div class="mb-5">
     <span class="pixel-label text-gold">{{ .Site.Params.currentSeason }} · {{ len $shops }} shops</span>
@@ -29,29 +40,58 @@
   {{ end }}
 
   <div class="flex flex-wrap items-center gap-3 mb-5">
-    <label class="flex items-center gap-2 flex-1 min-w-[220px] mc-input !w-auto focus-within:border-grass">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-muted shrink-0"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      <input id="shop-search" type="search" placeholder="Search shops, owners, stock, coords…" autocomplete="off"
-             class="w-full bg-transparent outline-none text-sm text-fg placeholder:text-muted">
-    </label>
+    <div class="relative flex-1 min-w-[220px]">
+      <label class="flex items-center gap-2 mc-input !w-auto focus-within:border-grass">
+        {{ partial "mc-icon.html" "chest" }}
+        <input id="shop-search" type="search" placeholder="Search shops, owners, items, coords…" autocomplete="off"
+               class="w-full bg-transparent outline-none text-sm text-fg placeholder:text-muted">
+      </label>
+      <div id="item-dropdown" class="hidden absolute z-10 top-full left-0 right-0 mt-1 mc-panel max-h-72 overflow-y-auto">
+        {{ range $allItems }}
+        <button type="button" data-item="{{ lower .name }}" data-name="{{ .name }}" class="item-option w-full flex items-center gap-2 px-3 py-1.5 text-left text-sm text-fg hover:bg-surface-2 border-b border-rowline last:border-b-0">
+          {{ partial "mc-icon.html" .material }}
+          <span class="item-option-name">{{ .name }}</span>
+        </button>
+        {{ end }}
+      </div>
+    </div>
     <span class="text-sm text-faint"><span id="shop-count">{{ len $shops }}</span> shown</span>
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4" id="shop-grid">
     {{ range $shops.ByTitle }}
-    <a href="{{ .RelPermalink }}" data-search="{{ lower (printf "%s %s %s %s" .Title .Params.owners .Params.summary .Params.loc) }}"
+    {{ $itemNames := slice }}
+    {{ range .Params.items }}{{ $itemNames = $itemNames | append (lower .name) }}{{ end }}
+    {{ $inStockItems := where .Params.items "inStock" true }}
+    {{ $previewItems := first 6 (cond (gt (len $inStockItems) 0) $inStockItems .Params.items) }}
+    {{ $moreCount := sub (len .Params.items) (len $previewItems) }}
+    {{/* NOTE: coord-chip's map link is an <a> — never pass "season" here, the
+         card itself is an <a>, and nested anchors get silently split apart
+         by the browser's HTML parser (that was the broken-card bug). */}}
+    <a href="{{ .RelPermalink }}" data-search="{{ lower (printf "%s %s %s %s %s" .Title .Params.owners .Params.summary .Params.loc (delimit $itemNames " ")) }}"
        class="mc-card mc-card-hover flex flex-col no-underline overflow-hidden group">
       {{ with .Params.image }}
       <div class="aspect-[16/10] overflow-hidden bg-surface-2 border-b-[3px] border-line">
         <img src="{{ . | relURL }}" alt="" loading="lazy" class="w-full h-full object-cover">
       </div>
+      {{ else }}
+      <div class="aspect-[16/10] overflow-hidden bg-surface-2 border-b-[3px] border-line flex items-center justify-center gap-1.5 text-muted">
+        {{ partial "mc-icon.html" "painting" }}
+        <span class="pixel-label text-[8px]">Image coming soon</span>
+      </div>
       {{ end }}
       <div class="p-3.5 flex flex-col gap-2 flex-1">
         <h3 class="pixel text-[12px] uppercase text-fg leading-snug">{{ .Title }}</h3>
         {{ with .Params.summary }}<p class="text-sm text-muted line-clamp-2">{{ . }}</p>{{ end }}
+        {{ with $previewItems }}
+        <div class="flex flex-wrap items-center gap-1 text-muted">
+          {{ range . }}<span title="{{ .name }}{{ if not .inStock }} (out of stock){{ end }}"{{ if not .inStock }} class="opacity-40 grayscale"{{ end }}>{{ partial "mc-icon.html" .material }}</span>{{ end }}
+          {{ if gt $moreCount 0 }}<span class="text-[11px]">+{{ $moreCount }} more</span>{{ end }}
+        </div>
+        {{ end }}
         <div class="flex flex-wrap items-center gap-1.5 mt-auto pt-1">
           {{ with .Params.owners }}<span class="chip">{{ partial "playerheads.html" . }}</span>{{ end }}
-          {{ with .Params.loc }}{{ partial "coord-chip.html" (dict "coord" . "season" "season-4") }}{{ end }}
+          {{ with .Params.loc }}{{ partial "coord-chip.html" (dict "coord" .) }}{{ end }}
         </div>
       </div>
     </a>
@@ -63,9 +103,12 @@
 <script>
 (function () {
   var input = document.getElementById('shop-search');
+  var dropdown = document.getElementById('item-dropdown');
+  var options = Array.prototype.slice.call(document.querySelectorAll('.item-option'));
   var cards = Array.prototype.slice.call(document.querySelectorAll('#shop-grid > a'));
   var countEl = document.getElementById('shop-count');
   var empty = document.getElementById('no-results');
+
   function apply() {
     var q = input.value.trim().toLowerCase();
     var shown = 0;
@@ -77,7 +120,51 @@
     countEl.textContent = shown;
     empty.classList.toggle('hidden', !!shown);
   }
-  input.addEventListener('input', apply);
+
+  function escapeRegExp(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function updateDropdown() {
+    var q = input.value.trim().toLowerCase();
+    var anyVisible = false;
+    var re = q ? new RegExp('(' + escapeRegExp(q) + ')', 'ig') : null;
+    options.forEach(function (opt) {
+      var name = opt.getAttribute('data-name');
+      var match = !q || opt.getAttribute('data-item').indexOf(q) !== -1;
+      opt.classList.toggle('hidden', !match);
+      if (match) anyVisible = true;
+      var nameEl = opt.querySelector('.item-option-name');
+      nameEl.innerHTML = re ? escapeHtml(name).replace(re, '<strong>$1</strong>') : escapeHtml(name);
+    });
+    dropdown.classList.toggle('hidden', !anyVisible);
+  }
+
+  var initialQ = new URLSearchParams(location.search).get('q');
+  if (initialQ) {
+    input.value = initialQ;
+    apply();
+  }
+
+  input.addEventListener('input', function () {
+    apply();
+    updateDropdown();
+  });
+  input.addEventListener('focus', updateDropdown);
+  document.addEventListener('click', function (e) {
+    if (e.target !== input && !dropdown.contains(e.target)) dropdown.classList.add('hidden');
+  });
+  options.forEach(function (opt) {
+    opt.addEventListener('click', function () {
+      input.value = opt.getAttribute('data-name');
+      apply();
+      dropdown.classList.add('hidden');
+    });
+  });
 })();
 
 (function () {

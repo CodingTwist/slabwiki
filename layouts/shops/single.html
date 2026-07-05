@@ -7,20 +7,70 @@
         <h1 class="pixel text-[26px] md:text-[30px] mt-1.5">{{ .Title }}</h1>
         <div class="stripe-divider my-4"></div>
         <div class="prose">
-          {{ with .Params.summary }}
-            <h2>Stock</h2>
-            <p>{{ . }}</p>
+          <h2>Stock</h2>
+          {{ with .Params.summary }}<p>{{ . }}</p>{{ end }}
+        </div>
+        {{ with .Params.items }}
+        {{ $groups := dict }}
+        {{ $order := slice }}
+        {{ range . }}
+          {{ $base := trim (replaceRE `\s*\([^()]*\)$` "" .name) " " }}
+          {{ $hasVariant := ne $base .name }}
+          {{ $variant := "" }}
+          {{ if $hasVariant }}{{ $variant = replaceRE `^.*\(([^()]*)\)$` "$1" .name }}{{ end }}
+          {{ $existing := index $groups $base }}
+          {{ if not $existing }}{{ $order = $order | append $base }}{{ end }}
+          {{ $entry := dict "name" .name "variant" $variant "material" .material "inStock" .inStock }}
+          {{ $groups = merge $groups (dict $base ((default slice $existing) | append $entry)) }}
+        {{ end }}
+        {{ $order = sort $order }}
+        <div class="divide-y divide-rowline border-t border-rowline mt-3">
+          {{ range $base := $order }}
+          {{ $items := index $groups $base }}
+          {{ if eq (len $items) 1 }}
+            {{ $it := index $items 0 }}
+            <a href="{{ printf "%s?q=%s" $.Parent.RelPermalink ($it.name | urlquery) }}" class="flex items-center gap-2 py-1.5 no-underline hover:bg-surface-2{{ if not $it.inStock }} opacity-40 grayscale{{ end }}" title="Search shops selling {{ $it.name }}{{ if not $it.inStock }} (out of stock){{ end }}">
+              {{ partial "mc-icon.html" $it.material }}
+              <span class="text-sm text-fg">{{ $it.name }}</span>
+              {{ if not $it.inStock }}<span class="text-[10px] uppercase text-muted ml-auto">out</span>{{ end }}
+            </a>
           {{ else }}
-            <p class="text-muted">No stock summary recorded for this shop.</p>
+            {{ $inStockCount := 0 }}
+            {{ range $items }}{{ if .inStock }}{{ $inStockCount = add $inStockCount 1 }}{{ end }}{{ end }}
+            <details class="group py-1.5">
+              <summary class="flex items-center gap-2 cursor-pointer list-none hover:bg-surface-2 -mx-1 px-1 rounded{{ if eq $inStockCount 0 }} opacity-40 grayscale{{ end }}">
+                {{ partial "mc-icon.html" (index $items 0).material }}
+                <span class="text-sm text-fg">{{ $base }}</span>
+                <span class="text-[11px] text-muted">&times;{{ len $items }}{{ if lt $inStockCount (len $items) }} ({{ $inStockCount }} in stock){{ end }}</span>
+                <span class="ml-auto text-[10px] text-faint transition-transform group-open:rotate-90">&#9656;</span>
+              </summary>
+              <div class="pl-6 pt-1 pb-1 flex flex-col gap-1">
+                {{ range sort $items "variant" }}
+                <a href="{{ printf "%s?q=%s" $.Parent.RelPermalink (.name | urlquery) }}" class="flex items-center gap-2 no-underline hover:bg-surface-2 py-0.5{{ if not .inStock }} opacity-40 grayscale{{ end }}" title="Search shops selling {{ .name }}{{ if not .inStock }} (out of stock){{ end }}">
+                  <span class="text-sm text-fg">{{ if .variant }}{{ .variant }}{{ else }}{{ .name }}{{ end }}</span>
+                  {{ if not .inStock }}<span class="text-[10px] uppercase text-muted ml-auto">out</span>{{ end }}
+                </a>
+                {{ end }}
+              </div>
+            </details>
+          {{ end }}
           {{ end }}
         </div>
+        {{ else }}
+          {{ if not .Params.summary }}<p class="text-muted mt-3">No stock recorded for this shop.</p>{{ end }}
+        {{ end }}
       </article>
 
-      <aside class="mc-panel lg:sticky lg:top-[var(--sticky-h)] overflow-hidden">
+      <aside class="mc-panel lg:sticky lg:top-[var(--sticky-top)] overflow-hidden">
         <div class="pixel bg-wood text-white text-center text-[12px] px-2.5 py-3 border-b-4 border-line [text-shadow:2px_2px_0_rgb(0_0_0/0.3)] uppercase">{{ .Title }}</div>
         {{ with .Params.image }}
         <div class="border-b-4 border-line">
           <img src="{{ . | relURL }}" alt="{{ $.Title }}" class="w-full h-[150px] object-cover pixelated block">
+        </div>
+        {{ else }}
+        <div class="border-b-4 border-line h-[150px] flex items-center justify-center bg-surface-2 text-muted gap-2">
+          {{ partial "mc-icon.html" "painting" }}
+          <span class="pixel-label text-[9px]">Image coming soon</span>
         </div>
         {{ end }}
         <dl class="text-[13.5px] py-1">
@@ -29,7 +79,7 @@
           {{ with .Params.updated }}<div class="flex justify-between gap-2 px-3.5 py-2"><dt class="text-wood-l font-bold shrink-0">Updated</dt><dd class="text-fg font-bold text-right min-w-0 [overflow-wrap:anywhere]">{{ . }}</dd></div>{{ end }}
         </dl>
         {{ with .Params.loc }}{{ partial "location-map.html" (dict "coord" . "season" "season-4" "title" $.Title) }}{{ end }}
-        <a href="{{ "/shops" | relURL }}" class="mc-panel-grass block border-t-4 text-center py-2.5 no-underline">
+        <a href="{{ .Parent.RelPermalink }}" class="mc-panel-grass block border-t-4 text-center py-2.5 no-underline">
           <span class="pixel-label text-[8px] text-white">◂ All shops</span>
         </a>
       </aside>

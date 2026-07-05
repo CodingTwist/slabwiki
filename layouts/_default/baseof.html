@@ -37,7 +37,10 @@
           </span>
         </a>
         <div class="relative order-last basis-full sm:order-none sm:ml-auto sm:w-60 lg:w-80">
-          <input id="site-search" type="search" placeholder="🔍 Search the wiki…" autocomplete="off" aria-label="Search" class="mc-input">
+          <label class="flex items-center gap-2 mc-input focus-within:border-grass">
+            {{ partial "mc-icon.html" "spyglass" }}
+            <input id="site-search" type="search" placeholder="Search the wiki…" autocomplete="off" aria-label="Search" class="w-full bg-transparent outline-none">
+          </label>
           <div class="search-results" id="search-results"></div>
         </div>
         {{ partial "theme-toggle.html" . }}
@@ -56,12 +59,17 @@
     // The header+breadcrumb stack's height changes with viewport width (search
     // bar wraps to its own row below sm, breadcrumbs wrap on long titles), so
     // --sticky-h can't be a fixed constant. Measure the real stack and keep it
-    // in sync so sticky sidebars AND anchor scroll-margins land just below it.
+    // in sync so anchor scroll-margins land just below it. --sticky-top is the
+    // same height plus a gap, used only for the sticky sidebar/panel offset so
+    // they float with the same top gap the main content column already has
+    // (its container's py-6 = 24px), rather than sitting flush against the stack.
     (function(){
       var stack = document.getElementById('sticky-stack');
       if(!stack) return;
       function sync(){
-        document.documentElement.style.setProperty('--sticky-h', stack.offsetHeight + 'px');
+        var h = stack.offsetHeight;
+        document.documentElement.style.setProperty('--sticky-h', h + 'px');
+        document.documentElement.style.setProperty('--sticky-top', (h + 24) + 'px');
       }
       new ResizeObserver(sync).observe(stack);
       sync();
@@ -87,6 +95,10 @@
       <span class="text-xs text-muted">· © {{ now.Year }} Slabserver community · Companion archive to <a class="text-grass-hi no-underline hover:underline" href="https://slabserver.org/">slabserver.org</a></span>
       <a href="{{ "/server-info" | relURL }}" class="text-xs text-grass-hi no-underline hover:underline">Server Info</a>
       <span class="ml-auto text-xs text-muted">Shops synced from the live directory sheet</span>
+    </div>
+    <div class="px-4 sm:px-6 pb-3.5 border-t border-line/40 pt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+      <span class="text-[11px] text-muted">Not affiliated with Mojang Studios or Microsoft. Minecraft is a trademark of Mojang Synergies AB.</span>
+      <span class="ml-auto text-[11px] text-muted">Built with <a class="text-grass-hi no-underline hover:underline" href="https://gohugo.io/">Hugo</a> &amp; <a class="text-grass-hi no-underline hover:underline" href="https://tailwindcss.com/">Tailwind CSS</a> · Fonts: <a class="text-grass-hi no-underline hover:underline" href="https://fonts.google.com/specimen/Silkscreen">Silkscreen</a> &amp; <a class="text-grass-hi no-underline hover:underline" href="https://fonts.google.com/specimen/Nunito+Sans">Nunito Sans</a> via Google Fonts</span>
     </div>
   </footer>
 

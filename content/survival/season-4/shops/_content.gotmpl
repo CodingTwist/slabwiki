@@ -16,6 +16,35 @@
     {{ if $key }}{{ $imgmap = merge $imgmap (dict $key (printf "/images/%s/%s" $dir .Name)) }}{{ end }}
   {{ end }}
 {{ end }}
+{{/* Build a lookup of items-per-shop from the companion "Items" sheet:
+     normalised shop name -> slice of (dict "name" .. "material" .. "inStock" ..). */}}
+{{ $itemsByShop := dict }}
+{{ with try (resources.GetRemote site.Params.itemsCsvUrl) }}
+  {{ with .Err }}
+    {{ warnf "shops: could not fetch items sheet: %s" . }}
+  {{ else with .Value }}
+    {{ $icsv := transform.Unmarshal (dict "delimiter" ",") .Content }}
+    {{ $iheader := index $icsv 0 }}
+    {{ $iidx := dict }}
+    {{ range $i, $h := $iheader }}{{ $iidx = merge $iidx (dict (lower (trim $h " ")) $i) }}{{ end }}
+    {{ range after 1 $icsv }}
+      {{ $shopName := trim (index . (index $iidx "shop name")) " " }}
+      {{ $itemName := trim (index . (index $iidx "name")) " " }}
+      {{ if and $shopName $itemName }}
+        {{ $material := trim (index . (index $iidx "material")) " " }}
+        {{ $status   := trim (index . (index $iidx "status")) " " }}
+        {{ $key := lower $shopName }}
+        {{ $existing := index $itemsByShop $key | default slice }}
+        {{ $itemsByShop = merge $itemsByShop (dict $key ($existing | append (dict
+          "name" $itemName
+          "material" $material
+          "inStock" (eq (lower $status) "in stock")
+        ))) }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
 {{ with try (resources.GetRemote $url) }}
   {{ with .Err }}
     {{ warnf "shops: could not fetch directory sheet: %s" . }}
@@ -43,6 +72,9 @@
         {{/* attach a photo if one matches this shop's name */}}
         {{ $img := index $imgmap (lower (replaceRE `[^a-zA-Z0-9]` "" $name)) }}
 
+        {{/* attach the itemized stock list from the companion Items sheet, if any */}}
+        {{ $items := index $itemsByShop (lower $name) | default slice }}
+
         {{ $.AddPage (dict
           "kind" "page"
           "path" $path
@@ -54,6 +86,7 @@
             "summary"    $summary
             "updated"    $updated
             "image"      $img
+            "items"      $items
             "shop"       true
           )
           "content" (dict "mediaType" "text/markdown" "value" $summary)
