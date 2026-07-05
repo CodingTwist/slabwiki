@@ -16,4 +16,4 @@ test test
 
 ### HELLO WORLD
 
-[S4Spawn/Storage](/survival/season-4/builds/spawn-storage/)
+[S4Spawn/Storage](/survival/season-4/builds/s4spawn-storage/)

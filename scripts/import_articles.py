@@ -4,14 +4,21 @@ One-shot importer: pulls a curated set of SlabWiki articles from the live
 MediaWiki API, lifts their {{Infobox ...}} into YAML front matter, downloads
 referenced images, and converts the prose to Markdown via pandoc.
 
-Re-runnable. Skips near-empty pages. Usage: python3 scripts/import_articles.py
+Writes into the current content/<server>/<season>/<category>/ layout (all
+KEEPERS are Survival-world pages). An `aliases` entry preserves the old flat
+/articles/<slug>/ URL. Re-runnable, but will overwrite hand-edited files at
+the slug it computes - if a page has since been renamed or reseasoned by
+hand, either update KEEPERS to match or skip re-running it for that title.
+
+Skips near-empty pages. Usage: python3 scripts/import_articles.py
 """
 import json, os, re, subprocess, sys, urllib.parse, urllib.request
 
 API = "https://wiki.slabserver.org/w/api.php"
 UA = "SlabWikiArchiver/1.0 (static-site migration)"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROOT, "content", "articles")
+SERVER = "survival"
+CONTENT = os.path.join(ROOT, "content", SERVER)
 IMG = os.path.join(ROOT, "static", "images", "articles")
 
 # Curated keepers (main namespace) mapped to a category + season.
@@ -64,6 +71,11 @@ def slugify(title):
     s = re.sub(r"[’']", "", s)
     s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")
     return s
+
+
+def dash_slug(s):
+    """'Season 4' -> 'season-4', 'Farms' -> 'farms'."""
+    return re.sub(r"\s+", "-", s.strip().lower())
 
 
 def find_infobox(text):
@@ -159,7 +171,7 @@ def norm_season(s):
     return f"Season {m.group(1)}" if m else s
 
 
-# slug set for resolving internal wikilinks to kept pages
+# slug -> (season, category) for kept pages, used to resolve internal wikilinks
 KEEPER_SLUGS = {}
 
 
@@ -169,16 +181,17 @@ def rewrite_wikilinks(md):
     def repl(m):
         text, target = m.group(1), m.group(2)
         slug = slugify(target.replace("_", " "))
-        if slug in KEEPER_SLUGS:
-            return f"[{text}](/articles/{slug}/)"
+        hit = KEEPER_SLUGS.get(slug)
+        if hit:
+            season, category = hit
+            return f"[{text}](/{SERVER}/{dash_slug(season)}/{dash_slug(category)}/{slug}/)"
         return text
     return re.sub(r'\[([^\]]+)\]\(([^)]+)\s+"wikilink"\)', repl, md)
 
 
 def main():
-    os.makedirs(OUT, exist_ok=True)
-    for t in KEEPERS:
-        KEEPER_SLUGS[slugify(t)] = True
+    for t, (cat, season) in KEEPERS.items():
+        KEEPER_SLUGS[slugify(t)] = (season, cat)
     written = 0
     for title, (category, default_season) in KEEPERS.items():
         d = api({"action": "query", "prop": "revisions", "rvprop": "content",
@@ -200,10 +213,10 @@ def main():
             continue
 
         # front matter
-        fm = {"title": title.replace("_", " ")}
         season = fields.get("season", "")
         season = norm_season(season) if season else default_season
-        fm["season"] = season
+        slug = slugify(title)
+        fm = {"title": title.replace("_", " ")}
         desc = md.split("\n\n", 1)[0]
         desc = re.sub(r"[#*_`>\[\]]", "", desc).strip()
         if desc:
@@ -229,14 +242,10 @@ def main():
         if coords:
             infobox["Coordinates"] = " ".join(coords)
 
-        lines = ["---"]
-        for k, v in fm.items():
-            lines.append(f"{k}: {yaml_val(v)}")
-        # world is the top axis; all imported articles are Survival content
-        lines.append(f"world: {yaml_val('Survival')}")
-        # taxonomy terms (plural keys drive Hugo taxonomies)
-        lines.append(f"categories: [{yaml_val(category)}]")
-        lines.append(f"seasons: [{yaml_val(season)}]")
+        lines = ["---", f"title: {yaml_val(fm['title'])}",
+                  f"aliases: [{yaml_val('/articles/' + slug + '/')}]"]
+        if "description" in fm:
+            lines.append(f"description: {yaml_val(fm['description'])}")
         if infobox:
             lines.append("infobox:")
             for k, v in infobox.items():
@@ -244,7 +253,9 @@ def main():
         lines.append("---\n")
         out = "\n".join(lines) + md + "\n"
 
-        path = os.path.join(OUT, slugify(title) + ".md")
+        out_dir = os.path.join(CONTENT, dash_slug(season), dash_slug(category))
+        os.makedirs(out_dir, exist_ok=True)
+        path = os.path.join(out_dir, slug + ".md")
         with open(path, "w") as f:
             f.write(out)
         written += 1

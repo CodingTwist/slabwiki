@@ -44,7 +44,9 @@
             <div class="flex justify-between gap-2 px-3.5 py-2 border-b-2 border-rowline last:border-b-0">
               <dt class="text-wood-l font-bold shrink-0">{{ $k | humanize | title }}</dt>
               <dd class="text-fg font-bold text-right min-w-0 [overflow-wrap:anywhere]">
-                {{ if eq (lower $k) "coordinates" }}<span class="coord" data-coord="{{ $v }}">{{ $v }}</span>{{ else }}{{ $v }}{{ end }}
+                {{ if eq (lower $k) "coordinates" }}<span class="coord" data-coord="{{ $v }}">{{ $v }}</span>
+                {{ else if in (slice "builders" "designers" "owners") (lower $k) }}{{ partial "playerheads.html" $v }}
+                {{ else }}{{ $v }}{{ end }}
               </dd>
             </div>
             {{ end }}
