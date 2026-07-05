@@ -77,7 +77,8 @@
   </script>
 
   {{/*  Body: sidebar + content grouped and centered on the wallpaper  */}}
-  <div class="flex-1 w-full article-backdrop" style="--backdrop-url:url('{{ "images/misc/Spawn_Cover_Image.png" | relURL }}')">
+  <div class="flex-1 w-full article-backdrop">
+    <div class="article-backdrop-layer" style="background-image:linear-gradient(rgb(0 0 0 / .40), rgb(0 0 0 / .55)), url('{{ "images/misc/Spawn_Cover_Image.png" | relURL }}')"></div>
     <div class="mx-auto max-w-[1600px] w-full flex flex-col lg:flex-row gap-5 px-4 lg:px-6 py-6">
       <aside class="lg:w-[260px] shrink-0">
         {{ partial "sidebar.html" . }}

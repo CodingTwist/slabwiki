@@ -1366,15 +1366,13 @@
     position: relative;
     isolation: isolate;
   }
-  .article-backdrop::before {
-    content: "";
+  .article-backdrop-layer {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     height: 100vh;
     z-index: -1;
-    background-image: linear-gradient(rgb(0 0 0 / .40), rgb(0 0 0 / .55)), var(--backdrop-url);
     background-size: cover;
     background-position: center 42%;
     image-rendering: pixelated;
