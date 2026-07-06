@@ -1,6 +1,7 @@
 locale = 'en-us'
 title = 'SlabWiki'
 enableGitInfo = false
+enableRobotsTXT = true
 
 [params]
   description = 'The community wiki and shop directory for Slabserver - a Minecraft SMP.'

@@ -4,9 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#16130e">
-  <title>{{ if .IsHome }}{{ .Site.Title }} - {{ .Site.Params.tagline }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
-  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  {{ $pageTitle := cond .IsHome (printf "%s - %s" .Site.Title .Site.Params.tagline) (printf "%s · %s" .Title .Site.Title) }}
+  {{ $pageDesc := .Description | default .Site.Params.description }}
+  <title>{{ $pageTitle }}</title>
+  <meta name="description" content="{{ $pageDesc }}">
+  <link rel="canonical" href="{{ .Permalink }}">
   <link rel="icon" href="{{ "favicon.png" | relURL }}">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ $pageTitle }}">
+  <meta property="og:description" content="{{ $pageDesc }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:site_name" content="{{ .Site.Title }}">
+  <meta property="og:image" content="{{ "images/logo.png" | absURL }}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ $pageTitle }}">
+  <meta name="twitter:description" content="{{ $pageDesc }}">
+  <meta name="twitter:image" content="{{ "images/logo.png" | absURL }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800;6..12,900&display=swap" rel="stylesheet">
@@ -151,5 +165,9 @@
   <link rel="stylesheet" href="{{ "vendor/leaflet/leaflet.css" | relURL }}">
   <script src="{{ "vendor/leaflet/leaflet.js" | relURL }}"></script>
   <script src="{{ "js/slab-map.js" | relURL }}"></script>
+
+  {{/*  Client-side list filtering, wired up from [data-list-filter] config
+        elements emitted by the list-filter.html partial.  */}}
+  <script src="{{ "js/list-filter.js" | relURL }}"></script>
 </body>
 </html>

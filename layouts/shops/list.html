@@ -23,12 +23,7 @@
 {{ range $k, $v := $itemLookup }}{{ $allItems = $allItems | append $v }}{{ end }}
 {{ $allItems = sort $allItems "name" }}
 <div class="page-sheet px-6 sm:px-8 py-8">
-  <div class="mb-5">
-    <span class="pixel-label text-gold">{{ .Site.Params.currentSeason }} · {{ len $shops }} shops</span>
-    <h1 class="pixel text-[26px] md:text-[30px] mt-1.5">{{ .Title }}</h1>
-    {{ with .Description }}<p class="text-muted text-sm mt-1.5">{{ . }}</p>{{ end }}
-    <div class="stripe-divider mt-4"></div>
-  </div>
+  {{ partial "page-header.html" (dict "eyebrow" (printf "%s · %d shops" .Site.Params.currentSeason (len $shops)) "title" .Title "description" .Description) }}
 
   {{ if and $mapCfg $markers }}
   <div class="mc-panel mb-6 overflow-hidden">
@@ -100,26 +95,12 @@
   <p class="text-muted mt-6 hidden" id="no-results">No shops match your search.</p>
 </div>
 
+{{ partial "list-filter.html" (dict "input" "shop-search" "items" "#shop-grid > a" "count" "shop-count" "empty" "no-results") }}
 <script>
 (function () {
   var input = document.getElementById('shop-search');
   var dropdown = document.getElementById('item-dropdown');
   var options = Array.prototype.slice.call(document.querySelectorAll('.item-option'));
-  var cards = Array.prototype.slice.call(document.querySelectorAll('#shop-grid > a'));
-  var countEl = document.getElementById('shop-count');
-  var empty = document.getElementById('no-results');
-
-  function apply() {
-    var q = input.value.trim().toLowerCase();
-    var shown = 0;
-    cards.forEach(function (c) {
-      var hit = !q || c.getAttribute('data-search').indexOf(q) !== -1;
-      c.style.display = hit ? '' : 'none';
-      if (hit) shown++;
-    });
-    countEl.textContent = shown;
-    empty.classList.toggle('hidden', !!shown);
-  }
 
   function escapeRegExp(s) {
     return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -144,16 +125,9 @@
     dropdown.classList.toggle('hidden', !anyVisible);
   }
 
-  var initialQ = new URLSearchParams(location.search).get('q');
-  if (initialQ) {
-    input.value = initialQ;
-    apply();
-  }
+  if (input.value) updateDropdown();
 
-  input.addEventListener('input', function () {
-    apply();
-    updateDropdown();
-  });
+  input.addEventListener('input', updateDropdown);
   input.addEventListener('focus', updateDropdown);
   document.addEventListener('click', function (e) {
     if (e.target !== input && !dropdown.contains(e.target)) dropdown.classList.add('hidden');
@@ -161,7 +135,7 @@
   options.forEach(function (opt) {
     opt.addEventListener('click', function () {
       input.value = opt.getAttribute('data-name');
-      apply();
+      input.dispatchEvent(new Event('input'));
       dropdown.classList.add('hidden');
     });
   });

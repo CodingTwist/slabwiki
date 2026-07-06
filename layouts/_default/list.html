@@ -2,11 +2,7 @@
 {{ $sections := sort .Sections "Weight" "desc" }}
 {{ $pages := where .Pages "Kind" "page" }}
 <div class="page-sheet px-6 sm:px-8 py-8">
-  <div class="mb-5">
-    <h1 class="pixel text-[26px] md:text-[30px]">{{ .Title }}</h1>
-    {{ with .Description }}<p class="text-muted text-sm mt-1.5">{{ . }}</p>{{ end }}
-    <div class="stripe-divider mt-4"></div>
-  </div>
+  {{ partial "page-header.html" (dict "title" .Title "description" .Description) }}
   {{ with .Content }}<div class="prose mb-6">{{ . }}</div>{{ end }}
 
   {{/* Child sections → hub cards (seasons, categories, games) */}}

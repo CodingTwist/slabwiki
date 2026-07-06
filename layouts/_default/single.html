@@ -44,7 +44,7 @@
         {{ end }}
         {{ if ge (len $headings) 3 }}
         <div class="mc-panel overflow-hidden">
-          <div class="pixel bg-wood text-white text-center text-[12px] px-2.5 py-3 border-b-4 border-line [text-shadow:2px_2px_0_rgb(0_0_0/0.3)] uppercase">On This Page</div>
+          {{ partial "panel-header.html" "On This Page" }}
           <nav class="text-[13px] py-2.5 px-3.5 space-y-1.5">
             <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="block text-wood-l hover:underline no-underline pb-1.5 mb-1.5 border-b-2 border-rowline">▲ Back to top</a>
             {{ range $headings }}
@@ -65,7 +65,7 @@
 
         {{/*  Main panel: page title + page-level infobox + section nav.  */}}
         <div class="mc-panel overflow-hidden">
-          <div class="pixel bg-wood text-white text-center text-[12px] px-2.5 py-3 border-b-4 border-line [text-shadow:2px_2px_0_rgb(0_0_0/0.3)] uppercase">{{ .Title }}</div>
+          {{ partial "panel-header.html" .Title }}
           {{ $infoboxCoord := "" }}
           {{ with .Params.infobox }}
           {{ with .image }}

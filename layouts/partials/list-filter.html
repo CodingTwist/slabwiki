@@ -1,0 +1,17 @@
+{{- /* ctx: dict
+  "input" <id of the search input, required>
+  "items" <css selector matching filterable elements, each with a data-search attr>
+  "count" <id of the element showing the visible count, optional>
+  "empty" <id of the "no results" message element, optional>
+  "typeSelect" <id of a <select> filtering via each item's data-type attr, optional>
+  "groups" <css selector for group containers to hide/show and auto-open, optional>
+
+  Emits a config element read by static/js/list-filter.js (compiled from
+  assets/ts/list-filter.ts, loaded once in baseof.html). */ -}}
+<div data-list-filter
+  data-input="{{ .input }}"
+  data-items="{{ .items }}"
+  {{- with .count }} data-count="{{ . }}"{{ end }}
+  {{- with .empty }} data-empty="{{ . }}"{{ end }}
+  {{- with .typeSelect }} data-type-select="{{ . }}"{{ end }}
+  {{- with .groups }} data-groups="{{ . }}"{{ end }} hidden></div>

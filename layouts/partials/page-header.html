@@ -1,0 +1,9 @@
+{{- /* ctx: dict "title" <text> "eyebrow" <optional pixel-label text> "description" <optional> "divider" <optional divider margin class, default "mt-4"> */ -}}
+{{- $eyebrow := .eyebrow -}}
+{{- $divider := .divider | default "mt-4" -}}
+<div class="mb-5">
+  {{ with $eyebrow }}<span class="pixel-label text-gold">{{ . }}</span>{{ end }}
+  <h1 class="pixel text-[26px] md:text-[30px]{{ if $eyebrow }} mt-1.5{{ end }}">{{ .title }}</h1>
+  {{ with .description }}<p class="text-muted text-sm mt-1.5">{{ . }}</p>{{ end }}
+  <div class="stripe-divider {{ $divider }}"></div>
+</div>

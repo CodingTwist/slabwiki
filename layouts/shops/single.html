@@ -62,7 +62,7 @@
       </article>
 
       <aside class="mc-panel lg:sticky lg:top-[var(--sticky-top)] overflow-hidden">
-        <div class="pixel bg-wood text-white text-center text-[12px] px-2.5 py-3 border-b-4 border-line [text-shadow:2px_2px_0_rgb(0_0_0/0.3)] uppercase">{{ .Title }}</div>
+        {{ partial "panel-header.html" .Title }}
         {{ with .Params.image }}
         <div class="border-b-4 border-line">
           <img src="{{ . | strings.TrimPrefix "/" | relURL }}" alt="{{ $.Title }}" class="w-full h-[150px] object-cover pixelated block">

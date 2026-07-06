@@ -4,7 +4,7 @@
 {{- $season := .season -}}
 {{- $coordVal := "" -}}
 <div class="mc-panel overflow-hidden">
-  <div class="pixel bg-wood text-white text-center text-[12px] px-2.5 py-3 border-b-4 border-line [text-shadow:2px_2px_0_rgb(0_0_0/0.3)] uppercase">{{ $title }}</div>
+  {{ partial "panel-header.html" $title }}
   {{ with $box.image }}
   <div class="relative border-b-4 border-line">
     <img src="{{ . | strings.TrimPrefix "/" | relURL }}" alt="{{ $title }}" class="w-full h-[150px] object-cover pixelated block">

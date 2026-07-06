@@ -33,12 +33,7 @@
 {{ $types = sort $types }}
 
 <div class="page-sheet px-6 sm:px-8 py-8">
-  <div class="mb-5">
-    <span class="pixel-label text-gold">{{ .Site.Params.currentSeason }} · {{ len $rows }} resources</span>
-    <h1 class="pixel text-[26px] md:text-[30px] mt-1.5">{{ .Title }}</h1>
-    {{ with .Description }}<p class="text-muted text-sm mt-1.5">{{ . }}</p>{{ end }}
-    <div class="stripe-divider mt-4"></div>
-  </div>
+  {{ partial "page-header.html" (dict "eyebrow" (printf "%s · %d resources" .Site.Params.currentSeason (len $rows)) "title" .Title "description" .Description) }}
 
   {{ if $fetchErr }}
   <p class="text-muted text-sm">The public resources directory couldn't be fetched right now. Try again shortly.</p>
@@ -87,36 +82,5 @@
   {{ end }}
 </div>
 
-<script>
-(function () {
-  var input = document.getElementById('pr-search');
-  if (!input) return;
-  var typeSel = document.getElementById('pr-type');
-  var cards = Array.prototype.slice.call(document.querySelectorAll('#pr-grid > div'));
-  var countEl = document.getElementById('pr-count');
-  var empty = document.getElementById('no-results');
-
-  function apply() {
-    var q = input.value.trim().toLowerCase();
-    var t = typeSel ? typeSel.value : '';
-    var shown = 0;
-    cards.forEach(function (c) {
-      var hit = (!q || c.getAttribute('data-search').indexOf(q) !== -1) &&
-                (!t || c.getAttribute('data-type') === t);
-      c.style.display = hit ? '' : 'none';
-      if (hit) shown++;
-    });
-    countEl.textContent = shown;
-    empty.classList.toggle('hidden', !!shown);
-  }
-
-  var initialQ = new URLSearchParams(location.search).get('q');
-  if (initialQ) {
-    input.value = initialQ;
-  }
-  input.addEventListener('input', apply);
-  if (typeSel) typeSel.addEventListener('change', apply);
-  apply();
-})();
-</script>
+{{ partial "list-filter.html" (dict "input" "pr-search" "items" "#pr-grid > div" "count" "pr-count" "empty" "no-results" "typeSelect" "pr-type") }}
 {{ end }}
