@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{ $servers := hugo.Data.servers.servers }}
+{{ $sections := hugo.Data.sections.sections }}
 {{ $survival := site.GetPage "/survival" }}
 {{ $seasons := slice }}
 {{ with $survival }}{{ range .Sections }}{{ if hasPrefix .LinkTitle "Season" }}{{ $seasons = $seasons | append . }}{{ end }}{{ end }}{{ end }}
@@ -11,7 +11,7 @@
   {{/*  Hero: grass panel with stripe lip  */}}
   <section class="mc-panel mc-panel-grass relative px-7 pt-10 pb-8 sm:px-9">
     <div class="stripe-grass absolute top-0 left-0 right-0 h-2.5 border-b-[3px] border-line"></div>
-    <span class="pixel-label text-[9px] text-[#d7ecc4]">Community wiki · All servers</span>
+    <span class="pixel-label text-[9px] text-[#d7ecc4]">Community wiki · Explore it all</span>
     <h1 class="pixel text-[26px] sm:text-[32px] text-white [text-shadow:3px_3px_0_rgb(0_0_0/0.35)] leading-[1.3] mt-2">Welcome to the<br>Slabserver Wiki</h1>
     <p class="text-[#eaf4dd] text-[16px] mt-4 max-w-[600px] leading-[1.65]">A living directory of everything Slabserver - the Survival seasons, the Nexus games, spawn, public farms, the shop directory, tunnels and lots of lore. <a href="https://slabserver.org/" class="text-white underline decoration-2 underline-offset-2">slabserver.org</a> gets you connected; this is where the community keeps track of everything built along the way.</p>
     <div class="flex flex-wrap items-center gap-3 mt-5">
@@ -39,13 +39,13 @@
     {{ end }}
   </div>
 
-  {{/*  The Servers: the spine of the wiki  */}}
+  {{/*  Explore: the spine of the wiki - worlds + the workshop  */}}
   <div class="flex items-center gap-2.5 mt-8 mb-4">
     {{ partial "mc-icon.html" (dict "slug" "grass-block" "lg" true) }}
-    <h2 class="section-h flex-1">The Servers</h2>
+    <h2 class="section-h flex-1">Explore</h2>
   </div>
   <div class="grid gap-4 sm:grid-cols-2 mb-10">
-    {{ range $servers }}
+    {{ range $sections }}
     {{ $sp := site.GetPage (printf "/%s" .slug) }}
     {{ $quickSlugs := slice }}{{ range .quicklinks }}{{ $quickSlugs = $quickSlugs | append .slug }}{{ end }}
     <a href="{{ $sp.RelPermalink }}" class="mc-card mc-card-hover no-underline p-5 flex flex-col gap-3 group">

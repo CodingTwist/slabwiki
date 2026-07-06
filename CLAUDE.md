@@ -17,8 +17,8 @@ Hugo static site: community wiki & shop directory for Slabserver (a Minecraft SM
 No Hugo taxonomies  `[taxonomies]` is explicitly emptied in `hugo.toml`.
 Hierarchy is plain nested sections: `content/<server>/<season>/<category>/`.
 `content/<server>/_index.md` cascades a `server` param used by templates and
-the sidebar. `data/servers.yaml` drives the header nav, sidebar, and each
-server's icon/quicklinks. See `README.md` for the full breakdown and the
+the sidebar. `data/sections.yaml` drives the Explore nav, sidebar, and each
+section's icon/quicklinks (worlds + the Workshop general blog). See `README.md` for the full breakdown and the
 "adding a new page" walkthrough.
 
 ## Commands
@@ -43,13 +43,13 @@ npm run build   # npm run css && hugo --gc --minify
   `scripts/wiki_cache/s3_bodies.json`). Each S3 wiki page bundles three things,
   split into Hugo's data/content model: the `{{Infobox Shop}}` becomes front
   matter (title/owners/loc/image); the inline `{{Shop Item}}` blocks become the
-  front-matter `items:` list (name/material/inStock — these never populated the
+  front-matter `items:` list (name/material/inStock - these never populated the
   `Shop_Item` cargo table, so they exist only in the wikitext) which drives the
   list-page search, item dropdown, card preview icons, and the single page's
   stock UI; and the prose body becomes the markdown body, rendered by
   `layouts/shops/single.html` via `.Content`. Item `material` icon slugs are
   best-effort derived from item names (British spellings / "Item Set(...)" style
-  entries may not match a sprite — harmless empty icon). They reuse the shared
+  entries may not match a sprite - harmless empty icon). They reuse the shared
   `layouts/shops/` templates, which are season-aware via the
   `seasonKey`/`seasonLabel` params cascaded from the section `_index.md`
   (defaulting to season-4 / currentSeason when unset). Photos + the 3 inline

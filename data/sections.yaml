@@ -1,0 +1,29 @@
+# Drives the header "Explore" nav and the section-aware sidebar. Adding a
+# section is data-only: give it a slug (its content/<slug>/ section), an icon
+# (sprite slug from assets/css/mc-items.css), the label for its primary nav
+# group, and any quicklinks (sub-sections surfaced separately from the main
+# list). Most sections are game worlds; Workshop is the general blog (tech
+# write-ups, updates, anything else), flagged with `kind: blog` so templates
+# can treat its primary group as a post list.
+sections:
+  - title: Survival
+    slug: survival
+    icon: grass-block
+    navLabel: Seasons
+    quicklinks:
+      - {title: Map, slug: season-4/map, icon: filled-map}
+      - {title: Shops, slug: season-4/shops, icon: tall-grass}
+      - {title: Tunnels, slug: season-4/tunnels, icon: rail}
+      - {title: Public Resources, slug: season-4/public-resources, icon: beacon}
+      - {title: The Passage, slug: season-4/puzzles/the-passage/, icon: candle}
+  - title: Nexus
+    slug: nexus
+    icon: ender-pearl
+    navLabel: Games
+    quicklinks: []
+  - title: Workshop
+    slug: workshop
+    icon: crafting-table
+    navLabel: Posts
+    kind: blog
+    quicklinks: []

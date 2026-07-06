@@ -1,0 +1,24 @@
+{{- /* Workshop post byline: a Minecraft helm avatar for the author + the date.
+     ctx: dict "author" <ign> "date" <Time> "size" <"sm"|"lg"> "onGrass" <bool> */ -}}
+{{- $author := .author -}}
+{{- $date := .date -}}
+{{- $lg := eq (.size | default "sm") "lg" -}}
+{{- $px := cond $lg "34" "22" -}}
+{{- $nameCls := cond .onGrass "text-white" "text-fg" -}}
+{{- $dateCls := cond .onGrass "text-[#dCeCcC]" "text-muted" -}}
+<div class="flex flex-wrap items-center {{ cond $lg "gap-3" "gap-2" }}">
+  {{- with $author -}}
+  <span class="inline-flex items-center gap-2 whitespace-nowrap">
+    <img src="https://minotar.net/helm/{{ . }}/{{ $px }}.png"
+         width="{{ $px }}" height="{{ $px }}"
+         loading="lazy" alt="" class="pixelated shrink-0 border-2 border-line">
+    <span class="{{ cond $lg "text-[15px]" "text-[13px]" }} font-bold {{ $nameCls }}">{{ . }}</span>
+  </span>
+  {{- end -}}
+  {{- if and $author (not $date.IsZero) -}}
+  <span class="{{ $dateCls }} opacity-60" aria-hidden="true">•</span>
+  {{- end -}}
+  {{- if not $date.IsZero -}}
+  <time datetime="{{ $date.Format "2006-01-02" }}" class="{{ cond $lg "text-[13px]" "text-xs" }} font-bold {{ $dateCls }}">{{ $date.Format "Jan 2, 2006" }}</time>
+  {{- end -}}
+</div>

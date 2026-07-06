@@ -89,7 +89,7 @@ instead of inline styles:
 
 ```
 assets/css/          main.css (source), app.css (built), mc-items.css (sprites)
-data/servers.yaml     the server list (drives header nav + sidebar)
+data/sections.yaml    the section list - worlds + workshop (drives Explore nav + sidebar)
 content/
   <server>/_index.md      section root; cascades a `server` param to children
   <server>/<season>/      a season, e.g. survival/season-4
@@ -119,10 +119,13 @@ layouts/
 There are no Hugo taxonomies (`[taxonomies]` is explicitly emptied in
 `hugo.toml`) - the hierarchy is just nested sections:
 
-- **Servers** are the top axis (`content/survival/`, `content/nexus/`).
-  Each `content/<server>/_index.md` cascades a `server` param that templates
-  and the sidebar key off. `data/servers.yaml` drives the header nav, sidebar,
-  and each server's icon/quicklinks.
+- **Sections** are the top axis (`content/survival/`, `content/nexus/`,
+  `content/workshop/`). Most are game worlds; Workshop is the general blog -
+  tech write-ups, updates, or anything else the crew wants to post (flagged
+  `kind: blog` in the data file). Each `content/<slug>/_index.md`
+  cascades a `server` param that templates and the sidebar key off.
+  `data/sections.yaml` drives the Explore nav, sidebar, and each section's
+  icon/quicklinks.
 - **Seasons** (`content/survival/season-4/`) and **categories**
   (`.../season-4/builds/`) are just nested sections underneath a server, each
   with its own `_index.md` for title/icon. `params.currentSeason` in
@@ -155,7 +158,7 @@ There are no Hugo taxonomies (`[taxonomies]` is explicitly emptied in
 To add a whole new **category**, create the folder with an `_index.md`
 (`title` + an `item` icon slug from `assets/css/mc-items.css`) under the
 right season. To add a whole new **server**, add an entry to
-`data/servers.yaml` and create `content/<slug>/_index.md`.
+`data/sections.yaml` and create `content/<slug>/_index.md`.
 
 ## Notes
 

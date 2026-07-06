@@ -1,21 +1,21 @@
-{{/* Server-aware sidebar. Derives the current server from .Params.server
-     (cascaded from each content/<server>/_index.md) and looks it up in
-     data/servers.yaml. Primary group = the server landing's children minus its
-     quicklink slugs (Survival → seasons, Nexus → games); then quicklinks; then
-     server status. Each section is its own bordered box, stacked with a gap. On
-     pages with no server (home) it renders a compact server directory
+{{/* Section-aware sidebar. Derives the current section from .Params.server
+     (cascaded from each content/<slug>/_index.md) and looks it up in
+     data/sections.yaml. Primary group = the section landing's children minus its
+     quicklink slugs (Survival → seasons, Nexus → games, Workshop → posts); then
+     quicklinks; then server status. Each block is its own bordered box, stacked
+     with a gap. On pages with no section (home) it renders a compact directory
      instead. Icons use the crisp 32px sprite. */}}
 {{ $curPerm := .RelPermalink }}
 {{ $server := .Params.server }}
 {{ $entry := "" }}
-{{ range hugo.Data.servers.servers }}{{ if eq .title $server }}{{ $entry = . }}{{ end }}{{ end }}
+{{ range hugo.Data.sections.sections }}{{ if eq .title $server }}{{ $entry = . }}{{ end }}{{ end }}
 
 <div class="flex flex-col gap-4 lg:sticky lg:top-[var(--sticky-top)]">
   {{/*  Server switcher (always shown)  */}}
-  <nav class="mc-nav px-4 py-4 lg:px-3 lg:py-4" aria-label="Servers">
-    <div class="pixel-label text-wood-l px-2 pb-2.5 hidden lg:block">Servers</div>
+  <nav class="mc-nav px-4 py-4 lg:px-3 lg:py-4" aria-label="Explore">
+    <div class="pixel-label text-wood-l px-2 pb-2.5 hidden lg:block">Explore</div>
     <ul class="flex lg:flex-col gap-0.5 overflow-x-auto lg:overflow-visible pb-1 lg:pb-0">
-      {{ range hugo.Data.servers.servers }}
+      {{ range hugo.Data.sections.sections }}
         {{ $active := eq $server .title }}
         <li class="shrink-0">
           <a href="{{ with site.GetPage (printf "/%s" .slug) }}{{ .RelPermalink }}{{ end }}"
@@ -66,7 +66,7 @@
   <nav class="mc-nav px-3 py-4 hidden lg:block" aria-label="Quick links">
     <div class="pixel-label text-wood-l px-2 pb-2.5">Quick links</div>
     <ul class="flex flex-col gap-0.5">
-      {{ range hugo.Data.servers.servers }}
+      {{ range hugo.Data.sections.sections }}
         {{ $srv := . }}
         {{ range .quicklinks }}
           {{ $page := site.GetPage (printf "/%s/%s" $srv.slug .slug) }}
