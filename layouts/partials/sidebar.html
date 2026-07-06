@@ -29,27 +29,6 @@
     </ul>
   </nav>
 
-  {{/*  Quick links (always shown, across every server)  */}}
-  <nav class="mc-nav px-3 py-4 hidden lg:block" aria-label="Quick links">
-    <div class="pixel-label text-wood-l px-2 pb-2.5">Quick links</div>
-    <ul class="flex flex-col gap-0.5">
-      {{ range hugo.Data.servers.servers }}
-        {{ $srv := . }}
-        {{ range .quicklinks }}
-          {{ $page := site.GetPage (printf "/%s/%s" $srv.slug .slug) }}
-          {{ $active := and $page (hasPrefix $curPerm $page.RelPermalink) }}
-          <li>
-            <a href="{{ with $page }}{{ .RelPermalink }}{{ end }}"
-               class="flex items-center gap-2.5 px-2 py-1.5 no-underline whitespace-nowrap border-l-4
-                      {{ if $active }}border-grass bg-[rgba(91,138,60,.16)]{{ else }}border-transparent hover:bg-[rgba(91,138,60,.08)]{{ end }}">
-              {{ partial "mc-icon.html" (dict "slug" .icon "lg" true) }}
-              <span class="text-[15px] font-bold {{ if $active }}text-grass-hi{{ else }}text-fg{{ end }}">{{ .title }}</span>
-            </a>
-          </li>
-        {{ end }}
-      {{ end }}
-    </ul>
-  </nav>
 {{ if $entry }}
   {{ $landing := site.GetPage (printf "/%s" $entry.slug) }}
   {{ $quickSlugs := slice }}
@@ -81,14 +60,32 @@
     </ul>
   </nav>
 
+{{ end }}
+
+  {{/*  Quick links (always shown, across every server)  */}}
+  <nav class="mc-nav px-3 py-4 hidden lg:block" aria-label="Quick links">
+    <div class="pixel-label text-wood-l px-2 pb-2.5">Quick links</div>
+    <ul class="flex flex-col gap-0.5">
+      {{ range hugo.Data.servers.servers }}
+        {{ $srv := . }}
+        {{ range .quicklinks }}
+          {{ $page := site.GetPage (printf "/%s/%s" $srv.slug .slug) }}
+          {{ $active := and $page (hasPrefix $curPerm $page.RelPermalink) }}
+          <li>
+            <a href="{{ with $page }}{{ .RelPermalink }}{{ end }}"
+               class="flex items-center gap-2.5 px-2 py-1.5 no-underline whitespace-nowrap border-l-4
+                      {{ if $active }}border-grass bg-[rgba(91,138,60,.16)]{{ else }}border-transparent hover:bg-[rgba(91,138,60,.08)]{{ end }}">
+              {{ partial "mc-icon.html" (dict "slug" .icon "lg" true) }}
+              <span class="text-[15px] font-bold {{ if $active }}text-grass-hi{{ else }}text-fg{{ end }}">{{ .title }}</span>
+            </a>
+          </li>
+        {{ end }}
+      {{ end }}
+    </ul>
+  </nav>
+
   {{/*  Server status (already its own bordered box)  */}}
   <div class="hidden lg:block">
     {{ partial "server-status.html" . }}
   </div>
-{{ else }}
-  {{/*  No server context: switcher box above already lists servers  */}}
-  <div class="hidden lg:block">
-    {{ partial "server-status.html" . }}
-  </div>
-{{ end }}
 </div>

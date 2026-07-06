@@ -9,7 +9,7 @@ servers:
     navLabel: Seasons
     quicklinks:
       - {title: Map, slug: season-4/map, icon: filled-map}
-      - {title: Shops, slug: season-4/shops, icon: emerald}
+      - {title: Shops, slug: season-4/shops, icon: tall-grass}
       - {title: Tunnels, slug: season-4/tunnels, icon: rail}
       - {title: Public Resources, slug: season-4/public-resources, icon: beacon}
       - {title: The Passage, slug: season-4/puzzles/the-passage/, icon: candle}

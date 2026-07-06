@@ -5,9 +5,11 @@
 {{ $img := "" }}
 {{ with .Params.image }}{{ $img = . }}{{ end }}
 {{ with .Params.infobox }}{{ with .image }}{{ $img = . }}{{ end }}{{ end }}
+{{ with .Params.infoboxes }}{{ with index . 0 }}{{ with .image }}{{ $img = . }}{{ end }}{{ end }}{{ end }}
 {{ $coord := "" }}
 {{ with .Params.loc }}{{ $coord = . }}{{ end }}
 {{ with .Params.infobox }}{{ with .Coordinates }}{{ $coord = . }}{{ end }}{{ end }}
+{{ with .Params.infoboxes }}{{ with index . 0 }}{{ with .Coordinates }}{{ $coord = . }}{{ end }}{{ end }}{{ end }}
 {{ $sec := .CurrentSection }}
 {{ $catTitle := "" }}{{ $catIcon := "" }}
 {{ with $sec }}{{ with .Params.icon }}{{ $catIcon = . }}{{ $catTitle = $sec.LinkTitle }}{{ end }}{{ end }}

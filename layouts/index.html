@@ -4,9 +4,8 @@
 {{ $seasons := slice }}
 {{ with $survival }}{{ range .Sections }}{{ if hasPrefix .LinkTitle "Season" }}{{ $seasons = $seasons | append . }}{{ end }}{{ end }}{{ end }}
 {{ $current := "" }}{{ range $seasons }}{{ if .Params.current }}{{ $current = . }}{{ end }}{{ end }}
-{{ $survivalPages := where .Site.RegularPages "Params.server" "Survival" }}
-{{ $featured := where $survivalPages "Params.infobox.image" "!=" nil }}
-{{ $shops := where .Site.RegularPages "Params.shop" true }}
+{{ $featured := slice }}
+{{ range hugo.Data.featured.pages }}{{ with site.GetPage . }}{{ $featured = $featured | append . }}{{ end }}{{ end }}
 <div class="page-sheet px-6 sm:px-8 py-8">
 
   {{/*  Hero: grass panel with stripe lip  */}}
@@ -23,11 +22,21 @@
     </div>
   </section>
 
-  {{/*  Stat cards (computed scoreboard)  */}}
+  {{/*  Quick jump cards: straight to S4 shops, hub (spawn) and public resources  */}}
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
-    <div class="mc-card border-t-4 border-t-grass p-5"><div class="pixel text-[28px] text-grass-hi">{{ len .Site.RegularPages }}</div><div class="text-[14px] text-muted font-bold mt-2">Wiki pages</div></div>
-    <div class="mc-card border-t-4 border-t-grass p-5"><div class="pixel text-[28px] text-grass-hi">{{ len $shops }}</div><div class="text-[14px] text-muted font-bold mt-2">Shops in the directory</div></div>
-    <div class="mc-card border-t-4 border-t-grass p-5"><div class="pixel text-[28px] text-grass-hi">{{ len $featured }}</div><div class="text-[14px] text-muted font-bold mt-2">Featured builds</div></div>
+    {{ range slice
+      (dict "page" (site.GetPage "/survival/season-4/shops") "title" "S4 Shops" "icon" "tall-grass")
+      (dict "page" (site.GetPage "/survival/season-4/builds/spawn") "title" "Hub" "icon" "grass-block")
+      (dict "page" (site.GetPage "/survival/season-4/public-resources") "title" "Resources" "icon" "beacon")
+    }}
+    {{ $item := . }}
+    {{ with .page }}
+    <a href="{{ .RelPermalink }}" class="mc-card mc-card-hover no-underline border-t-4 border-t-grass p-5 flex items-center gap-3">
+      {{ partial "mc-icon.html" (dict "slug" $item.icon "lg" true) }}
+      <span class="pixel text-[15px] text-fg">{{ $item.title }}</span>
+    </a>
+    {{ end }}
+    {{ end }}
   </div>
 
   {{/*  The Servers: the spine of the wiki  */}}
@@ -86,7 +95,7 @@
   {{ with $featured }}
   <div class="flex items-center gap-2.5 mt-8 mb-4">
     {{ partial "mc-icon.html" (dict "slug" "map" "lg" true) }}
-    <h2 class="section-h flex-1">Featured builds</h2>
+    <h2 class="section-h flex-1">Featured pages</h2>
   </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
     {{ range first 6 (sort . "Title") }}{{ partial "entry-card.html" . }}{{ end }}
