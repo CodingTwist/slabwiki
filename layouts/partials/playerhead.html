@@ -1,9 +1,7 @@
 {{- /* Minecraft playerhead avatar next to a username. Context = the IGN.
-     Mirrors the old wiki's Template:Player (minotar.net helm render). */ -}}
+     Mirrors the old wiki's Template:Player (minotar.net helm render).
+     Kept on a single output line so `hugo --minify` doesn't strip the
+     significant space between this inline unit and the following word. */ -}}
 {{- with trim . " " -}}
-<span class="inline-flex items-center whitespace-nowrap align-middle">
-  <img src="https://minotar.net/helm/{{ . }}/20.png" width="20" height="20" loading="lazy"
-       alt="" class="playerhead-img pixelated shrink-0">
-  <span>{{ . }}</span>
-</span>
+<span class="inline-flex items-center whitespace-nowrap align-middle"><img src="https://minotar.net/helm/{{ . }}/20.png" width="20" height="20" loading="lazy" alt="" class="playerhead-img pixelated shrink-0"><span>{{ . }}</span></span>
 {{- end -}}
