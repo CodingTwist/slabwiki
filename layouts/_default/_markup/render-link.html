@@ -2,4 +2,4 @@
 {{- if and (strings.HasPrefix $u "/") (not (strings.HasPrefix $u "//")) -}}
   {{- $u = $u | strings.TrimPrefix "/" | relURL -}}
 {{- end -}}
-<a href="{{ $u | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
+<a href="{{ $u | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>{{- /* trim trailing newline so it doesn't render as a space */ -}}
