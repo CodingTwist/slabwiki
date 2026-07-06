@@ -384,6 +384,14 @@
   .prose a { @apply text-grass-hi underline underline-offset-2; }
   .prose a:hover { filter: brightness(1.1); }
   .prose img { @apply border-[3px] border-line my-4 max-w-full h-auto; box-shadow: 4px 4px 0 var(--c-card-sh); }
+  .prose img.playerhead-img,
+  img.playerhead-img { @apply border-0 my-0 rounded-none; box-shadow: none; }
+  .prose-figure { @apply my-4; }
+  .prose-figure img { @apply my-0 block; }
+  .prose-figure figcaption {
+    @apply bg-wood text-white text-[12px] px-2.5 py-2 border-x-[3px] border-b-[3px] border-line;
+    box-shadow: 4px 4px 0 var(--c-card-sh);
+  }
   .prose code {
     @apply font-mono text-[0.85em] bg-surface-2 border border-rowline px-1 py-0.5 text-fg;
   }

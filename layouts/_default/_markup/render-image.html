@@ -2,4 +2,8 @@
 {{- if and (strings.HasPrefix $u "/") (not (strings.HasPrefix $u "//")) -}}
   {{- $u = $u | strings.TrimPrefix "/" | relURL -}}
 {{- end -}}
-<img src="{{ $u | safeURL }}" alt="{{ .PlainText }}"{{ with .Title }} title="{{ . }}"{{ end }}>
+{{- with .Title -}}
+<figure class="prose-figure"><img src="{{ $u | safeURL }}" alt="{{ $.PlainText }}"><figcaption>{{ . }}</figcaption></figure>
+{{- else -}}
+<img src="{{ $u | safeURL }}" alt="{{ .PlainText }}">
+{{- end -}}

@@ -1,11 +1,16 @@
 {{ define "main" }}
+{{ $seasonKey := .Params.seasonKey | default "season-4" }}
+{{ $seasonLabel := .Params.seasonLabel | default .Site.Params.currentSeason }}
 <div class="w-full">
   <div class="grid lg:grid-cols-[1fr_300px] gap-5 items-start">
 
       <article class="mc-panel min-w-0 px-6 py-6 sm:px-8 sm:pb-8">
-        <span class="pixel-label text-gold">{{ with .Site.Params.currentSeason }}{{ . }} · {{ end }}Shop</span>
+        <span class="pixel-label text-gold">{{ with $seasonLabel }}{{ . }} · {{ end }}Shop</span>
         <h1 class="pixel text-[26px] md:text-[30px] mt-1.5">{{ .Title }}</h1>
         <div class="stripe-divider my-4"></div>
+        {{ with .Content }}
+        <div class="prose mb-6">{{ . }}</div>
+        {{ end }}
         <div class="prose">
           <h2>Stock</h2>
           {{ with .Params.summary }}<p>{{ . }}</p>{{ end }}
@@ -75,10 +80,10 @@
         {{ end }}
         <dl class="text-[13.5px] py-1">
           {{ with .Params.owners }}<div class="flex justify-between gap-2 px-3.5 py-2 border-b-2 border-rowline"><dt class="text-wood-l font-bold shrink-0">Owners</dt><dd class="text-fg font-bold text-right min-w-0 [overflow-wrap:anywhere]">{{ partial "playerheads.html" . }}</dd></div>{{ end }}
-          {{ with .Params.loc }}<div class="flex justify-between gap-2 px-3.5 py-2 border-b-2 border-rowline"><dt class="text-wood-l font-bold shrink-0">Location</dt><dd class="min-w-0 text-right">{{ partial "coord-chip.html" (dict "coord" . "season" "season-4") }}</dd></div>{{ end }}
+          {{ with .Params.loc }}<div class="flex justify-between gap-2 px-3.5 py-2 border-b-2 border-rowline"><dt class="text-wood-l font-bold shrink-0">Location</dt><dd class="min-w-0 text-right">{{ partial "coord-chip.html" (dict "coord" . "season" $seasonKey) }}</dd></div>{{ end }}
           {{ with .Params.updated }}<div class="flex justify-between gap-2 px-3.5 py-2"><dt class="text-wood-l font-bold shrink-0">Updated</dt><dd class="text-fg font-bold text-right min-w-0 [overflow-wrap:anywhere]">{{ . }}</dd></div>{{ end }}
         </dl>
-        {{ with .Params.loc }}{{ partial "location-map.html" (dict "coord" . "season" "season-4" "title" $.Title) }}{{ end }}
+        {{ with .Params.loc }}{{ partial "location-map.html" (dict "coord" . "season" $seasonKey "title" $.Title) }}{{ end }}
         <a href="{{ .Parent.RelPermalink }}" class="mc-panel-grass block border-t-4 text-center py-2.5 no-underline">
           <span class="pixel-label text-[8px] text-white">◂ All shops</span>
         </a>

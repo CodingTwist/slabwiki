@@ -36,9 +36,27 @@ npm run build   # npm run css && hugo --gc --minify
   `static/images/season-4-shops/` by normalized filename via `os.ReadDir`.
   Don't delete images in those two directories without checking the shops
   list page still renders correctly.
-- `static/images/season-3-shops/`, `farms/`, `arg-puzzles/`, `_superseded/`,
-  and `screenshots/` are currently unreferenced by any content/layout but are
-  intentionally kept for future use  do not delete them as "unused."
+- Season 3 shop pages (`content/survival/season-3/shops/`) are **static**
+  committed markdown (117 files + `_index.md`), one per shop, since S3 ended and
+  no longer updates. Regenerate them with `python3 scripts/build_s3_shops.py`
+  (reads the cargo `Shop` table live + cached page bodies in
+  `scripts/wiki_cache/s3_bodies.json`). Each S3 wiki page bundles three things,
+  split into Hugo's data/content model: the `{{Infobox Shop}}` becomes front
+  matter (title/owners/loc/image); the inline `{{Shop Item}}` blocks become the
+  front-matter `items:` list (name/material/inStock — these never populated the
+  `Shop_Item` cargo table, so they exist only in the wikitext) which drives the
+  list-page search, item dropdown, card preview icons, and the single page's
+  stock UI; and the prose body becomes the markdown body, rendered by
+  `layouts/shops/single.html` via `.Content`. Item `material` icon slugs are
+  best-effort derived from item names (British spellings / "Item Set(...)" style
+  entries may not match a sprite — harmless empty icon). They reuse the shared
+  `layouts/shops/` templates, which are season-aware via the
+  `seasonKey`/`seasonLabel` params cascaded from the section `_index.md`
+  (defaulting to season-4 / currentSeason when unset). Photos + the 3 inline
+  prose images live in `static/images/season-3-shops/`.
+- `static/images/farms/`, `arg-puzzles/`, `_superseded/`, and `screenshots/`
+  are currently unreferenced by any content/layout but are intentionally kept
+  for future use  do not delete them as "unused."
 - `scripts/import_articles.py` is a one-shot MediaWiki importer from an
   earlier project iteration; it writes to a flat `content/articles/` layout
   that predates the current server/season/category structure. Don't run it
