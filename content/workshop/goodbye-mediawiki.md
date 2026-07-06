@@ -67,7 +67,7 @@ The wiki sat idle for months. No edits, no new pages, nothing. Meanwhile a full 
 
 And it wasn't even sitting there quietly.
 
-10GB of traffic a day. *Thanks [ClaudeBot](https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler)*, crawling every page over and over. Not a single real visitor behind most of that, just an AI crawler hammering a PHP wiki that nobody was reading or editing anymore.
+10GB of traffic a day. *Thanks [ClaudeBot](https://www.theverge.com/2024/7/25/24205943/anthropic-ai-web-crawler-claudebot-ifixit-scraping-training-data)*, crawling every page over and over. Not a single real visitor behind most of that, just an AI crawler hammering a PHP wiki that nobody was reading or editing anymore.
 
 ## Hugo
 
