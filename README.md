@@ -173,3 +173,10 @@ right season. To add a whole new **server**, add an entry to
   MediaWiki content into an earlier flat `content/articles/` layout; it
   predates the current server/season/category structure and would need
   updating before it could be re-run.
+
+## License
+
+See [`LICENSE`](LICENSE): the code is MIT, the original site imagery and
+visual theme are CC BY-SA 4.0, and the wiki content itself (articles, shop
+listings, player/build data) belongs to the Slabserver community and isn't
+covered by either license.

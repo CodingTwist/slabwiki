@@ -1,0 +1,47 @@
+This repository uses two licenses for two different kinds of material:
+
+## Code — MIT License
+
+Applies to all Hugo templates/layouts, shortcodes, partials, build scripts,
+config, and CSS/JS (everything under `layouts/`, `assets/`, `scripts/`,
+`config/`, and the site's own stylesheets/behavior).
+
+Copyright (c) 2026 CodingTwist
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to
+deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+IN THE SOFTWARE.
+
+## Images & visual theme — CC BY-SA 4.0
+
+Applies to original site imagery and the pixel/Minecraft-inspired visual
+theme/design (screenshots and artwork under `static/images/` that were
+produced for this project, and the overall look-and-feel of the theme
+itself) — not including third-party assets pulled in from elsewhere (e.g.
+Google Fonts, which carry their own licenses; see the site footer for
+credits).
+
+This work is licensed under the Creative Commons Attribution-ShareAlike 4.0
+International License. To view a copy of this license, visit
+https://creativecommons.org/licenses/by-sa/4.0/
+
+## Wiki content
+
+Written articles, shop listings, player/build data, and other Slabserver
+community content under `content/` and `data/` is not covered by either
+license above — it belongs to the Slabserver community and its
+contributors, and is not intended for reuse outside the project.
