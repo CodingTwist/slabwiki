@@ -5,11 +5,11 @@ date: 2026-07-06
 description: 'Why the community wiki left MediaWiki behind for a static Hugo site.'
 summary: "MediaWiki worked, until it didn't. Here's what pushed us to rebuild the wiki on Hugo instead."
 ---
-This wiki used to run on MediaWiki, The same software behind Wikipedia. If it can hold the sum of human knowledge so it should be able to hold a Minecraft server's shop list, that was the thinking anyway. It was picked at different time in the project, since there have been a lot of issues. So it's moving to Hugo, a static site. Here's what it actually looked like, I'll give a retrospective.
+This wiki used to run on [MediaWiki](https://www.mediawiki.org/), the same software behind [Wikipedia](https://www.wikipedia.org/). If it can hold the sum of human knowledge so it should be able to hold a Minecraft server's shop list, that was the thinking anyway. It was picked at different time in the project, since there have been a lot of issues. So it's moving to Hugo, a static site. Here's what it actually looked like, I'll give a retrospective.
 
 ## Getting it running
 
-The install itself wasn't bad. It ran in Pterodactyl, the same panel we use for every game server, using an normal nginx image for it. Pointed it at a database, walk through the web setup, done. That part took maybe an hour. Everything after "it's installed" is where the actual project started, and where it stopped being that easy.
+The install itself wasn't bad. It ran in [Pterodactyl](https://pterodactyl.io/), the same panel we use for every game server, using an normal nginx image for it. Pointed it at a database, walk through the web setup, done. That part took maybe an hour. Everything after "it's installed" is where the actual project started, and where it stopped being that easy.
 
 ## Discord login
 
@@ -21,23 +21,23 @@ Doing it meant going into MediaWiki's auth system directly. I managed to get it 
 
 What I actually wanted was hierarchy. Servers, then seasons under each server, then categories under each season, then pages under that. A real tree, matching how the wiki is actually organized in my head and how it's organized now on Hugo (this site).
 
-MediaWiki's answer to structured data is SMW (Semantic MediaWiki) or Cargo, extensions that let a page carry fields and get queried like a database. I used both, at different points, trying to get this working. I even bought a book on Cargo, that's how serious the attempt was. They're flat by design. Good for "give me every shop owned by this player". I could store the data. I could query the data. I could not make it nest the way I needed in the URL. I did get something working, but it was not good and every page felt empty.
+MediaWiki's answer to structured data is [SMW (Semantic MediaWiki)](https://www.semantic-mediawiki.org/) or [Cargo](https://www.mediawiki.org/wiki/Extension:Cargo), extensions that let a page carry fields and get queried like a database. I used both, at different points, trying to get this working. I even bought a book on Cargo, that's how serious the attempt was. They're flat by design. Good for "give me every shop owned by this player". I could store the data. I could query the data. I could not make it nest the way I needed in the URL. I did get something working, but it was not good and every page felt empty.
 
-I also tried to make editing itself as simple as I could, since not everyone wants to learn wikitext just to add a build. I set up Page Forms hooked into Cargo, so instead of writing a page by hand you'd fill out an actual form and it would generate the page and the Cargo data from that. It sounded like the answer to a lot of this at once, simple editing and structured data in one move. In practice no one really used this feature.
+I also tried to make editing itself as simple as I could, since not everyone wants to learn wikitext just to add a build. I set up [Page Forms](https://www.mediawiki.org/wiki/Extension:Page_Forms) hooked into Cargo, so instead of writing a page by hand you'd fill out an actual form and it would generate the page and the Cargo data from that. It sounded like the answer to a lot of this at once, simple editing and structured data in one move. In practice no one really used this feature.
 
 ## Infoboxes needed Lua
 
-The little infobox on the side of a page, that's usually built on Lua modules through the Scribunto extension on any wiki that's doing it properly. My Docker image could not run Lua.
+The little infobox on the side of a page, that's usually built on [Lua](https://www.lua.org/) modules through the [Scribunto](https://www.mediawiki.org/wiki/Extension:Scribunto) extension on any wiki that's doing it properly. My Docker image could not run Lua.
 
 So getting infoboxes working meant learning how Pterodactyl eggs work, the templates that define what a server image actually installs and runs, and building my own with Lua baked in. A lot of work to just so a page could show a little box of stats in the corner.
 
 ## Theming
 
-Found a skin called Citizen. Looked a lot better than the MediaWiki default, more modern, less like a 2005 forum. But it wasn't very changeable past its own settings, and it broke in odd ways once other extensions were running alongside it, bugs that only showed up with everything stacked together, not in isolation. Never got it to a point where it felt like it was actually built for this wiki. I wanted a Discord link in the sidebar too but there was no clean way to add one, so I had to it injected with JavaScript instead.
+Found a skin called [Citizen](https://www.mediawiki.org/wiki/Skin:Citizen). Looked a lot better than the MediaWiki default, more modern, less like a 2005 forum. But it wasn't very changeable past its own settings, and it broke in odd ways once other extensions were running alongside it, bugs that only showed up with everything stacked together, not in isolation. Never got it to a point where it felt like it was actually built for this wiki. I wanted a Discord link in the sidebar too but there was no clean way to add one, so I had to it injected with JavaScript instead.
 
 ## The custom map
 
-I reverse engineered the in-game map p3lxmap, so I could control the frontend and loaded it into MediaWiki's map extension so people could click around and see where shops and builds actually were in the world.
+I reverse engineered the in-game map [p3lxmap](https://github.com/pl3xgaming/Pl3xMap), so I could control the frontend and loaded it into MediaWiki's map extension so people could click around and see where shops and builds actually were in the world.
 
 Worked great, until it started throwing errors. The extension plots everything in latitude and longitude, which has a hard cap built in, because normally that's meant for a small area on a real-world map, not a Minecraft world where X and Z just keep climbing the further you build from spawn. Go out far enough and you blow past that cap and the extension just errors out instead of placing anything. So it got split: infoboxes used the real embedded map, the shop list used the custom one since every shop was >1000 away from 0 0.
 
@@ -67,11 +67,11 @@ The wiki sat idle for months. No edits, no new pages, nothing. Meanwhile a full 
 
 And it wasn't even sitting there quietly.
 
-10GB of traffic a day. *Thanks ClaudeBot*, crawling every page over and over. Not a single real visitor behind most of that, just an AI crawler hammering a PHP wiki that nobody was reading or editing anymore.
+10GB of traffic a day. *Thanks [ClaudeBot](https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler)*, crawling every page over and over. Not a single real visitor behind most of that, just an AI crawler hammering a PHP wiki that nobody was reading or editing anymore.
 
 ## Hugo
 
-Now it's Hugo. Static, built ahead of time, no PHP, no database, no extensions to keep balanced against each other. This didn't feel like fighting the tool at any point. I was fully in control of it the whole way through.
+Now it's [Hugo](https://gohugo.io/). Static, built ahead of time, no PHP, no database, no extensions to keep balanced against each other. This didn't feel like fighting the tool at any point. I was fully in control of it the whole way through.
 
 The MediaWiki setup took months to get working, on and off, spread across the auth work, the Lua egg, the theming, the map. This whole rebuild, the entire site you're reading this on, took a week.
 
@@ -97,7 +97,7 @@ Pterodactyl. Before this I used it the normal way: pick an egg, click install, d
 
 My nginx skills got good too. Between the custom egg and just keeping the thing routed and running, I stopped copy-pasting configs and started actually understanding what they did.
 
-The PHP and auth work carried further than the login button. While I was in there I also tried to get the wiki itself acting as an OAuth provider, so a Kanboard board could let people log in with their wiki account. The idea was to use it to help direct people to tasks. That part never worked. But it's where I actually learned OAuth properly.
+The PHP and auth work carried further than the login button. While I was in there I also tried to get the wiki itself acting as an [OAuth](https://oauth.net/) provider, so a [Kanboard](https://kanboard.org/) board could let people log in with their wiki account. The idea was to use it to help direct people to tasks. That part never worked. But it's where I actually learned OAuth properly.
 
 The Cargo fight taught me what a flat data model can and can't do. That's the direct reason the Hugo site's structure, actually nests the way I wanted from the start instead of faking it with categories again.
 
@@ -113,4 +113,4 @@ The friendly in-browser editor is gone. That's the real tradeoff, and I'm not go
 
 Before I close this out, a few people actually did show up and I want to name them.
 
-{{< playerhead "DaMarine" >}} was the MVP of the whole project. Believed in it when it was just me pushing on it, and wrote some genuinely amazing puzzle pages. {{< playerhead "PurpleKiiwi" >}} wrote a great shop page. {{< playerhead "StoryCatBuilds" >}} stepped up more than once and put together some really good pages. That's the handful I mentioned earlier, and they're the reason this wasn't a total waste of time.
+{{< playerhead "DaMarine" >}} was the MVP of the whole project. Believed in it when it was just me pushing on it, and wrote some genuinely amazing [puzzle](/survival/season-2/puzzles/the-disc-11-puzzle/) [pages](/survival/season-4/puzzles/the-passage/). {{< playerhead "PurpleKiiwi" >}} wrote a great shop page. {{< playerhead "StoryCatBuilds" >}} stepped up more than once and put together some really good pages. That's the handful I mentioned earlier, and they're the reason this wasn't a total waste of time.
