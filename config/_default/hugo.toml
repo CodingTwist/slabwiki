@@ -4,7 +4,7 @@ enableGitInfo = false
 enableRobotsTXT = true
 
 [params]
-  description = 'The community wiki and shop directory for Slabserver - a Minecraft SMP.'
+  description = 'The community wiki and shop directory for Slabserver'
   tagline = 'Community wiki & shop directory for Slabserver'
   # Published Google Sheet (Directory - Slabserver Season 4), exported as CSV.
   # File > Share > Publish to web > CSV, or the /export?format=csv&gid=... form.
