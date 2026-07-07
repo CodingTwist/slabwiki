@@ -1,7 +1,7 @@
 {{/* Blocky entry card. Works for shops (.Params.image, .Params.loc) and
-     articles (.Params.infobox.image). The immediate section is the category
-     (carries title + sprite icon); the season chip comes from the shared
-     "season.html" partial (page `season` param, else a "Season N" ancestor). */}}
+     articles (.Params.infobox.image). Chips are derived from the path now:
+     the immediate section is the category (carries title + sprite icon), and a
+     "Season N" ancestor supplies the season chip. */}}
 {{ $img := "" }}
 {{ with .Params.image }}{{ $img = . }}{{ end }}
 {{ with .Params.infobox }}{{ with .image }}{{ $img = . }}{{ end }}{{ end }}
@@ -15,7 +15,7 @@
 {{ with $sec }}{{ with .Params.icon }}{{ $catIcon = . }}{{ $catTitle = $sec.LinkTitle }}{{ end }}{{ end }}
 {{ $season := "" }}
 {{ $seasonKey := "" }}
-{{ with partial "season.html" . }}{{ $season = .LinkTitle }}{{ $seasonKey = path.Base .RelPermalink }}{{ end }}
+{{ with $sec.Parent }}{{ if hasPrefix .LinkTitle "Season" }}{{ $season = .LinkTitle }}{{ $seasonKey = path.Base .RelPermalink }}{{ end }}{{ end }}
 {{/* Container is a div, not an <a>: coord-chip's map link is a real nested
      <a>, and browsers repair <a> nested inside <a> by splitting the outer
      anchor into fragments (each keeping the mc-card styling), shattering the

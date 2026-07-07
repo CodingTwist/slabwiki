@@ -1,6 +1,6 @@
 {{ define "main" }}
 {{ $sec := .CurrentSection }}
-{{ $season := partial "season.html" . }}
+{{ $season := "" }}{{ with $sec.Parent }}{{ if hasPrefix .LinkTitle "Season" }}{{ $season = . }}{{ end }}{{ end }}
 {{ $seasonKey := "" }}{{ with $season }}{{ $seasonKey = path.Base .RelPermalink }}{{ end }}
 {{ $isCat := and $sec $sec.Params.icon }}
 <div class="w-full">
