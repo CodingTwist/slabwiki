@@ -26,7 +26,7 @@
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
     {{ range slice
       (dict "page" (site.GetPage "/survival/season-4/shops") "title" "S4 Shops" "icon" "tall-grass")
-      (dict "page" (site.GetPage "/survival/season-4/builds/spawn") "title" "Hub" "icon" "grass-block")
+      (dict "page" (site.GetPage "/survival/builds/spawn") "title" "Hub" "icon" "grass-block")
       (dict "page" (site.GetPage "/survival/season-4/public-resources") "title" "Resources" "icon" "beacon")
     }}
     {{ $item := . }}
@@ -75,9 +75,9 @@
   <div class="puzzle-strip mb-10">
     <div class="puzzle-track">
     {{ range slice
-      (dict "page" (site.GetPage "/survival/season-2/puzzles/the-disc-11-puzzle") "title" "The Disc" "season" "Season 2" "img" "/images/articles/disc-arg-banner.webp")
-      (dict "page" (site.GetPage "/survival/season-3/puzzles/the-tunnel") "title" "The Tunnel" "season" "Season 3" "img" "/images/articles/tunnel-arg-banner.webp")
-      (dict "page" (site.GetPage "/survival/season-4/puzzles/the-passage") "title" "The Passage" "season" "Season 4" "img" "/images/articles/passage-arg-banner.webp")
+      (dict "page" (site.GetPage "/survival/puzzles/the-disc-11-puzzle") "title" "The Disc" "season" "Season 2" "img" "/images/articles/disc-arg-banner.webp")
+      (dict "page" (site.GetPage "/survival/puzzles/the-tunnel") "title" "The Tunnel" "season" "Season 3" "img" "/images/articles/tunnel-arg-banner.webp")
+      (dict "page" (site.GetPage "/survival/puzzles/the-passage") "title" "The Passage" "season" "Season 4" "img" "/images/articles/passage-arg-banner.webp")
     }}
     <a href="{{ .page.RelPermalink }}" class="puzzle-panel no-underline" aria-label="{{ .title }}">
       <div class="puzzle-img" style="background-image:url('{{ .img | strings.TrimPrefix "/" | relURL }}')"></div>
