@@ -1,32 +1,38 @@
-{{/* Season info panel: boxed stat card (wood-banner header, bordered rows)
-     matching the site's infobox-panel style, instead of a bare chip row.
-     Shows status (current/ended/archived), dates, and spawn coord+map link
-     from the season's front matter (`current`, `completed`, `dates`,
-     `spawn`). Any field left unset is simply omitted; a future `seed` param
-     can slot in the same way. */}}
+{{/* Season info: a full-width row of stat cards (one boxed, labelled tile per
+     fact) instead of a narrow stranded panel. Each tile has a sprite icon, a
+     pixel label and a bold value; tiles grow to fill the width, so the strip
+     reads as a hub dashboard whether a season has one fact or several.
+     Sourced from the season's front matter (`current`, `completed`, `dates`,
+     `spawn`); any unset field is omitted, and a future `seed` slots in the
+     same way. */}}
 {{ $showDates := and .Params.dates (ne (lower .Params.dates) "archived") }}
-<div class="mc-panel overflow-hidden max-w-sm mb-6">
-  {{ partial "panel-header.html" "Season Info" }}
-  <dl class="text-[13.5px] py-1">
-    <div class="flex justify-between items-center gap-2 px-3.5 py-2 border-b-2 border-rowline last:border-b-0">
-      <dt class="text-wood-l font-bold shrink-0">Status</dt>
-      <dd class="text-right">
-        {{ if .Params.current }}<span class="mc-badge mc-badge-grass">Current</span>
-        {{ else if .Params.completed }}<span class="mc-badge">Ended</span>
-        {{ else }}<span class="mc-badge">Archived</span>{{ end }}
-      </dd>
+{{ $season := path.Base .RelPermalink }}
+<div class="flex flex-wrap gap-3 mb-8">
+  <div class="mc-card grow basis-52 flex items-center gap-3 px-4 py-3">
+    {{ partial "mc-icon.html" (dict "slug" "grass-block" "lg" true) }}
+    <div class="flex flex-col gap-1.5 min-w-0">
+      <span class="pixel-label text-wood-l">Status</span>
+      {{ if .Params.current }}<span class="mc-badge mc-badge-grass w-fit">Current</span>
+      {{ else if .Params.completed }}<span class="mc-badge w-fit">Ended</span>
+      {{ else }}<span class="mc-badge w-fit">Archived</span>{{ end }}
     </div>
-    {{ if $showDates }}
-    <div class="flex justify-between items-center gap-2 px-3.5 py-2 border-b-2 border-rowline last:border-b-0">
-      <dt class="text-wood-l font-bold shrink-0">Dates</dt>
-      <dd class="text-fg font-bold text-right">{{ .Params.dates }}</dd>
+  </div>
+  {{ if $showDates }}
+  <div class="mc-card grow basis-52 flex items-center gap-3 px-4 py-3">
+    {{ partial "mc-icon.html" (dict "slug" "clock" "lg" true) }}
+    <div class="flex flex-col gap-1.5 min-w-0">
+      <span class="pixel-label text-wood-l">Dates</span>
+      <span class="text-fg font-bold text-[14px] leading-tight">{{ .Params.dates }}</span>
     </div>
-    {{ end }}
-    {{ with .Params.spawn }}
-    <div class="flex justify-between items-center gap-2 px-3.5 py-2 border-b-2 border-rowline last:border-b-0">
-      <dt class="text-wood-l font-bold shrink-0">Spawn</dt>
-      <dd class="text-fg font-bold text-right">{{ partial "coord-chip.html" (dict "coord" . "season" (path.Base $.RelPermalink)) }}</dd>
+  </div>
+  {{ end }}
+  {{ with .Params.spawn }}
+  <div class="mc-card grow basis-52 flex items-center gap-3 px-4 py-3">
+    {{ partial "mc-icon.html" (dict "slug" "lodestone" "lg" true) }}
+    <div class="flex flex-col gap-1.5 min-w-0">
+      <span class="pixel-label text-wood-l">Spawn</span>
+      <span class="text-[14px]">{{ partial "coord-chip.html" (dict "coord" . "season" $season) }}</span>
     </div>
-    {{ end }}
-  </dl>
+  </div>
+  {{ end }}
 </div>
