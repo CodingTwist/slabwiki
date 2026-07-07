@@ -1,21 +1,32 @@
-{{/* Season intro strip: status badge (current/ended/archived), dates, and
-     spawn coordinate (linked to that season's map), pulled from the season
-     `_index.md` front matter (`current`, `dates`, `started`, `completed`,
-     `spawn`). Any field left unset is simply omitted. */}}
-<div class="flex flex-wrap items-center gap-2 mb-5">
-  {{ if .Params.current }}
-    <span class="mc-badge mc-badge-grass">Current Season</span>
-  {{ else if .Params.completed }}
-    <span class="mc-badge">Ended</span>
-  {{ else if .Params.dates }}
-    <span class="mc-badge">Archived</span>
-  {{ end }}
-  {{ with .Params.dates }}
-  {{ if ne (lower .) "archived" }}
-  <span class="chip inline-flex items-center gap-1">{{ partial "mc-icon.html" "clock" }}{{ . }}</span>
-  {{ end }}
-  {{ end }}
-  {{ with .Params.spawn }}
-  <span class="chip inline-flex items-center gap-1">{{ partial "coord-chip.html" (dict "coord" . "season" (path.Base $.RelPermalink)) }}</span>
-  {{ end }}
+{{/* Season info panel: boxed stat card (wood-banner header, bordered rows)
+     matching the site's infobox-panel style, instead of a bare chip row.
+     Shows status (current/ended/archived), dates, and spawn coord+map link
+     from the season's front matter (`current`, `completed`, `dates`,
+     `spawn`). Any field left unset is simply omitted; a future `seed` param
+     can slot in the same way. */}}
+{{ $showDates := and .Params.dates (ne (lower .Params.dates) "archived") }}
+<div class="mc-panel overflow-hidden max-w-sm mb-6">
+  {{ partial "panel-header.html" "Season Info" }}
+  <dl class="text-[13.5px] py-1">
+    <div class="flex justify-between items-center gap-2 px-3.5 py-2 border-b-2 border-rowline last:border-b-0">
+      <dt class="text-wood-l font-bold shrink-0">Status</dt>
+      <dd class="text-right">
+        {{ if .Params.current }}<span class="mc-badge mc-badge-grass">Current</span>
+        {{ else if .Params.completed }}<span class="mc-badge">Ended</span>
+        {{ else }}<span class="mc-badge">Archived</span>{{ end }}
+      </dd>
+    </div>
+    {{ if $showDates }}
+    <div class="flex justify-between items-center gap-2 px-3.5 py-2 border-b-2 border-rowline last:border-b-0">
+      <dt class="text-wood-l font-bold shrink-0">Dates</dt>
+      <dd class="text-fg font-bold text-right">{{ .Params.dates }}</dd>
+    </div>
+    {{ end }}
+    {{ with .Params.spawn }}
+    <div class="flex justify-between items-center gap-2 px-3.5 py-2 border-b-2 border-rowline last:border-b-0">
+      <dt class="text-wood-l font-bold shrink-0">Spawn</dt>
+      <dd class="text-fg font-bold text-right">{{ partial "coord-chip.html" (dict "coord" . "season" (path.Base $.RelPermalink)) }}</dd>
+    </div>
+    {{ end }}
+  </dl>
 </div>
