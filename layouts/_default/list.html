@@ -30,22 +30,37 @@
   {{ end }}
 
   {{ if hasPrefix .Title "Season" }}
+  {{/* Season spotlight: curated highlights for this season (e.g. its ARG
+       puzzle, spawn, a signature build), set via the season's `spotlight:`
+       front matter. Puzzle pages are one-per-season and don't work as a
+       filterable category, so they live only here, not in the grid below. */}}
+  {{ with .Params.spotlight }}
+  <div class="mb-10">
+    <div class="pixel-label text-wood-l mb-3">Season Spotlight</div>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {{ range . }}{{ with site.GetPage . }}{{ partial "spotlight-card.html" . }}{{ end }}{{ end }}
+    </div>
+  </div>
+  {{ end }}
+
   {{/* Season portal: articles live directly under the season and carry one or
        more `categories` tags. Rather than group into sections (which forces a
        multi-tagged page to pick one home or duplicate), show a single grid with
        a category filter-chip bar. Each card carries data-categories; the inline
        script below toggles cards, so a page matches every filter it's tagged
-       with and appears exactly once. */}}
-  {{ $allSlugs := slice }}{{ range hugo.Data.categories.categories }}{{ $allSlugs = $allSlugs | append .slug }}{{ end }}
+       with and appears exactly once. Puzzles are excluded (see spotlight above). */}}
+  {{ $allSlugs := slice }}{{ range hugo.Data.categories.categories }}{{ if ne .slug "puzzles" }}{{ $allSlugs = $allSlugs | append .slug }}{{ end }}{{ end }}
   {{ $articles := where (where .RegularPages "Kind" "page") "Params.categories" "intersect" $allSlugs }}
   {{ with $articles }}
   <div id="season-portal" class="mt-8">
     <div class="flex flex-wrap items-center gap-2 mb-5">
       <button type="button" data-cat-filter="all" class="chip chip-filter">All <span class="text-faint">({{ len $articles }})</span></button>
       {{ range hugo.Data.categories.categories }}
+        {{ if ne .slug "puzzles" }}
         {{ $n := len (where $articles "Params.categories" "intersect" (slice .slug)) }}
         {{ if gt $n 0 }}
         <button type="button" data-cat-filter="{{ .slug }}" class="chip chip-filter inline-flex items-center gap-1">{{ partial "mc-icon.html" .icon }}{{ .title }} <span class="text-faint">({{ $n }})</span></button>
+        {{ end }}
         {{ end }}
       {{ end }}
       <span class="text-sm text-faint ml-auto"><span id="season-count">{{ len $articles }}</span> shown</span>

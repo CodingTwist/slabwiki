@@ -321,6 +321,9 @@
   .mr-1 {
     margin-right: var(--spacing);
   }
+  .mb-1 {
+    margin-bottom: var(--spacing);
+  }
   .mb-1\.5 {
     margin-bottom: calc(var(--spacing) * 1.5);
   }
@@ -411,6 +414,9 @@
   .min-h-\[128px\] {
     min-height: 128px;
   }
+  .min-h-\[180px\] {
+    min-height: 180px;
+  }
   .min-h-screen {
     min-height: 100vh;
   }
@@ -425,6 +431,9 @@
   }
   .w-10 {
     width: calc(var(--spacing) * 10);
+  }
+  .w-fit {
+    width: fit-content;
   }
   .w-full {
     width: 100%;
@@ -1126,6 +1135,13 @@
     &:is(:where(.group):hover *) {
       @media (hover: hover) {
         opacity: 55%;
+      }
+    }
+  }
+  .group-hover\:opacity-65 {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        opacity: 65%;
       }
     }
   }

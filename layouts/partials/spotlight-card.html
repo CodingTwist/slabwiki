@@ -1,0 +1,21 @@
+{{/* Bigger hero-style card for a season's spotlight strip (curated via the
+     season's `spotlight:` front matter). Puzzle pages (categories: [puzzles])
+     get an "ARG Puzzle" ribbon since they're one-per-season and otherwise
+     don't appear in the season's filterable grid. */}}
+{{ $img := "" }}
+{{ with .Params.image }}{{ $img = . }}{{ end }}
+{{ with .Params.infobox }}{{ with .image }}{{ $img = . }}{{ end }}{{ end }}
+{{ with .Params.infoboxes }}{{ with index . 0 }}{{ with .image }}{{ $img = . }}{{ end }}{{ end }}{{ end }}
+{{ $isPuzzle := in (.Params.categories | default slice) "puzzles" }}
+<a href="{{ .RelPermalink }}" class="mc-card mc-card-hover no-underline relative overflow-hidden min-h-[180px] flex flex-col justify-end group">
+  {{ with $img }}
+  <div class="absolute inset-0 bg-cover bg-center opacity-50 group-hover:opacity-65 transition-opacity duration-300 pixelated" style="background-image:url('{{ . | strings.TrimPrefix "/" | relURL }}')"></div>
+  <div class="absolute inset-0 bg-gradient-to-t from-card via-card/80 to-transparent"></div>
+  {{ end }}
+  <div class="relative p-5 flex flex-col gap-1.5">
+    {{ if $isPuzzle }}<span class="mc-badge mc-badge-gold w-fit mb-1">ARG Puzzle</span>{{ end }}
+    <h3 class="pixel text-[16px] text-fg leading-tight">{{ .Title }}</h3>
+    {{ with .Params.summary }}<p class="text-sm text-muted line-clamp-2">{{ . }}</p>
+    {{ else }}{{ with .Description }}<p class="text-sm text-muted line-clamp-2">{{ . }}</p>{{ end }}{{ end }}
+  </div>
+</a>
