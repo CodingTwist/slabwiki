@@ -29,29 +29,6 @@
   </div>
   {{ end }}
 
-  {{/* Season portal: flat category articles no longer live under the season
-       section, so gather them by their `season` param and group by category.
-       (Shops/public-resources/tunnels are still nested and appear as hub cards
-       above.) */}}
-  {{ if hasPrefix .Title "Season" }}
-  {{ $num := int (strings.TrimPrefix "season-" (path.Base .RelPermalink)) }}
-  {{ range (site.GetPage "/survival").Sections }}
-    {{ if hasPrefix .Title "Season" }}{{ continue }}{{ end }}
-    {{ if not .Params.icon }}{{ continue }}{{ end }}
-    {{ $cat := . }}
-    {{ $catPages := where (where .RegularPages "Kind" "page") "Params.season" $num }}
-    {{ with $catPages }}
-    <div class="flex items-center gap-2.5 mt-8 mb-4">
-      {{ partial "mc-icon.html" (dict "slug" $cat.Params.icon "lg" true) }}
-      <h2 class="section-h flex-1">{{ $cat.LinkTitle }}</h2>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-      {{ range .ByTitle }}{{ partial "entry-card.html" . }}{{ end }}
-    </div>
-    {{ end }}
-  {{ end }}
-  {{ end }}
-
   {{/* Child pages → entry cards (articles in a category, game subpages) */}}
   {{ with $pages }}
   <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
