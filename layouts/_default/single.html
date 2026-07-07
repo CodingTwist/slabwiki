@@ -3,6 +3,12 @@
 {{ $seasonKey := "" }}{{ with $season }}{{ $seasonKey = path.Base .RelPermalink }}{{ end }}
 {{ $cat := partial "category.html" . }}
 {{ $isCat := $cat.slug }}
+{{/* All category tags (title + term page) for the chip row. */}}
+{{ $cats := slice }}
+{{ range .Params.categories }}
+  {{ $slug := . }}
+  {{ range hugo.Data.categories.categories }}{{ if eq .slug $slug }}{{ $cats = $cats | append (dict "title" .title "page" (site.GetPage (printf "/categories/%s" .slug))) }}{{ end }}{{ end }}
+{{ end }}
 <div class="w-full">
   <div class="grid lg:grid-cols-[1fr_300px] gap-5 items-start">
 
@@ -19,9 +25,9 @@
           {{ .Content }}
         </div>
 
-        {{ if or $cat.page $season }}
+        {{ if or $cats $season }}
         <div class="flex flex-wrap gap-1.5 mt-8 pt-4 border-t-2 border-rowline">
-          {{ with $cat.page }}<a class="chip" href="{{ .RelPermalink }}">{{ $cat.title }}</a>{{ end }}
+          {{ range $cats }}<a class="chip" href="{{ with .page }}{{ .RelPermalink }}{{ end }}">{{ .title }}</a>{{ end }}
           {{ with $season }}<a class="chip" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}
         </div>
         {{ end }}

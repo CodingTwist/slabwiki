@@ -364,6 +364,11 @@
   a.chip:hover { @apply border-grass text-fg; }
   .chip-season { @apply text-gold; }
 
+  /* Category filter buttons on the season portal (toggle the article grid). */
+  .chip-filter { @apply cursor-pointer select-none; }
+  .chip-filter:hover { @apply border-grass text-fg; }
+  .chip-filter.is-on { @apply border-grass bg-grass text-white; }
+
   /* Prose (article body) - themed typographic defaults. */
   .prose { @apply max-w-none leading-[1.75] text-body text-[16.5px]; }
   .prose h2, .prose h3 {

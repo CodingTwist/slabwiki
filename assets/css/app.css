@@ -1800,6 +1800,20 @@
   .chip-season {
     color: var(--color-gold);
   }
+  .chip-filter {
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .chip-filter:hover {
+    border-color: var(--color-grass);
+    color: var(--color-fg);
+  }
+  .chip-filter.is-on {
+    border-color: var(--color-grass);
+    background-color: var(--color-grass);
+    color: var(--color-white);
+  }
   .prose {
     max-width: none;
     font-size: 16.5px;

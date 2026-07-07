@@ -1,7 +1,8 @@
 {{/* Blocky entry card. Works for shops (.Params.image, .Params.loc) and
-     articles (.Params.infobox.image). The category chip comes from the page's
-     `categories` tag (via partials/category.html); the season chip from a
-     "Season N" ancestor (via partials/season.html). */}}
+     articles (.Params.infobox.image). A chip is shown for every `categories`
+     tag the page carries (resolved to title+icon via data/categories.yaml);
+     the season chip comes from a "Season N" ancestor (partials/season.html).
+     The root carries data-categories so the season-portal filter can match. */}}
 {{ $img := "" }}
 {{ with .Params.image }}{{ $img = . }}{{ end }}
 {{ with .Params.infobox }}{{ with .image }}{{ $img = . }}{{ end }}{{ end }}
@@ -10,9 +11,12 @@
 {{ with .Params.loc }}{{ $coord = . }}{{ end }}
 {{ with .Params.infobox }}{{ with .Coordinates }}{{ $coord = . }}{{ end }}{{ end }}
 {{ with .Params.infoboxes }}{{ with index . 0 }}{{ with .Coordinates }}{{ $coord = . }}{{ end }}{{ end }}{{ end }}
-{{ $cat := partial "category.html" . }}
-{{ $catTitle := "" }}{{ $catIcon := "" }}
-{{ with $cat.title }}{{ $catTitle = . }}{{ $catIcon = $cat.icon }}{{ end }}
+{{/* Resolve every category tag to its title+icon (data/categories.yaml). */}}
+{{ $cats := slice }}
+{{ range .Params.categories }}
+  {{ $slug := . }}
+  {{ range hugo.Data.categories.categories }}{{ if eq .slug $slug }}{{ $cats = $cats | append . }}{{ end }}{{ end }}
+{{ end }}
 {{ $season := "" }}
 {{ $seasonKey := "" }}
 {{ with partial "season.html" . }}{{ $season = .LinkTitle }}{{ $seasonKey = path.Base .RelPermalink }}{{ end }}
@@ -21,7 +25,7 @@
      anchor into fragments (each keeping the mc-card styling), shattering the
      card. Instead the title carries a stretched-link overlay for the main
      click target, leaving the map link independently clickable above it. */}}
-<div class="mc-card mc-card-hover flex flex-col overflow-hidden group relative">
+<div class="mc-card mc-card-hover flex flex-col overflow-hidden group relative" data-categories="{{ delimit (.Params.categories | default slice) " " }}">
   {{ with $img }}
   <div class="aspect-[16/10] overflow-hidden bg-surface-2 border-b-[3px] border-line relative">
     <img src="{{ . | strings.TrimPrefix "/" | relURL }}" alt="" loading="lazy" class="w-full h-full object-cover">
@@ -37,7 +41,7 @@
     {{ with .Params.summary }}<p class="text-sm text-muted line-clamp-2">{{ . }}</p>
     {{ else }}{{ with .Description }}<p class="text-sm text-muted line-clamp-2">{{ . }}</p>{{ end }}{{ end }}
     <div class="flex flex-wrap items-center gap-1.5 mt-auto pt-1">
-      {{ with $catTitle }}<span class="chip inline-flex items-center gap-1">{{ with $catIcon }}{{ partial "mc-icon.html" . }}{{ end }}{{ . }}</span>{{ end }}
+      {{ range $cats }}<span class="chip inline-flex items-center gap-1">{{ with .icon }}{{ partial "mc-icon.html" . }}{{ end }}{{ .title }}</span>{{ end }}
       {{ if not $img }}{{ with $season }}<span class="chip chip-season">{{ . }}</span>{{ end }}{{ end }}
       {{ with $coord }}{{ partial "coord-chip.html" (dict "coord" . "season" $seasonKey) }}{{ end }}
     </div>
