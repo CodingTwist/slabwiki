@@ -1,7 +1,5 @@
 ---
 categories: [puzzles]
-aliases:
-  - /survival/season-3/puzzles/the-tunnel/
 title: 'The Tunnel'
 infobox:
   image: '/images/articles/tunnel-arg-artwork.png'

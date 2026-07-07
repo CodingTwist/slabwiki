@@ -2,7 +2,7 @@
 # content path (as passed to site.GetPage), no leading/trailing slash needed.
 pages:
   - survival/season-4/spawn
-  - survival/season-4/s4-outposts
+  - survival/season-4/outposts
   - survival/season-4/public-shulker-farm
   - survival/season-3/decked-out
   - survival/season-2/the-disc-11-puzzle

@@ -1,7 +1,5 @@
 ---
 categories: [community]
-aliases:
-  - /survival/season-4/community/fish-cult/
 title: 'Fish Cult'
 infobox:
   image: '/images/articles/2025-02-16-19-51-21.png'

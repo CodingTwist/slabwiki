@@ -1,8 +1,6 @@
 ---
 categories: [builds]
-aliases:
-  - /survival/season-4/builds/spawn/
-title: 'S4Spawn'
+title: 'Spawn'
 infobox:
   image: '/images/articles/s4spawn.png'
   Status: 'Building'

@@ -10,7 +10,7 @@ description: 'The current Survival world. Spawn, public farms, shops, games and 
 spotlight:
   - survival/season-4/the-passage
   - survival/season-4/spawn
-  - survival/season-4/s4-outposts
+  - survival/season-4/outposts
   - survival/season-4/public-shulker-farm
 ---
 The current Survival world. Spawn was built over many months by the community

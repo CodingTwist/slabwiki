@@ -1,7 +1,5 @@
 ---
 categories: [farms]
-aliases:
-  - /survival/season-4/farms/public-blaze-farm/
 title: 'Public Blaze farm'
 infobox:
   image: '/images/articles/blaze-farm.png'

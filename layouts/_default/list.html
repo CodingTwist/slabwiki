@@ -3,6 +3,7 @@
 {{ $pages := where .Pages "Kind" "page" }}
 <div class="page-sheet px-6 sm:px-8 py-8">
   {{ partial "page-header.html" (dict "title" .Title "description" .Description) }}
+  {{ if hasPrefix .Title "Season" }}{{ partial "season-stats.html" . }}{{ end }}
   {{ with .Content }}<div class="prose mb-6">{{ . }}</div>{{ end }}
 
   {{/* Child sections → hub cards (seasons, categories, games) */}}

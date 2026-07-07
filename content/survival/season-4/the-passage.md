@@ -1,7 +1,5 @@
 ---
 categories: [puzzles]
-aliases:
-  - /survival/season-4/puzzles/the-passage/
 title: 'The Passage'
 infobox:
   image: '/images/articles/passage-arg-artwork.png'

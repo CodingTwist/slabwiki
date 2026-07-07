@@ -1,8 +1,6 @@
 ---
 categories: [events]
-aliases:
-  - /survival/season-4/events/s4-games-district/
-title: 'S4 Games District'
+title: 'Games District'
 infobox:
   Status: 'Building'
   Builders: '8138763, ClockworksHero'

@@ -1,7 +1,5 @@
 ---
 categories: [builds]
-aliases:
-  - /survival/season-3/builds/season3-spawn/
 title: 'Season3 Spawn'
 infobox:
   Status: 'Complete'

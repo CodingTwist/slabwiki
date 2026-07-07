@@ -23,8 +23,8 @@
 {{ end }}
 <a href="{{ $page.RelPermalink }}" class="mc-card mc-card-hover no-underline relative overflow-hidden flex flex-col justify-end group {{ $span }}">
   {{ with $img }}
-  <div class="absolute inset-0 bg-cover bg-center opacity-50 group-hover:opacity-65 transition-opacity duration-300 pixelated" style="background-image:url('{{ . | strings.TrimPrefix "/" | relURL }}')"></div>
-  <div class="absolute inset-0 bg-gradient-to-t from-card via-card/80 to-transparent"></div>
+  <div class="absolute inset-0 bg-cover bg-center pixelated" style="background-image:url('{{ . | strings.TrimPrefix "/" | relURL }}')"></div>
+  <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"></div>
   {{ end }}
   <div class="relative p-4 flex flex-col gap-1.5">
     {{ if $isPuzzle }}<span class="mc-badge mc-badge-gold w-fit mb-1">ARG Puzzle</span>{{ end }}

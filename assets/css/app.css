@@ -6,6 +6,7 @@
     --font-sans: "Nunito Sans", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
     --text-xs: 0.75rem;
@@ -731,9 +732,24 @@
   .bg-\[repeating-linear-gradient\(90deg\,\#a6e05a_0_6px\,\#7cc24a_6px_12px\)\] {
     background-image: repeating-linear-gradient(90deg,#a6e05a 0 6px,#7cc24a 6px 12px);
   }
+  .from-black\/85 {
+    --tw-gradient-from: color-mix(in srgb, #000 85%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      --tw-gradient-from: color-mix(in oklab, var(--color-black) 85%, transparent);
+    }
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
   .from-card {
     --tw-gradient-from: var(--color-card);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .via-black\/15 {
+    --tw-gradient-via: color-mix(in srgb, #000 15%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      --tw-gradient-via: color-mix(in oklab, var(--color-black) 15%, transparent);
+    }
+    --tw-gradient-via-stops: var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-via) var(--tw-gradient-via-position), var(--tw-gradient-to) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-via-stops);
   }
   .via-card\/80 {
     --tw-gradient-via: var(--color-card);
@@ -1156,13 +1172,6 @@
     &:is(:where(.group):hover *) {
       @media (hover: hover) {
         opacity: 55%;
-      }
-    }
-  }
-  .group-hover\:opacity-65 {
-    &:is(:where(.group):hover *) {
-      @media (hover: hover) {
-        opacity: 65%;
       }
     }
   }

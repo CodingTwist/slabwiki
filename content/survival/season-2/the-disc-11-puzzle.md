@@ -1,7 +1,5 @@
 ---
 categories: [puzzles]
-aliases:
-  - /survival/season-2/puzzles/the-disc-11-puzzle/
 title: 'The Disc 11 Puzzle'
 infobox:
   image: '/images/articles/disc-arg-artwork.png'

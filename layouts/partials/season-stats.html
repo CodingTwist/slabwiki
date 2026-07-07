@@ -1,0 +1,21 @@
+{{/* Season intro strip: status badge (current/ended/archived), dates, and
+     spawn coordinate (linked to that season's map), pulled from the season
+     `_index.md` front matter (`current`, `dates`, `started`, `completed`,
+     `spawn`). Any field left unset is simply omitted. */}}
+<div class="flex flex-wrap items-center gap-2 mb-5">
+  {{ if .Params.current }}
+    <span class="mc-badge mc-badge-grass">Current Season</span>
+  {{ else if .Params.completed }}
+    <span class="mc-badge">Ended</span>
+  {{ else if .Params.dates }}
+    <span class="mc-badge">Archived</span>
+  {{ end }}
+  {{ with .Params.dates }}
+  {{ if ne (lower .) "archived" }}
+  <span class="chip inline-flex items-center gap-1">{{ partial "mc-icon.html" "clock" }}{{ . }}</span>
+  {{ end }}
+  {{ end }}
+  {{ with .Params.spawn }}
+  <span class="chip inline-flex items-center gap-1">{{ partial "coord-chip.html" (dict "coord" . "season" (path.Base $.RelPermalink)) }}</span>
+  {{ end }}
+</div>

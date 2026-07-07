@@ -1,7 +1,5 @@
 ---
 categories: [builds]
-aliases:
-  - /survival/season-3/builds/decked-out/
 title: 'Decked Out'
 infobox:
   image: '/images/articles/clockfinland.png'

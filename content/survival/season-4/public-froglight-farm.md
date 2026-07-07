@@ -1,7 +1,5 @@
 ---
 categories: [farms]
-aliases:
-  - /survival/season-4/farms/public-froglight-farm/
 title: 'Public Froglight Farm'
 infobox:
   image: '/images/articles/froglight-farm-exterior-2025-02-16.png'
