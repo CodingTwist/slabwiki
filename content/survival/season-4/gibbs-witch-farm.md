@@ -1,4 +1,7 @@
 ---
+categories: [farms]
+aliases:
+  - /survival/season-4/farms/gibbs-witch-farm/
 title: '(Gibb''s) Witch Farm'
 infobox:
   Status: 'Complete'

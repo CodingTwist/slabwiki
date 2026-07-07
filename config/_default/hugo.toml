@@ -19,11 +19,14 @@ enableRobotsTXT = true
   # Minecraft server address for the live sidebar status panel (mcsrvstat.us).
   serverAddress = 'slabserver.org'
 
-# Top axis is the server (content/<server>/). Season and category are just
-# nested sections under a server - no taxonomies. Each content/<server>/_index.md
-# cascades a `server` param that templates key off. currentSeason is informational.
-# The empty block disables Hugo's built-in `tags`/`categories` taxonomies.
+# Top axis is the server (content/<server>/); season is a nested section
+# (content/<server>/<season>/). Category is NOT a folder any more - it's a
+# `categories` tag on each page, so an article lives directly under its season
+# and can carry one or more categories (build, farm, event, puzzle, community).
+# data/categories.yaml holds each category's display title + sprite icon.
+# Each content/<server>/_index.md cascades a `server` param templates key off.
 [taxonomies]
+  category = 'categories'
 
 # Home also emits index.json - the client-side search index.
 [outputs]

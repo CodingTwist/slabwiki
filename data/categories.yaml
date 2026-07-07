@@ -1,0 +1,12 @@
+# The Survival article categories. Category is a `categories` tag on each page
+# (see hugo.toml [taxonomies]) rather than a folder, so this file supplies the
+# display title + Minecraft sprite icon (slug from assets/css/mc-items.css) for
+# each category slug. Used by the entry-card chip, the single-page tag row, and
+# the season-portal grouping in layouts/_default/list.html. Order here is the
+# order categories are shown in a season portal.
+categories:
+  - {slug: builds, title: Builds, icon: grass-block}
+  - {slug: farms, title: Farms, icon: wheat}
+  - {slug: events, title: Events, icon: firework-rocket}
+  - {slug: puzzles, title: Puzzles, icon: redstone}
+  - {slug: community, title: Community, icon: player-head}

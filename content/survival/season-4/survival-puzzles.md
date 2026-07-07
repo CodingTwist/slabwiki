@@ -1,4 +1,7 @@
 ---
+categories: [puzzles]
+aliases:
+  - /survival/season-4/puzzles/survival-puzzles/
 title: 'Survival Puzzles'
 ---
 # DaUltraTrilogy
@@ -9,7 +12,7 @@ title: 'Survival Puzzles'
 
 <h3>
 
-[The Disc 11 Puzzle](/survival/season-2/puzzles/the-disc-11-puzzle/)
+[The Disc 11 Puzzle](/survival/season-2/the-disc-11-puzzle/)
 
 </h3>
 
@@ -28,7 +31,7 @@ title: 'Survival Puzzles'
 
 <h3>
 
-[The Tunnel](/survival/season-3/puzzles/the-tunnel/)
+[The Tunnel](/survival/season-3/the-tunnel/)
 
 </h3>
 
@@ -47,7 +50,7 @@ title: 'Survival Puzzles'
 
 <h3>
 
-[The Passage](/survival/season-4/puzzles/the-passage/)
+[The Passage](/survival/season-4/the-passage/)
 
 </h3>
 

@@ -1,4 +1,7 @@
 ---
+categories: [events]
+aliases:
+  - /survival/season-4/events/s4-games-district/
 title: 'S4 Games District'
 infobox:
   Status: 'Building'

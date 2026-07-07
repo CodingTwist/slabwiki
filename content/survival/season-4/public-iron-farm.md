@@ -1,4 +1,7 @@
 ---
+categories: [farms]
+aliases:
+  - /survival/season-4/farms/public-iron-farm/
 title: 'Public Iron Farm'
 infobox:
   image: '/images/articles/iron-farm2.png'

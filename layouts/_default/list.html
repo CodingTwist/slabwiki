@@ -29,11 +29,31 @@
   </div>
   {{ end }}
 
-  {{/* Child pages → entry cards (articles in a category, game subpages) */}}
+  {{ if hasPrefix .Title "Season" }}
+  {{/* Season portal: articles live directly under the season and carry a
+       `categories` tag, so group them by category (data/categories.yaml order)
+       instead of by child section. */}}
+  {{ $page := . }}
+  {{ range hugo.Data.categories.categories }}
+    {{ $cat := . }}
+    {{ $catPages := where (where $page.RegularPages "Kind" "page") "Params.categories" "intersect" (slice .slug) }}
+    {{ with $catPages }}
+    <div class="flex items-center gap-2.5 mt-8 mb-4">
+      {{ partial "mc-icon.html" (dict "slug" $cat.icon "lg" true) }}
+      <h2 class="section-h flex-1">{{ $cat.title }}</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+      {{ range .ByTitle }}{{ partial "entry-card.html" . }}{{ end }}
+    </div>
+    {{ end }}
+  {{ end }}
+  {{ else }}
+  {{/* Child pages → entry cards (category term pages, game subpages, etc.) */}}
   {{ with $pages }}
   <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
     {{ range .ByTitle }}{{ partial "entry-card.html" . }}{{ end }}
   </div>
+  {{ end }}
   {{ end }}
 </div>
 {{ end }}

@@ -1,4 +1,7 @@
 ---
+categories: [builds]
+aliases:
+  - /survival/season-4/builds/spawn-storage/
 title: 'S4Spawn/Storage'
 infobox:
   image: '/images/articles/spawn-storage.png'

@@ -1,4 +1,7 @@
 ---
+categories: [builds]
+aliases:
+  - /survival/season-3/builds/season3-spawn/
 title: 'Season3 Spawn'
 infobox:
   Status: 'Complete'
@@ -14,4 +17,4 @@ test test
 
 ### HELLO WORLD
 
-[S4Spawn/Storage](/survival/season-4/builds/spawn-storage/)
+[S4Spawn/Storage](/survival/season-4/spawn-storage/)

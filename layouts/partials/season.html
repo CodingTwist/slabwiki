@@ -1,0 +1,10 @@
+{{- /* Resolve the Season landing Page for any Survival page by walking its
+     section ancestry for a "Season N" section. Works whether the page sits
+     directly under the season (loose articles) or one level down in an
+     exception folder (shops, public-resources, tunnels). Returns the season
+     Page, or an empty string. */ -}}
+{{- $season := "" -}}
+{{- range .Ancestors -}}
+  {{- if and (not $season) (hasPrefix .LinkTitle "Season") -}}{{- $season = . -}}{{- end -}}
+{{- end -}}
+{{- return $season -}}

@@ -2,7 +2,10 @@
 {{- range .Site.RegularPages -}}
   {{- if ne .Section "server-info" -}}
     {{- $server := .Params.server | default "" -}}
-    {{- $sec := "" -}}{{- with .CurrentSection }}{{ if .Title }}{{ $sec = .LinkTitle }}{{ end }}{{ end -}}
+    {{- /* category: prefer the page's `categories` tag, else its section
+         (covers still-nested shops, whose section is the category) */ -}}
+    {{- $sec := (partial "category.html" .).title | default "" -}}
+    {{- with .CurrentSection }}{{ if and (not $sec) .Title }}{{ $sec = .LinkTitle }}{{ end }}{{ end -}}
     {{- $coord := "" -}}
     {{- with .Params.loc }}{{ $coord = . }}{{ end -}}
     {{- with .Params.infobox }}{{ with .Coordinates }}{{ $coord = . }}{{ end }}{{ end -}}

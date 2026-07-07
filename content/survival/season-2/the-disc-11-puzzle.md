@@ -1,4 +1,7 @@
 ---
+categories: [puzzles]
+aliases:
+  - /survival/season-2/puzzles/the-disc-11-puzzle/
 title: 'The Disc 11 Puzzle'
 infobox:
   image: '/images/articles/disc-arg-artwork.png'
@@ -41,13 +44,13 @@ On March 21, 2016, {{< playerhead "DaMarine" >}} published a [postmortem](https:
 
 ## Sequels
 
-Owing to the positive reception of the Disc 11 puzzle, and despite the prior expectations that no future puzzles would be made, several years later a second puzzle, “[The Tunnel](/survival/season-3/puzzles/the-tunnel/)”, was created by {{< playerhead "DaMarine" >}} and {{< playerhead "MCfineplayer" >}} for Season 3.
+Owing to the positive reception of the Disc 11 puzzle, and despite the prior expectations that no future puzzles would be made, several years later a second puzzle, “[The Tunnel](/survival/season-3/the-tunnel/)”, was created by {{< playerhead "DaMarine" >}} and {{< playerhead "MCfineplayer" >}} for Season 3.
 
-On the 23rd of August 2024, {{< playerhead "DaMarine" >}} announced that a third and final puzzle had been secretly in development for Season 4 since March 2020. The third puzzle concludes the unofficial trilogy of community puzzles, and released on April 4th, 2025, its name finally revealed as "[The Passage](/survival/season-4/puzzles/the-passage/)".
+On the 23rd of August 2024, {{< playerhead "DaMarine" >}} announced that a third and final puzzle had been secretly in development for Season 4 since March 2020. The third puzzle concludes the unofficial trilogy of community puzzles, and released on April 4th, 2025, its name finally revealed as "[The Passage](/survival/season-4/the-passage/)".
 
 ## Trivia
 
 - During development, the puzzle was internally known as “Project Aquarius”, referencing Aquarius as the 11th zodiac sign.
-- Disc 11 also featured in the Season 3 community puzzle, "[The Tunnel](/survival/season-3/puzzles/the-tunnel/)", and served a similar purpose during the final stage to solve the puzzle.
+- Disc 11 also featured in the Season 3 community puzzle, "[The Tunnel](/survival/season-3/the-tunnel/)", and served a similar purpose during the final stage to solve the puzzle.
 - In mid-2018, [Java Edition 1.13](https://minecraft.wiki/w/Java_Edition_1.13) overhauled the command syntax, causing the commands used for the puzzle to no longer work. {{< playerhead "MCfineplayer" >}} helped the staff team update the puzzle to the new command syntax, and addressed several long-standing bugs with the puzzle.
   - Due to his contributions and continued involvement with the staff team, {{< playerhead "MCfineplayer" >}} was later invited to join the team.

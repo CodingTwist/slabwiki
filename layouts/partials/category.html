@@ -1,0 +1,14 @@
+{{- /* Resolve a page's primary category (its first `categories` tag) to a
+     dict: slug, title, icon (from data/categories.yaml) and page (the
+     /categories/<slug>/ taxonomy term page). Returns an empty dict when the
+     page has no category. */ -}}
+{{- $out := dict -}}
+{{- with .Params.categories -}}
+  {{- $slug := index . 0 -}}
+  {{- range hugo.Data.categories.categories -}}
+    {{- if eq .slug $slug -}}
+      {{- $out = dict "slug" $slug "title" .title "icon" .icon "page" (site.GetPage (printf "/categories/%s" $slug)) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

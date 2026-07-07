@@ -1,9 +1,9 @@
 # Pages shown in the homepage "Featured pages" section. Each entry is a
 # content path (as passed to site.GetPage), no leading/trailing slash needed.
 pages:
-  - survival/season-4/builds/spawn
-  - survival/season-4/builds/s4-outposts
-  - survival/season-4/farms/public-shulker-farm
-  - survival/season-3/builds/decked-out
-  - survival/season-2/puzzles/the-disc-11-puzzle
+  - survival/season-4/spawn
+  - survival/season-4/s4-outposts
+  - survival/season-4/public-shulker-farm
+  - survival/season-3/decked-out
+  - survival/season-2/the-disc-11-puzzle
   - survival/season-3/shops/hollow-knight-map-art

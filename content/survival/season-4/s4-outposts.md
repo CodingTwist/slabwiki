@@ -1,4 +1,7 @@
 ---
+categories: [builds]
+aliases:
+  - /survival/season-4/builds/s4-outposts/
 title: 'S4 Outposts'
 infoboxes:
   - title: 'Moss Outpost'

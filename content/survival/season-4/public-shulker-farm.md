@@ -1,4 +1,7 @@
 ---
+categories: [farms]
+aliases:
+  - /survival/season-4/farms/public-shulker-farm/
 title: 'Public Shulker Farm'
 infobox:
   image: '/images/articles/shulker-farm3.png'

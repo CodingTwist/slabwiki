@@ -1,4 +1,0 @@
----
-title: Farms
-icon: wheat
----

@@ -14,8 +14,18 @@ Hugo static site: community wiki & shop directory for Slabserver (a Minecraft SM
 
 ## Content model
 
-No Hugo taxonomies  `[taxonomies]` is explicitly emptied in `hugo.toml`.
-Hierarchy is plain nested sections: `content/<server>/<season>/<category>/`.
+Hierarchy is `content/<server>/<season>/` — an article lives **directly under
+its season** (e.g. `content/survival/season-4/spawn.md`). Category is **not a
+folder**: it's a `categories` **taxonomy tag** (`hugo.toml [taxonomies]`
+`category = 'categories'`), so a page carries one or more of build / farm /
+event / puzzle / community and can be nested in subfolders freely without that
+dictating its category. `data/categories.yaml` maps each category slug to its
+display title + sprite icon; `partials/category.html` resolves a page's primary
+category and `partials/season.html` resolves its season (by "Season N"
+ancestry). The entry-card chip, single-page tag row, and the season-portal
+grouping in `layouts/_default/list.html` all key off the tag, not the path.
+Exceptions kept as season-nested folders: `shops/`, `public-resources/`,
+`tunnels/` (data-driven) and the season `_index.md` hub pages.
 `content/<server>/_index.md` cascades a `server` param used by templates and
 the sidebar. `data/sections.yaml` drives the Explore nav, sidebar, and each
 section's icon/quicklinks (worlds + the Workshop general blog). See `README.md` for the full breakdown and the

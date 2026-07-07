@@ -1,8 +1,8 @@
 {{ define "main" }}
-{{ $sec := .CurrentSection }}
-{{ $season := "" }}{{ with $sec.Parent }}{{ if hasPrefix .LinkTitle "Season" }}{{ $season = . }}{{ end }}{{ end }}
+{{ $season := partial "season.html" . }}
 {{ $seasonKey := "" }}{{ with $season }}{{ $seasonKey = path.Base .RelPermalink }}{{ end }}
-{{ $isCat := and $sec $sec.Params.icon }}
+{{ $cat := partial "category.html" . }}
+{{ $isCat := $cat.slug }}
 <div class="w-full">
   <div class="grid lg:grid-cols-[1fr_300px] gap-5 items-start">
 
@@ -19,12 +19,10 @@
           {{ .Content }}
         </div>
 
-        {{ $tags := slice }}
-        {{ if $isCat }}{{ $tags = $tags | append $sec }}{{ end }}
-        {{ with $season }}{{ $tags = $tags | append . }}{{ end }}
-        {{ with $tags }}
+        {{ if or $cat.page $season }}
         <div class="flex flex-wrap gap-1.5 mt-8 pt-4 border-t-2 border-rowline">
-          {{ range . }}<a class="chip" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}
+          {{ with $cat.page }}<a class="chip" href="{{ .RelPermalink }}">{{ $cat.title }}</a>{{ end }}
+          {{ with $season }}<a class="chip" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}
         </div>
         {{ end }}
       </article>
@@ -91,11 +89,11 @@
           {{ with $infoboxCoord }}{{ partial "location-map.html" (dict "coord" . "season" $seasonKey "title" $.Title "world" $.Params.infobox.World) }}{{ end }}
           {{ end }}
 
-          {{ if $isCat }}
-          {{ $related := where (where $sec.Pages "Kind" "page") "Permalink" "!=" $.Permalink }}
+          {{ if and $isCat $season }}
+          {{ $related := where (where (where $season.RegularPages "Kind" "page") "Params.categories" "intersect" (slice $cat.slug)) "Permalink" "!=" $.Permalink }}
           {{ with $related }}
           <div class="px-3.5 py-3 border-t-2 border-rowline">
-            <div class="pixel-label text-wood-l mb-2">More in {{ $sec.LinkTitle }}</div>
+            <div class="pixel-label text-wood-l mb-2">More {{ $cat.title }} in {{ $season.LinkTitle }}</div>
             <ul class="space-y-1.5">
               {{ range first 6 (.ByTitle) }}<li><a class="text-sm text-grass-hi hover:underline no-underline" href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
             </ul>
