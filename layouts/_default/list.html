@@ -32,13 +32,24 @@
   {{ if hasPrefix .Title "Season" }}
   {{/* Season spotlight: curated highlights for this season (e.g. its ARG
        puzzle, spawn, a signature build), set via the season's `spotlight:`
-       front matter. Puzzle pages are one-per-season and don't work as a
-       filterable category, so they live only here, not in the grid below. */}}
+       front matter, laid out as an asymmetric magazine grid (first item big,
+       second tall, rest normal). Puzzle pages are one-per-season and don't
+       work as a filterable category, so they live only here, not in the grid
+       below - and every spotlighted page is excluded from that grid too, so
+       nothing appears twice. */}}
+  {{ $spotlightPaths := slice }}
   {{ with .Params.spotlight }}
   <div class="mb-10">
     <div class="pixel-label text-wood-l mb-3">Season Spotlight</div>
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {{ range . }}{{ with site.GetPage . }}{{ partial "spotlight-card.html" . }}{{ end }}{{ end }}
+    <div class="grid grid-cols-2 lg:grid-cols-4 auto-rows-[130px] gap-4">
+      {{ range $i, $slug := . }}
+        {{ with site.GetPage $slug }}
+          {{ $spotlightPaths = $spotlightPaths | append .RelPermalink }}
+          {{ $size := "normal" }}
+          {{ if eq $i 0 }}{{ $size = "big" }}{{ else if eq $i 1 }}{{ $size = "tall" }}{{ end }}
+          {{ partial "spotlight-card.html" (dict "page" . "size" $size) }}
+        {{ end }}
+      {{ end }}
     </div>
   </div>
   {{ end }}
@@ -50,7 +61,7 @@
        script below toggles cards, so a page matches every filter it's tagged
        with and appears exactly once. Puzzles are excluded (see spotlight above). */}}
   {{ $allSlugs := slice }}{{ range hugo.Data.categories.categories }}{{ if ne .slug "puzzles" }}{{ $allSlugs = $allSlugs | append .slug }}{{ end }}{{ end }}
-  {{ $articles := where (where .RegularPages "Kind" "page") "Params.categories" "intersect" $allSlugs }}
+  {{ $articles := where (where (where .RegularPages "Kind" "page") "Params.categories" "intersect" $allSlugs) "RelPermalink" "not in" $spotlightPaths }}
   {{ with $articles }}
   <div id="season-portal" class="mt-8">
     <div class="flex flex-wrap items-center gap-2 mb-5">
