@@ -2,11 +2,38 @@
      fact) instead of a narrow stranded panel. Each tile has a sprite icon, a
      pixel label and a bold value; tiles grow to fill the width, so the strip
      reads as a hub dashboard whether a season has one fact or several.
-     Sourced from the season's front matter (`current`, `completed`, `dates`,
-     `spawn`); any unset field is omitted, and a future `seed` slots in the
-     same way. */}}
+     Facts come from the season's front matter (`current`, `completed`, `dates`,
+     `started`) plus two derived counts (documented entries, shops) and a link
+     to the season map. Any tile whose data is missing is omitted, and a
+     future `seed` slots in the same way. */}}
 {{ $showDates := and .Params.dates (ne (lower .Params.dates) "archived") }}
 {{ $season := path.Base .RelPermalink }}
+
+{{/* Derived counts. `.RegularPages` is the season's own directly-filed articles
+     (builds, farms, puzzles, …) — the "documented" number. Shops live in a
+     data-generated `shops/` subsection, so they're counted from that section
+     page and get their own tile only where any exist. */}}
+{{ $entries := len .RegularPages }}
+{{ $shops := 0 }}
+{{ with site.GetPage (printf "/survival/%s/shops" $season) }}{{ $shops = len .RegularPages }}{{ end }}
+
+{{/* Derived duration: span from `started` to `completed` (or now if current),
+     rendered as "Ny Mm" or "N months". Needs a `started` date, so only shows
+     where one is set. */}}
+{{ $durText := "" }}
+{{ with .Params.started }}
+  {{ $start := time.AsTime . }}
+  {{ $end := now }}
+  {{ with $.Params.completed }}{{ $end = time.AsTime . }}{{ end }}
+  {{ $days := div (int ($end.Sub $start).Hours) 24 }}
+  {{ $months := int (math.Round (div (float $days) 30.44)) }}
+  {{ if ge $months 12 }}
+    {{ $durText = printf "%dy %dm" (int (math.Floor (div (float $months) 12))) (mod $months 12) }}
+  {{ else }}
+    {{ $durText = printf "%d months" $months }}
+  {{ end }}
+{{ end }}
+
 <div class="flex flex-wrap gap-3 mb-8">
   <div class="mc-card grow basis-52 flex items-center gap-3 px-4 py-3">
     {{ partial "mc-icon.html" (dict "slug" "grass-block" "lg" true) }}
@@ -26,13 +53,40 @@
     </div>
   </div>
   {{ end }}
-  {{ with .Params.spawn }}
+  {{ with $durText }}
   <div class="mc-card grow basis-52 flex items-center gap-3 px-4 py-3">
-    {{ partial "mc-icon.html" (dict "slug" "lodestone" "lg" true) }}
+    {{ partial "mc-icon.html" (dict "slug" "book" "lg" true) }}
     <div class="flex flex-col gap-1.5 min-w-0">
-      <span class="pixel-label text-wood-l">Spawn</span>
-      <span class="text-[14px]">{{ partial "coord-chip.html" (dict "coord" . "season" $season) }}</span>
+      <span class="pixel-label text-wood-l">Duration</span>
+      <span class="text-fg font-bold text-[14px] leading-tight">{{ . }}</span>
     </div>
   </div>
+  {{ end }}
+  {{ if gt $entries 0 }}
+  <div class="mc-card grow basis-52 flex items-center gap-3 px-4 py-3">
+    {{ partial "mc-icon.html" (dict "slug" "bookshelf" "lg" true) }}
+    <div class="flex flex-col gap-1.5 min-w-0">
+      <span class="pixel-label text-wood-l">Documented</span>
+      <span class="text-fg font-bold text-[14px] leading-tight">{{ $entries }} {{ cond (eq $entries 1) "page" "pages" }}</span>
+    </div>
+  </div>
+  {{ end }}
+  {{ if gt $shops 0 }}
+  <div class="mc-card grow basis-52 flex items-center gap-3 px-4 py-3">
+    {{ partial "mc-icon.html" (dict "slug" "emerald" "lg" true) }}
+    <div class="flex flex-col gap-1.5 min-w-0">
+      <span class="pixel-label text-wood-l">Shops</span>
+      <span class="text-fg font-bold text-[14px] leading-tight">{{ $shops }} listed</span>
+    </div>
+  </div>
+  {{ end }}
+  {{ with site.GetPage (printf "/survival/%s/map" $season) }}
+  <a href="{{ .RelPermalink }}" class="mc-card mc-card-hover no-underline grow basis-52 flex items-center gap-3 px-4 py-3">
+    {{ partial "mc-icon.html" (dict "slug" "filled-map" "lg" true) }}
+    <div class="flex flex-col gap-1.5 min-w-0">
+      <span class="pixel-label text-wood-l">Map</span>
+      <span class="text-fg font-bold text-[14px] leading-tight">View world map →</span>
+    </div>
+  </a>
   {{ end }}
 </div>

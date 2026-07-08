@@ -1,7 +1,9 @@
 ---
 title: Season 2
 weight: 2
-dates: 'archived'
+started: '2016-02-26'
+completed: '2019-07-05'
+dates: 'Feb 2016 - Jul 2019'
 description: 'The Season 2 Survival world.'
 spotlight:
   - survival/season-2/the-disc-11-puzzle

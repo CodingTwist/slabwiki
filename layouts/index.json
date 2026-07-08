@@ -1,6 +1,6 @@
 {{- $out := slice -}}
 {{- range .Site.RegularPages -}}
-  {{- if ne .Section "server-info" -}}
+  {{- if and (ne .Section "server-info") (not .Params.noSearch) -}}
     {{- $server := .Params.server | default "" -}}
     {{- /* category: prefer the page's `categories` tag, else its section
          (covers still-nested shops, whose section is the category) */ -}}

@@ -1,8 +1,9 @@
 ---
 title: Season 3
 weight: 3
+started: '2019-07-06'
 completed: '2025-04-21'
-dates: 'ended Apr 2025'
+dates: 'Jul 2019 - Apr 2025'
 spawn: '250 0'
 description: 'The Season 3 Survival world - its spawn, builds and community.'
 spotlight:
