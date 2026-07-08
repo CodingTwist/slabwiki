@@ -211,7 +211,7 @@ Same conversion. Four days became **about an hour.** Though it did use the entir
 
 # Extra bits
 
-The passage gave a lot of problems due to the world height and custom biome. I couldn't multithread it without changing the clone process but the world is much smaller so I did it single threaded.
+[The passage](/survival/season-4/the-passage/) gave a lot of problems due to the world height and custom biome. I couldn't multithread it without changing the clone process but the world is much smaller so I did it single threaded.
 
 The slabbed world got added to the [Nexus server](https://slabserver.org/documentation/nexus/) afterwards, so if you want to go walk around the Great Slabbening yourself, it's still there.
 
@@ -330,7 +330,7 @@ if __name__ == "__main__":
             f.write(f"# chunk ({cx}, {cz})  --  {entry['blocks_changed']} blocks changed\n")
             f.write(entry["tp"] + "\n\n")
 
-    print(f"Done in {m}m{s:02d}s  —  {all_changed} chunks modified, {all_skipped} skipped")
+    print(f"Done in {m}m{s:02d}s  -  {all_changed} chunks modified, {all_skipped} skipped")
     print(f"Conversion log -> {log_path.resolve()}")
     print(f"TP commands    -> {tp_path.resolve()}")
 ```
