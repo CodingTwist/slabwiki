@@ -1,5 +1,6 @@
 ---
 categories: [builds]
+tags: [decked-out]
 title: 'Decked Out'
 infobox:
   image: '/images/articles/clockfinland.png'

@@ -1,5 +1,6 @@
 ---
 categories: [puzzles]
+tags: [community-puzzle, lore]
 title: 'The Tunnel'
 infobox:
   image: '/images/articles/tunnel-arg-artwork.png'

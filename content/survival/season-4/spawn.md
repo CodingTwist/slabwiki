@@ -1,5 +1,6 @@
 ---
 categories: [builds]
+tags: [spawn]
 title: 'Spawn'
 infobox:
   image: '/images/articles/s4spawn.png'

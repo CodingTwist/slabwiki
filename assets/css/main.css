@@ -420,6 +420,20 @@
   .prose th, .prose td { @apply border-2 border-rowline px-3 py-2 text-left; }
   .prose th { @apply bg-surface-2 text-fg; }
 
+  .mc-details {
+    @apply border-2 border-line bg-surface my-4;
+    box-shadow: 4px 4px 0 var(--c-card-sh);
+  }
+  .mc-details-summary {
+    @apply font-pixel text-[13px] text-fg bg-surface-2 px-3 py-2 cursor-pointer select-none;
+    list-style: none;
+  }
+  .mc-details-summary::-webkit-details-marker { display: none; }
+  .mc-details-summary::before { content: '▸ '; }
+  .mc-details[open] .mc-details-summary::before { content: '▾ '; }
+  .mc-details-body { @apply border-t-2 border-line p-3; }
+  .mc-details-body pre { @apply my-0; }
+
   /*  Puzzle strip: skewed accordion banner
      One inner track carries the single skewX(); the panels inside it
      are plain flex children, so their seams are always parallel

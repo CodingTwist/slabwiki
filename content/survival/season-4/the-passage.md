@@ -1,5 +1,6 @@
 ---
 categories: [puzzles]
+tags: [community-puzzle, lore]
 title: 'The Passage'
 infobox:
   image: '/images/articles/passage-arg-artwork.png'

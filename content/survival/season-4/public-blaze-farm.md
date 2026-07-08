@@ -1,5 +1,6 @@
 ---
 categories: [farms]
+tags: [public-resource]
 title: 'Public Blaze farm'
 infobox:
   image: '/images/articles/blaze-farm.png'

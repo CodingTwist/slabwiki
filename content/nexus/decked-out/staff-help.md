@@ -1,6 +1,7 @@
 ---
 title: Decked Out - Staff Help
 linkTitle: Staff help
+tags: [decked-out]
 description: 'Getting unstuck in Decked Out - escape commands and reward recovery.'
 ---
 If a run goes wrong, these commands get you out:

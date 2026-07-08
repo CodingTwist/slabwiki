@@ -1,5 +1,6 @@
 ---
 categories: [builds]
+tags: [public-resource]
 title: 'Outposts'
 infoboxes:
   - title: 'Moss Outpost'

@@ -1,5 +1,6 @@
 ---
 categories: [builds]
+tags: [spawn]
 title: 'Spawn storage'
 infobox:
   image: '/images/articles/spawn-storage.png'

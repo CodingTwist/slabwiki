@@ -2163,6 +2163,44 @@
     background-color: var(--color-surface-2);
     color: var(--color-fg);
   }
+  .mc-details {
+    margin-block: calc(var(--spacing) * 4);
+    border-style: var(--tw-border-style);
+    border-width: 2px;
+    border-color: var(--color-line);
+    background-color: var(--color-surface);
+    box-shadow: 4px 4px 0 var(--c-card-sh);
+  }
+  .mc-details-summary {
+    cursor: pointer;
+    background-color: var(--color-surface-2);
+    padding-inline: calc(var(--spacing) * 3);
+    padding-block: calc(var(--spacing) * 2);
+    font-family: var(--font-pixel);
+    font-size: 13px;
+    color: var(--color-fg);
+    -webkit-user-select: none;
+    user-select: none;
+    list-style: none;
+  }
+  .mc-details-summary::-webkit-details-marker {
+    display: none;
+  }
+  .mc-details-summary::before {
+    content: '▸ ';
+  }
+  .mc-details[open] .mc-details-summary::before {
+    content: '▾ ';
+  }
+  .mc-details-body {
+    border-top-style: var(--tw-border-style);
+    border-top-width: 2px;
+    border-color: var(--color-line);
+    padding: calc(var(--spacing) * 3);
+  }
+  .mc-details-body pre {
+    margin-block: 0;
+  }
   .puzzle-strip {
     border-style: var(--tw-border-style);
     border-width: 4px;

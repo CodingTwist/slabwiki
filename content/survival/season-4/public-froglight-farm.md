@@ -1,5 +1,6 @@
 ---
 categories: [farms]
+tags: [public-resource]
 title: 'Public Froglight Farm'
 infobox:
   image: '/images/articles/froglight-farm-exterior-2025-02-16.png'

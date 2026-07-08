@@ -1,5 +1,6 @@
 ---
 categories: [builds]
+tags: [spawn]
 title: 'Season3 Spawn'
 infobox:
   Status: 'Complete'

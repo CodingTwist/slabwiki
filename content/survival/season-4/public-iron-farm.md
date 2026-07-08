@@ -1,5 +1,6 @@
 ---
 categories: [farms]
+tags: [public-resource]
 title: 'Public Iron Farm'
 infobox:
   image: '/images/articles/iron-farm2.png'

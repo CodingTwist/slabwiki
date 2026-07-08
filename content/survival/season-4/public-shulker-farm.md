@@ -1,5 +1,6 @@
 ---
 categories: [farms]
+tags: [public-resource]
 title: 'Public Shulker Farm'
 infobox:
   image: '/images/articles/shulker-farm3.png'

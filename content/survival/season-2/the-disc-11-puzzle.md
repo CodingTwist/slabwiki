@@ -1,5 +1,6 @@
 ---
 categories: [puzzles]
+tags: [community-puzzle, lore]
 title: 'The Disc 11 Puzzle'
 infobox:
   image: '/images/articles/disc-arg-artwork.png'

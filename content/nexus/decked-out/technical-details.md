@@ -1,6 +1,7 @@
 ---
 title: Decked Out - Technical Details
 linkTitle: Technical details
+tags: [decked-out]
 description: 'How Slab Edition instances Decked Out for multiplayer.'
 ---
 The Slab Edition's whole reason for existing is to remove the singleplayer
