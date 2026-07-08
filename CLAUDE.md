@@ -12,6 +12,39 @@ Hugo static site: community wiki & shop directory for Slabserver (a Minecraft SM
 - `assets/css/mc-items.css` is a hand-maintained Minecraft item sprite sheet
   that drives `layouts/partials/mc-icon.html`.
 
+## Design system & style guide
+
+There is a **live, in-site style guide at `/style-guide/`** - the source of
+truth for the visual system. It renders the real components (not a static spec)
+so it re-themes with the dark/light toggle and never drifts. It's a Hugo
+section: `content/style-guide/*.md` pages (each with `type: style-guide` +
+`noSearch: true` and a `sections:` list) dispatch to
+`layouts/partials/style-guide/*.html` via `layouts/style-guide/`. Tabs:
+**Foundations** (palette + typography + theming), **Components**, **Blocks**
+(a curated draft set - candidates kept or cut), and **Iconography**. **Read it
+before extending `layouts/` or `main.css`, and update it when you add/change a
+component.**
+
+The design language ("game-y Minecraft"):
+
+- **Hard corners** - never `rounded`.
+- **Hard OFFSET shadows only** - no blur. Scale by elevation:
+  `mc-card` 4px -> `mc-panel` 8px -> `mc-frame` 12px, all `Npx Npx 0 var(--c-shadow)`
+  (or `--c-card-sh`).
+- **Chunky `border-line` borders** (2/3/4px).
+- **Pixel font (Silkscreen, `var(--font-pixel)`) on all headings/labels/buttons**;
+  Nunito Sans for body. Sprites/maps use `image-rendering: pixelated`; stepped
+  `steps(2)` hover transitions.
+- **Never hardcode hex in templates** - use `bg-*`/`text-*`/`border-*` utilities
+  so both themes stay in sync. Colors are `@theme` tokens mapping `--color-*` ->
+  `var(--c-*)`, defined in three blocks in `main.css` (dark / `[data-theme="light"]`
+  / `prefers-color-scheme:light`); to retune a color, edit all three. Text sitting
+  on the fixed grass panel is the one "constant" case - use `text-on-grass` /
+  `text-on-grass-dim` (identical across themes, since `--c-grass` is), not a raw hex.
+- **Adding a component:** put it in the `@layer components` block of `main.css`,
+  compose with `@apply` + tokens (not raw hex), keep the `mc-`/feature-prefix
+  naming, `npm run css` to rebuild, then document + render it on the style guide.
+
 ## Content model
 
 Hierarchy is `content/<server>/<season>/` - an article lives **directly under
