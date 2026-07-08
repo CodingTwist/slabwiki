@@ -10,7 +10,7 @@
 {{ $season := path.Base .RelPermalink }}
 
 {{/* Derived counts. `.RegularPages` is the season's own directly-filed articles
-     (builds, farms, puzzles, …) — the "documented" number. Shops live in a
+     (builds, farms, puzzles, …) - the "documented" number. Shops live in a
      data-generated `shops/` subsection, so they're counted from that section
      page and get their own tile only where any exist. */}}
 {{ $entries := len .RegularPages }}

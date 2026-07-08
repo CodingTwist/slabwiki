@@ -1,0 +1,28 @@
+{{ define "main" }}
+{{/*  Style-guide landing: intro + a card grid linking to each sub-page.  */}}
+<div class="max-w-[1100px]">
+
+  <section class="mc-panel px-6 py-6 sm:px-8 mb-6">
+    {{ partial "page-header.html" (dict
+        "title" .Title
+        "eyebrow" "For designers & devs"
+        "description" .Description
+        "divider" "mt-4") }}
+    <div class="prose">{{ .Content }}</div>
+  </section>
+
+  {{ partial "style-guide/nav.html" . }}
+
+  <div class="grid sm:grid-cols-2 gap-4">
+    {{ range .Pages.ByWeight }}
+    <a href="{{ .RelPermalink }}" class="mc-card mc-card-hover p-5 no-underline block">
+      <div class="flex items-center gap-2 mb-1">
+        {{ with .Params.icon }}{{ partial "mc-icon.html" (dict "slug" . "lg" true) }}{{ end }}
+        <span class="pixel text-[14px] text-grass-hi uppercase">{{ .Title }}</span>
+      </div>
+      <p class="text-sm text-muted">{{ .Description }}</p>
+    </a>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

@@ -14,7 +14,7 @@ Hugo static site: community wiki & shop directory for Slabserver (a Minecraft SM
 
 ## Content model
 
-Hierarchy is `content/<server>/<season>/` — an article lives **directly under
+Hierarchy is `content/<server>/<season>/` - an article lives **directly under
 its season** (e.g. `content/survival/season-4/spawn.md`). Category is **not a
 folder**: it's a `categories` **taxonomy tag** (`hugo.toml [taxonomies]`
 `category = 'categories'`), so a page carries one or more of build / farm /

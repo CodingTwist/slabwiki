@@ -1,0 +1,30 @@
+{{- /* A row of player heads with a "+N" overflow chip. On hover/focus the
+       chip reveals the hidden players (head + name) - unless the overflow is
+       large, in which case it stays a plain count so the popover never turns
+       into a wall of names.
+       ctx: dict
+         "players" (slice of IGNs, required)
+         "show"    (int, heads shown before collapsing; default 4)
+         "popMax"  (int, max hidden players the hover roster will list; default 10) */ -}}
+{{- $players := .players -}}
+{{- $show := int (.show | default 4) -}}
+{{- $popMax := int (.popMax | default 10) -}}
+{{- with $players -}}
+<span class="inline-flex items-center gap-1.5 flex-wrap">
+  {{- range first (int (math.Min $show (len .))) . -}}
+  {{ partial "playerhead.html" . }}
+  {{- end -}}
+  {{- with after $show $players -}}
+  <span class="playerhead-group">
+    <span class="playerhead-more" tabindex="0" aria-label="{{ len . }} more players">+{{ len . }}</span>
+    {{- if le (len .) $popMax -}}
+    <span class="playerhead-pop" role="tooltip">
+      {{- range . -}}
+      <span>{{ partial "playerhead.html" . }}</span>
+      {{- end -}}
+    </span>
+    {{- end -}}
+  </span>
+  {{- end -}}
+</span>
+{{- end -}}

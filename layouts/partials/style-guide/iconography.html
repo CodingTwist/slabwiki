@@ -1,0 +1,26 @@
+{{/*  Iconography: sprite sampler + the hyphenated-slug rule.  */}}
+<section class="mc-panel overflow-hidden mb-6">
+  {{ partial "panel-header.html" "Iconography" }}
+  <div class="p-5 sm:p-6 space-y-4">
+    <p class="text-sm text-muted">
+      Minecraft item sprites come from <code class="text-fg">assets/css/mc-items.css</code>
+      (~1653 slugs). Use the shortcode <code class="text-fg">{{ "{{< mcicon \"grass-block\" >}}" }}</code>
+      inline, or <code class="text-fg">partial "mc-icon.html" "grass-block"</code>
+      in templates (pass a dict with <code class="text-fg">lg true</code> for 32px).
+      <strong class="text-fg">Slugs must be hyphenated</strong> -
+      <code class="text-grass-hi">ender-pearl</code>, not
+      <code class="text-mesa">enderpearl</code>; a bad slug renders an
+      <em>empty span</em> silently. Category → icon and section → icon mappings
+      live in <code class="text-fg">data/categories.yaml</code> and
+      <code class="text-fg">data/sections.yaml</code>.
+    </p>
+    <div class="flex flex-wrap items-end gap-4">
+      {{ range slice "grass-block" "wheat" "redstone" "ender-pearl" "emerald" "crafting-table" "filled-map" "firework-rocket" "player-head" "beacon" }}
+      <div class="flex flex-col items-center gap-1.5 w-20 text-center">
+        {{ partial "mc-icon.html" (dict "slug" . "lg" true) }}
+        <code class="text-[10px] text-muted [overflow-wrap:anywhere]">{{ . }}</code>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>

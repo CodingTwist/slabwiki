@@ -1,0 +1,159 @@
+{{/*  DRAFT component gallery - the trial set. Each renders live so it can be
+      judged in-theme, then kept or cut (with its CSS in main.css).  */}}
+<section class="mc-panel overflow-hidden mb-6">
+  {{ partial "panel-header.html" "Blocks (draft)" }}
+  <div class="p-5 sm:p-6 space-y-8">
+
+    <div class="mc-note mc-note-warn">
+      {{ partial "mc-icon.html" (dict "slug" "torch" "lg" true) }}
+      <div>
+        <div class="mc-note-title">Trial set</div>
+        <div class="mc-note-body"><p>Everything below is a candidate. Keep the ones that earn their place; the rest get deleted from <code class="text-fg">main.css</code> and this page.</p></div>
+      </div>
+    </div>
+
+    {{/*  Callouts  */}}
+    {{ partial "style-guide/caption.html" (dict "name" ".mc-note (+ -info / -tip / -warn / -danger)" "note" "Left-accent callout for notes, tips and warnings. Slot in an mc-icon + .mc-note-title + .mc-note-body.") }}
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div class="mc-note mc-note-info">
+        {{ partial "mc-icon.html" (dict "slug" "spyglass" "lg" true) }}
+        <div><div class="mc-note-title">Note</div><div class="mc-note-body"><p>Spawn is a protected area - build at least 200 blocks out.</p></div></div>
+      </div>
+      <div class="mc-note mc-note-tip">
+        {{ partial "mc-icon.html" (dict "slug" "emerald" "lg" true) }}
+        <div><div class="mc-note-title">Tip</div><div class="mc-note-body"><p>Trade with villagers before raiding - prices drop after a cure.</p></div></div>
+      </div>
+      <div class="mc-note mc-note-warn">
+        {{ partial "mc-icon.html" (dict "slug" "gold-ingot" "lg" true) }}
+        <div><div class="mc-note-title">Warning</div><div class="mc-note-body"><p>This farm was patched in 1.21 - check the changelog before rebuilding.</p></div></div>
+      </div>
+      <div class="mc-note mc-note-danger">
+        {{ partial "mc-icon.html" (dict "slug" "tnt" "lg" true) }}
+        <div><div class="mc-note-title">Danger</div><div class="mc-note-body"><p>Griefing or lava-casting near spawn is an instant ban.</p></div></div>
+      </div>
+    </div>
+
+    {{/*  Collapsible  */}}
+    {{ partial "style-guide/caption.html" (dict "name" ".mc-details / .mc-details-body" "note" "Styled <details>. Pixel caret rotates on open. Good for drop tables, long recipes, hidden coords.") }}
+    <details class="mc-details max-w-lg">
+      <summary>Full drop table</summary>
+      <div class="mc-details-body">
+        <p>Rare drops roll on a 1/128 table; wither skeletons drop skulls at 2.5% (5.5% with Looting III).</p>
+      </div>
+    </details>
+
+    {{/*  Table  */}}
+    {{ partial "style-guide/caption.html" (dict "name" ".mc-table" "note" "Standalone table treatment (prose gets this automatically). Zebra rows, pixel headers, grass row-hover.") }}
+    <div class="overflow-x-auto">
+      <table class="mc-table max-w-lg">
+        <thead><tr><th>Item</th><th>Rate</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td>Emerald</td><td>Common</td><td>Villager trade</td></tr>
+          <tr><td>Diamond</td><td>Uncommon</td><td>Deepslate Y-58</td></tr>
+          <tr><td>Netherite</td><td>Rare</td><td>Ancient debris</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    {{/*  Keycap  */}}
+    {{ partial "style-guide/caption.html" (dict "name" ".mc-key" "note" "Inline keyboard / keybind cap for guides.") }}
+    <p class="text-body">Open the debug screen with <kbd class="mc-key">F3</kbd>, then <kbd class="mc-key">F3</kbd> + <kbd class="mc-key">G</kbd> to show chunk borders. Sneak with <kbd class="mc-key">Shift</kbd>.</p>
+
+    {{/*  Progress  */}}
+    {{ partial "style-guide/caption.html" (dict "name" ".mc-progress / .mc-progress-fill" "note" "Segmented (blocky) completion bar. Set the fill width inline or from data.") }}
+    <div class="max-w-md space-y-2">
+      <div class="mc-progress"><span class="mc-progress-fill" style="width:68%"></span></div>
+      <div class="flex justify-between text-[11px] text-muted"><span>Season 4 build</span><span>68% complete</span></div>
+    </div>
+
+    {{/*  Stat tiles  */}}
+    {{ partial "style-guide/caption.html" (dict "name" ".mc-stat / .mc-stat-num / .mc-stat-label" "note" "Headline number + caption. Rows of these for season/build stats.") }}
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl">
+      <div class="mc-stat"><span class="mc-stat-num">42</span><span class="mc-stat-label">Farms</span></div>
+      <div class="mc-stat"><span class="mc-stat-num">7</span><span class="mc-stat-label">Seasons</span></div>
+      <div class="mc-stat"><span class="mc-stat-num">118</span><span class="mc-stat-label">Builds</span></div>
+      <div class="mc-stat"><span class="mc-stat-num">3.2k</span><span class="mc-stat-label">Members</span></div>
+    </div>
+
+    {{/*  Timeline  */}}
+    {{ partial "style-guide/caption.html" (dict "name" ".mc-timeline / .mc-timeline-when" "note" "Vertical rail with pixel nodes for season history or patch notes.") }}
+    <ul class="mc-timeline max-w-lg">
+      <li><span class="mc-timeline-when">Season 4 · now</span><p class="text-sm text-body">New spawn, 1.21 mob farms, the shopping district.</p></li>
+      <li><span class="mc-timeline-when">Season 3</span><p class="text-sm text-body">The great mesa expansion and 117 shops.</p></li>
+      <li><span class="mc-timeline-when">Season 1-2</span><p class="text-sm text-body">Where it all began.</p></li>
+    </ul>
+
+    {{/*  Player-head roster + overflow  */}}
+    {{ partial "style-guide/caption.html" (dict "name" ".playerhead-roster + .playerhead-more" "note" "Shows the first few builders, then a +N chip. Hover the chip to reveal the rest - unless the crowd is too big, then it stays a plain count.") }}
+    <div class="space-y-3">
+      <div>
+        <p class="text-[11px] text-muted mb-1">Small overflow - hover the +N to see who else built it</p>
+        {{ partial "playerhead-roster.html" (dict "players" (slice "GamingTwist" "Notch" "Dinnerbone" "Grumm" "jeb_" "Captainsparklez" "Etho")) }}
+      </div>
+      <div>
+        <p class="text-[11px] text-muted mb-1">Big overflow - past the cap, so no roster popover</p>
+        {{ partial "playerhead-roster.html" (dict "players" (slice "GamingTwist" "Notch" "Dinnerbone" "Grumm" "jeb_" "Captainsparklez" "Etho" "Docm77" "iskall85" "Mumbo" "Grian" "Xisuma" "Zombiecleo" "Tango" "Impulse" "Skizzleman" "Bdubs" "Keralis")) }}
+      </div>
+    </div>
+
+    {{/*  Tooltip  */}}
+    {{ partial "style-guide/caption.html" (dict "name" ".mc-tip / .mc-tip-pop" "note" "Hover / focus popover styled like an item tooltip. For glossary terms and coords.") }}
+    <p class="text-body">Hover the term
+      <span class="mc-tip" tabindex="0">ender pearl<span class="mc-tip-pop">Thrown to teleport; also fuels the End portal. Dropped by endermen.</span></span>
+      to see the tooltip.</p>
+
+    {{/*  Tag / pill link row  */}}
+    {{ partial "style-guide/caption.html" (dict "name" "Tag row (uses .chip)" "note" "A wrapping row of chip links - related builds, tags. No new CSS, just flex-wrap.") }}
+    <div class="flex flex-wrap gap-2">
+      {{ range slice "redstone" "villager-trading" "spawn" "megabuild" "1.21" }}
+      <a href="#" class="chip">#{{ . }}</a>
+      {{ end }}
+    </div>
+
+    {{/*  Empty state  */}}
+    {{ partial "style-guide/caption.html" (dict "name" ".mc-empty / .mc-empty-title" "note" "Placeholder for a category or search with no results.") }}
+    <div class="mc-empty max-w-md">
+      {{ partial "mc-icon.html" (dict "slug" "barrier" "lg" true) }}
+      <div class="mc-empty-title">Nothing here yet</div>
+      <p class="text-sm text-muted">No builds in this category. Be the first to add one.</p>
+    </div>
+
+    {{/*  Skeleton  */}}
+    {{ partial "style-guide/caption.html" (dict "name" ".mc-skeleton" "note" "Blocky shimmer placeholder while content loads.") }}
+    <div class="mc-card p-4 max-w-sm space-y-3">
+      <span class="mc-skeleton h-24 w-full"></span>
+      <span class="mc-skeleton h-4 w-3/4"></span>
+      <span class="mc-skeleton h-4 w-1/2"></span>
+    </div>
+
+    {{/*  Figure  */}}
+    {{ partial "style-guide/caption.html" (dict "name" ".mc-figure / figcaption" "note" "Framed screenshot with a pixel caption. The wiki's most-used content block - every build & shop article has photos.") }}
+    <figure class="mc-figure max-w-sm">
+      <img src="{{ "images/season-4/S4_Airship.png" | relURL }}" alt="An example Season 4 build" loading="lazy">
+      <figcaption>The Airship - Season 4 · built by GamingTwist</figcaption>
+    </figure>
+
+    {{/*  Steps  */}}
+    {{ partial "style-guide/caption.html" (dict "name" ".mc-steps / .mc-step-title" "note" "Numbered walkthrough with pixel badges and a joining rail. For farm guides, puzzle solutions, how-tos.") }}
+    <ol class="mc-steps max-w-lg">
+      <li><span class="mc-step-title">Head to the Nether</span><p class="text-sm text-body">Link a portal near spawn and travel to the fortress at <code>-88 -22</code>.</p></li>
+      <li><span class="mc-step-title">Clear the spawn platforms</span><p class="text-sm text-body">Light up everything within 128 blocks so mobs only spawn in the farm.</p></li>
+      <li><span class="mc-step-title">Collect the drops</span><p class="text-sm text-body">Stand in the AFK spot and let the collection hoppers do the work.</p></li>
+    </ol>
+
+    {{/*  Breadcrumbs  */}}
+    {{ partial "style-guide/caption.html" (dict "name" ".mc-crumbs" "note" "Server › Season › Page trail for the top of an article. Reads live from the page's ancestry.") }}
+    <nav class="mc-crumbs" aria-label="Breadcrumb">
+      <a href="#">Survival</a><span class="sep">›</span>
+      <a href="#">Season 4</a><span class="sep">›</span>
+      <span aria-current="page">Spawn</span>
+    </nav>
+
+    {{/*  Prev / next  */}}
+    {{ partial "style-guide/caption.html" (dict "name" ".mc-prevnext" "note" "Paired previous / next article links for the foot of a page. Card lift on hover.") }}
+    <nav class="mc-prevnext max-w-2xl" aria-label="Article navigation">
+      <a href="#" class="prev"><span class="dir">← Previous</span><span class="ttl">Shopping District</span></a>
+      <a href="#" class="next"><span class="dir">Next →</span><span class="ttl">Mob Farm Megabuild</span></a>
+    </nav>
+  </div>
+</section>

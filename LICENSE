@@ -1,6 +1,6 @@
 This repository uses two licenses for two different kinds of material:
 
-## Code — MIT License
+## Code - MIT License
 
 Applies to all Hugo templates/layouts, shortcodes, partials, build scripts,
 config, and CSS/JS (everything under `layouts/`, `assets/`, `scripts/`,
@@ -26,12 +26,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE.
 
-## Images & visual theme — CC BY-SA 4.0
+## Images & visual theme - CC BY-SA 4.0
 
 Applies to original site imagery and the pixel/Minecraft-inspired visual
 theme/design (screenshots and artwork under `static/images/` that were
 produced for this project, and the overall look-and-feel of the theme
-itself) — not including third-party assets pulled in from elsewhere (e.g.
+itself) - not including third-party assets pulled in from elsewhere (e.g.
 Google Fonts, which carry their own licenses; see the site footer for
 credits).
 
@@ -43,5 +43,5 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 Written articles, shop listings, player/build data, and other Slabserver
 community content under `content/` and `data/` is not covered by either
-license above — it belongs to the Slabserver community and its
+license above - it belongs to the Slabserver community and its
 contributors, and is not intended for reuse outside the project.

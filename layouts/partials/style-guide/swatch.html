@@ -1,0 +1,14 @@
+{{- /* ctx: dict t=token u=utility d="use for" note. Live hex filled by JS. */ -}}
+<div class="mc-card overflow-hidden">
+  <div class="h-14 border-b-[3px] border-line {{ if hasPrefix .u "bg-" }}{{ .u }}{{ else }}bg-surface-2 flex items-center justify-center{{ end }}">
+    {{ if not (hasPrefix .u "bg-") }}<span class="pixel text-[15px] {{ .u }}">Aa</span>{{ end }}
+  </div>
+  <div class="px-2.5 py-2">
+    <div class="flex items-baseline justify-between gap-2">
+      <code class="text-[11px] text-fg font-bold">{{ .t }}</code>
+      <code class="text-[10px] text-muted sg-hex" data-token="--c-{{ .t }}">#…</code>
+    </div>
+    <code class="block text-[10px] text-grass-hi mt-0.5">{{ .u }}</code>
+    <p class="text-[10.5px] text-muted mt-1 leading-tight">{{ .d }}</p>
+  </div>
+</div>

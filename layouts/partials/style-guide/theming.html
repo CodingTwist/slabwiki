@@ -1,0 +1,55 @@
+{{/*  Theming mechanics + the do/don't rules + "adding a new component".  */}}
+<section class="mc-panel overflow-hidden mb-6">
+  {{ partial "panel-header.html" "Theming & Conventions" }}
+  <div class="p-5 sm:p-6 grid md:grid-cols-2 gap-6">
+    <div>
+      <div class="pixel-label text-grass-hi mb-2">How theming works</div>
+      <ul class="text-sm text-body space-y-2 list-disc pl-5">
+        <li>One palette, three <code class="text-fg">--c-*</code> blocks in
+          <code class="text-fg">main.css</code>: <code class="text-fg">:root</code> /
+          <code class="text-fg">[data-theme="dark"]</code> (default),
+          <code class="text-fg">[data-theme="light"]</code>, and a
+          <code class="text-fg">prefers-color-scheme: light</code> block for
+          visitors who haven't chosen.</li>
+        <li><code class="text-fg">@theme</code> keeps the <code class="text-fg">var()</code>
+          reference in generated utilities, so flipping
+          <code class="text-fg">data-theme</code> re-themes live.</li>
+        <li>The toggle writes <code class="text-fg">localStorage('slab-theme')</code>;
+          a pre-paint script in <code class="text-fg">baseof.html</code> applies it
+          before first paint to avoid a flash.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="pixel-label text-grass-hi mb-2">Do &amp; don't</div>
+      <ul class="text-sm text-body space-y-2 list-disc pl-5">
+        <li><strong class="text-fg">Never hardcode hex</strong> in templates -
+          use <code class="text-fg">bg-*</code> / <code class="text-fg">text-*</code> /
+          <code class="text-fg">border-*</code> so both themes stay in sync. To
+          retune a colour, edit all three <code class="text-fg">--c-*</code> blocks.</li>
+        <li><strong class="text-fg">Hard corners only</strong> - no
+          <code class="text-fg">rounded</code>.</li>
+        <li><strong class="text-fg">Hard offset shadows, never blur</strong>. Depth
+          scale: <code class="text-fg">mc-card</code> 4px →
+          <code class="text-fg">mc-panel</code> 8px →
+          <code class="text-fg">mc-frame</code> 12px.</li>
+        <li>Chunky <code class="text-fg">border-line</code> borders (2 / 3 / 4px);
+          stepped hover transitions (<code class="text-fg">steps(2)</code>);
+          <code class="text-fg">image-rendering: pixelated</code> on sprites, maps
+          and images.</li>
+      </ul>
+    </div>
+    <div class="md:col-span-2 mc-card p-4">
+      <div class="pixel-label text-wood-l mb-2">Adding a new component</div>
+      <p class="text-sm text-body">
+        Define it in the <code class="text-fg">@layer components</code> block of
+        <code class="text-fg">main.css</code>, compose with
+        <code class="text-fg">@apply</code> + tokens (not raw hex), keep the
+        <code class="text-fg">mc-</code>/feature-prefix naming, then run
+        <code class="text-fg">npm run css</code> to rebuild
+        <code class="text-fg">app.css</code>. Because
+        <code class="text-fg">@source "../../layouts"</code> scans the templates,
+        any utilities you use are picked up automatically.
+      </p>
+    </div>
+  </div>
+</section>

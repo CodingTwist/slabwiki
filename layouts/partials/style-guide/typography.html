@@ -1,0 +1,55 @@
+{{/*  Typography: family specimens + a scale table of the real classes.  */}}
+<section class="mc-panel overflow-hidden mb-6">
+  {{ partial "panel-header.html" "Typography" }}
+  <div class="p-5 sm:p-6 space-y-6">
+    <p class="text-sm text-muted">
+      Two families: <strong class="text-fg">Silkscreen</strong> (pixel) for
+      every heading, label and button, and <strong class="text-fg">Nunito
+      Sans</strong> for body copy. Base font size is 17px on
+      <code class="text-fg">&lt;html&gt;</code>.
+    </p>
+
+    <div class="grid sm:grid-cols-2 gap-5">
+      <div class="mc-card p-4">
+        <div class="pixel-label text-wood-l mb-3">Silkscreen · var(--font-pixel)</div>
+        <div class="pixel text-[30px] leading-none mb-3">Aa Bb 123</div>
+        <p class="text-xs text-muted">Headings, badges, buttons, section labels. Runs large - size it down per use.</p>
+      </div>
+      <div class="mc-card p-4">
+        <div class="pixel-label text-wood-l mb-3">Nunito Sans · var(--font-sans)</div>
+        <div class="text-[30px] font-black leading-tight mb-1">Aa Bb 123</div>
+        <p class="text-body">The quick brown fox builds a redstone farm at spawn.</p>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse text-sm">
+        <thead>
+          <tr>
+            <th class="border-2 border-rowline bg-surface-2 text-fg px-3 py-2 text-left">Role</th>
+            <th class="border-2 border-rowline bg-surface-2 text-fg px-3 py-2 text-left">Class</th>
+            <th class="border-2 border-rowline bg-surface-2 text-fg px-3 py-2 text-left">Size</th>
+            <th class="border-2 border-rowline bg-surface-2 text-fg px-3 py-2 text-left">Sample</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ range slice
+              (dict "r" "Page title"      "c" ".pixel"       "s" "26-30px" "smp" "<span class='pixel text-[22px]'>Spawn</span>")
+              (dict "r" "Section heading" "c" ".section-h / prose h2" "s" "17px" "smp" "<span class='pixel text-grass-hi text-[15px]'>Features</span>")
+              (dict "r" "Sub heading"     "c" "prose h3"      "s" "14px" "smp" "<span class='pixel text-grass-hi text-[13px]'>Design</span>")
+              (dict "r" "Micro-label"     "c" ".pixel-label"  "s" "10px" "smp" "<span class='pixel-label text-wood-l'>Navigate</span>")
+              (dict "r" "Badge / tag"     "c" ".mc-badge"     "s" "8px"  "smp" "<span class='mc-badge mc-badge-gold'>Featured</span>")
+              (dict "r" "Button"          "c" ".mc-btn"       "s" "10px" "smp" "<span class='pixel text-[10px] uppercase'>Explore</span>")
+              (dict "r" "Body copy"       "c" ".prose"        "s" "16.5px / 1.75" "smp" "<span class='text-body'>Built over many months.</span>") }}
+          <tr>
+            <td class="border-2 border-rowline px-3 py-2 text-fg">{{ .r }}</td>
+            <td class="border-2 border-rowline px-3 py-2"><code class="text-grass-hi">{{ .c }}</code></td>
+            <td class="border-2 border-rowline px-3 py-2 text-muted">{{ .s }}</td>
+            <td class="border-2 border-rowline px-3 py-2">{{ .smp | safeHTML }}</td>
+          </tr>
+          {{ end }}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

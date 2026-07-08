@@ -1,0 +1,10 @@
+{{- /* ctx: the current page. Tab row across the style-guide section. */ -}}
+{{- $cur := . -}}
+{{- with site.GetPage "/style-guide" -}}
+<nav class="flex flex-wrap gap-2 mb-6">
+  <a href="{{ .RelPermalink }}" class="mc-btn {{ if eq $cur . }}mc-btn-grass{{ end }}">Overview</a>
+  {{ range .Pages.ByWeight }}
+  <a href="{{ .RelPermalink }}" class="mc-btn {{ if eq $cur . }}mc-btn-grass{{ end }}">{{ .Title }}</a>
+  {{ end }}
+</nav>
+{{- end -}}

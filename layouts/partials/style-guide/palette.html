@@ -1,0 +1,68 @@
+{{/*  Palette: swatches using the REAL utility classes; hex read live per theme.  */}}
+<section class="mc-panel overflow-hidden mb-6">
+  {{ partial "panel-header.html" "Palette" }}
+  <div class="p-5 sm:p-6">
+    <p class="text-sm text-muted mb-4">
+      Tokens map to Tailwind utilities via <code class="text-fg">@theme</code>
+      (<code class="text-fg">--color-grass</code> → <code class="text-fg">var(--c-grass)</code>),
+      so <code class="text-fg">bg-grass</code> / <code class="text-fg">text-fg</code> /
+      <code class="text-fg">border-line</code> resolve through a live
+      <code class="text-fg">var()</code>. Hex below is read live from the
+      current theme. <strong class="text-fg">grass, ice, mesa, stone and gold
+      are shared across themes</strong>; the neutrals plus
+      <code class="text-fg">grass-hi</code> / <code class="text-fg">wood</code>
+      shift between dark and light.
+    </p>
+
+    <div class="pixel-label text-wood-l mb-2">Surfaces &amp; ink</div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
+      {{ range slice
+          (dict "t" "bg"        "u" "bg-bg"        "d" "Page background (behind the checker)")
+          (dict "t" "surface"   "u" "bg-surface"   "d" "Header, sidebar, wells")
+          (dict "t" "surface-2" "u" "bg-surface-2" "d" "Insets, inputs, code")
+          (dict "t" "card"      "u" "bg-card"      "d" "Cards & panels")
+          (dict "t" "fg"        "u" "text-fg"      "d" "Primary text / headings")
+          (dict "t" "body"      "u" "text-body"    "d" "Prose body copy")
+          (dict "t" "muted"     "u" "text-muted"   "d" "Secondary / captions")
+          (dict "t" "faint"     "u" "text-faint"   "d" "Faintest text")
+          (dict "t" "line"      "u" "border-line"  "d" "All chunky borders")
+          (dict "t" "divider"   "u" "border-divider" "d" "Soft heading underline")
+          (dict "t" "rowline"   "u" "border-rowline" "d" "Table / infobox rows") }}
+        {{ partial "style-guide/swatch.html" . }}
+      {{ end }}
+    </div>
+
+    <div class="pixel-label text-wood-l mb-2">Accents &amp; biomes</div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+      {{ range slice
+          (dict "t" "grass"    "u" "bg-grass"    "d" "Primary action / brand")
+          (dict "t" "grass-hi" "u" "text-grass-hi" "d" "Links, active state")
+          (dict "t" "gold"     "u" "text-gold"   "d" "Featured / season badge")
+          (dict "t" "wood"     "u" "bg-wood"     "d" "Panel banners")
+          (dict "t" "wood-l"   "u" "text-wood-l" "d" "Labels on dark panels")
+          (dict "t" "ice"      "u" "text-ice"    "d" "Ice biome accent")
+          (dict "t" "mesa"     "u" "text-mesa"   "d" "Mesa biome accent")
+          (dict "t" "stone"    "u" "text-stone"  "d" "Stone / neutral accent") }}
+        {{ partial "style-guide/swatch.html" . }}
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{/*  Live hex: read the computed --c-* value for each swatch and write it in.
+      Re-runs whenever the theme toggle flips data-theme on <html>.  */}}
+<script>
+(function(){
+  function paint(){
+    var cs = getComputedStyle(document.documentElement);
+    document.querySelectorAll('.sg-hex').forEach(function(el){
+      var v = cs.getPropertyValue(el.getAttribute('data-token')).trim();
+      if(v){ el.textContent = v; }
+    });
+  }
+  paint();
+  new MutationObserver(paint).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['data-theme']
+  });
+})();
+</script>
