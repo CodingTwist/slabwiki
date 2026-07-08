@@ -5,7 +5,7 @@
 {{- $lg := eq (.size | default "sm") "lg" -}}
 {{- $px := cond $lg "34" "22" -}}
 {{- $nameCls := cond .onGrass "text-white" "text-fg" -}}
-{{- $dateCls := cond .onGrass "text-[#dCeCcC]" "text-muted" -}}
+{{- $dateCls := cond .onGrass "text-on-grass-dim" "text-muted" -}}
 <div class="flex flex-wrap items-center {{ cond $lg "gap-3" "gap-2" }}">
   {{- with $author -}}
   <span class="inline-flex items-center gap-2 whitespace-nowrap">

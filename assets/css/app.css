@@ -40,6 +40,8 @@
     --color-line: var(--c-line);
     --color-grass: var(--c-grass);
     --color-grass-hi: var(--c-grass-hi);
+    --color-on-grass: var(--c-on-grass);
+    --color-on-grass-dim: var(--c-on-grass-dim);
     --color-wood: var(--c-wood);
     --color-wood-l: var(--c-wood-l);
     --color-gold: var(--c-gold);
@@ -1141,18 +1143,6 @@
   .whitespace-nowrap {
     white-space: nowrap;
   }
-  .text-\[\#d7ecc4\] {
-    color: #d7ecc4;
-  }
-  .text-\[\#dCeCcC\] {
-    color: #dCeCcC;
-  }
-  .text-\[\#dbe9cd\] {
-    color: #dbe9cd;
-  }
-  .text-\[\#eaf4dd\] {
-    color: #eaf4dd;
-  }
   .text-body {
     color: var(--color-body);
   }
@@ -1176,6 +1166,12 @@
   }
   .text-muted {
     color: var(--color-muted);
+  }
+  .text-on-grass {
+    color: var(--color-on-grass);
+  }
+  .text-on-grass-dim {
+    color: var(--color-on-grass-dim);
   }
   .text-stone {
     color: var(--color-stone);
@@ -1599,6 +1595,8 @@
   --c-line: #0c0a07;
   --c-grass: #5b8a3c;
   --c-grass-hi: #7cc24a;
+  --c-on-grass: #eaf4dd;
+  --c-on-grass-dim: #d3e6c2;
   --c-wood: #8a5e35;
   --c-wood-l: #c49a63;
   --c-ice: #4f83b3;
@@ -1624,6 +1622,8 @@
   --c-line: #2a2620;
   --c-grass: #5b8a3c;
   --c-grass-hi: #3f6d2a;
+  --c-on-grass: #eaf4dd;
+  --c-on-grass-dim: #d3e6c2;
   --c-wood: #7a5230;
   --c-wood-l: #9c6b3f;
   --c-ice: #4f83b3;
@@ -1650,6 +1650,8 @@
     --c-line: #2a2620;
     --c-grass: #5b8a3c;
     --c-grass-hi: #3f6d2a;
+    --c-on-grass: #eaf4dd;
+    --c-on-grass-dim: #d3e6c2;
     --c-wood: #7a5230;
     --c-wood-l: #9c6b3f;
     --c-ice: #4f83b3;
@@ -2696,27 +2698,29 @@
     margin: 0;
     display: inline-block;
     max-width: 100%;
-    border-style: var(--tw-border-style);
-    border-width: 3px;
-    border-color: var(--color-line);
-    background-color: var(--color-card);
-    padding: calc(var(--spacing) * 1.5);
-    box-shadow: 6px 6px 0 var(--c-card-sh);
   }
   .mc-figure > img {
     display: block;
     width: 100%;
     max-width: 100%;
+    border-style: var(--tw-border-style);
+    border-width: 3px;
+    border-color: var(--color-line);
+    box-shadow: 4px 4px 0 var(--c-card-sh);
   }
   .mc-figure figcaption {
-    margin-top: calc(var(--spacing) * 1.5);
     display: block;
-    padding-inline: calc(var(--spacing) * 0.5);
-    font-size: 11px;
-    color: var(--color-muted);
-    font-family: var(--font-pixel);
-    letter-spacing: .03em;
-    line-height: 1.5;
+    border-inline-style: var(--tw-border-style);
+    border-inline-width: 3px;
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 3px;
+    border-color: var(--color-line);
+    background-color: var(--color-wood);
+    padding-inline: calc(var(--spacing) * 2.5);
+    padding-block: calc(var(--spacing) * 2);
+    font-size: 12px;
+    color: var(--color-white);
+    box-shadow: 4px 4px 0 var(--c-card-sh);
   }
   .mc-steps {
     position: relative;

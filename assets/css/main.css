@@ -21,6 +21,8 @@
   --color-line:      var(--c-line);
   --color-grass:     var(--c-grass);
   --color-grass-hi:  var(--c-grass-hi);
+  --color-on-grass:     var(--c-on-grass);
+  --color-on-grass-dim: var(--c-on-grass-dim);
   --color-wood:      var(--c-wood);
   --color-wood-l:    var(--c-wood-l);
   --color-gold:      var(--c-gold);
@@ -58,6 +60,9 @@
   --c-line:      #0c0a07;
   --c-grass:     #5b8a3c;
   --c-grass-hi:  #7cc24a;
+  /* Text on the fixed grass panel - constant across themes, since grass is. */
+  --c-on-grass:     #eaf4dd;
+  --c-on-grass-dim: #d3e6c2;
   --c-wood:      #8a5e35;
   --c-wood-l:    #c49a63;
   --c-ice:       #4f83b3;
@@ -84,6 +89,8 @@
   --c-line:      #2a2620;
   --c-grass:     #5b8a3c;
   --c-grass-hi:  #3f6d2a;
+  --c-on-grass:     #eaf4dd;
+  --c-on-grass-dim: #d3e6c2;
   --c-wood:      #7a5230;
   --c-wood-l:    #9c6b3f;
   --c-ice:       #4f83b3;
@@ -112,6 +119,8 @@
     --c-line:      #2a2620;
     --c-grass:     #5b8a3c;
     --c-grass-hi:  #3f6d2a;
+    --c-on-grass:     #eaf4dd;
+    --c-on-grass-dim: #d3e6c2;
     --c-wood:      #7a5230;
     --c-wood-l:    #9c6b3f;
     --c-ice:       #4f83b3;
@@ -676,17 +685,18 @@
     animation: mc-shimmer 1.1s steps(6) infinite;
   }
 
-  /* --- Figure: framed screenshot + pixel caption --------------------- */
-  .mc-figure {
-    @apply inline-block max-w-full bg-card border-[3px] border-line p-1.5 m-0;
-    box-shadow: 6px 6px 0 var(--c-card-sh);
+  /* --- Figure: framed screenshot + wood nameplate caption -------------
+     Matches the in-prose figure treatment (.prose-figure): a border-line
+     framed image with an offset shadow, and the caption as a solid wood
+     bar butted directly beneath it. */
+  .mc-figure { @apply inline-block max-w-full m-0; }
+  .mc-figure > img {
+    @apply block max-w-full w-full border-[3px] border-line;
+    box-shadow: 4px 4px 0 var(--c-card-sh);
   }
-  .mc-figure > img { @apply block max-w-full w-full; }
   .mc-figure figcaption {
-    @apply block text-[11px] text-muted mt-1.5 px-0.5;
-    font-family: var(--font-pixel);
-    letter-spacing: .03em;
-    line-height: 1.5;
+    @apply block bg-wood text-white text-[12px] px-2.5 py-2 border-x-[3px] border-b-[3px] border-line;
+    box-shadow: 4px 4px 0 var(--c-card-sh);
   }
 
   /* --- Steps: numbered how-to guide ---------------------------------- */
