@@ -11,17 +11,17 @@ infobox:
   Finished: '2026-04-01'
   Builders: GamingTwist
 ---
-The server is called Slabserver. So {{< playerhead "GamingTwist" >}} took that personally for April Fools 2026, that kicked a pretty technical challenge that if he knew from the start wouldn't have done: every block in the Season 4 world got halved into a slab of itself. Stone into a stone slab, oak planks into an oak slab, the lot. The whole world. The joke was pushed it was to save storage and along side the world, half the players inventory was randomly removed. The server icon was also halved.
+The server is called Slabserver. So {{< playerhead "GamingTwist" >}}(me) took that personally for April Fools 2026, and kicked off a pretty technical challenge that, if I'd known how much work it would be from the start, I probably wouldn't have started: every block in the Season 4 world got halved into a slab of itself. Stone into a stone slab, oak planks into an oak slab, the lot. The whole world. The joke was framed as "saving storage," and alongside the world, half of every player's inventory was randomly removed. The server icon was also halved.
 
 {{< compare before="/images/articles/s4-april-fools-before.jpg" after="/images/articles/s4-april-fools-after.jpg" alt="Spawn before and after the Great Slabbening" >}}
 
 # Starting Small
 
-It started as small as it goes: get one block type, in one chunk, to turn into a another block. For the first test that was dirt into diamond block. If I was able to get this working the idea was most likely doable
+It started as small as it goes: get one block type, in one chunk, to turn into another block. For the first test that was dirt into diamond block. If I was able to get this working, the idea was most likely doable.
 
 The whole thing was built with [Amulet](https://www.amuletmc.com/), a world editor with a Python library underneath it. That library lets you load a Minecraft world. It gave a nice method to easily do it. [Core example of how this code works](https://amulet-core.readthedocs.io/en/stable/getting_started/blocks/amulet.html)
 
-Python wasn't the obvious pick. Since I prefer TypeScript, but the NBT libraries there were lacking and Python had by far the best support for minecraft NBT. And this was a script that needed to run exactly once and then never again, so none of the usual reasons to reach for a familiar language really applied. It just had to work the one time.
+Python wasn't the obvious pick, since I prefer TypeScript, but the NBT libraries there were lacking and Python had by far the best support for Minecraft NBT. And this was a script that needed to run exactly once and then never again, so none of the usual reasons to reach for a familiar language really applied. It just had to work the one time.
 
 ## Finding the right slab
 
@@ -29,7 +29,7 @@ The next problem is that not every block *has* an obvious slab. Stone slab, fine
 
 The answer was matching by colour. A mapping takes every block and finds the average colour and find the closest slab to it *by colour*, so a block with no real slab equivalent still becomes the slab that looks most like it.
 
-Going through that list by hand caught mistakes the matching logic couldn't see. Leaves were the clearest: they're stored as grey-scale, the colour only gets added by the game as a biome tint at render time. Matched blind, every tree would've come out slabbed dead grey. That one needed a manual override to mossy cobblestone slabs. If it was in the list it would get replaced which is why air wasn't replaced.
+Going through that list by hand caught mistakes the matching logic couldn't see. Leaves were the clearest: they're stored as grey-scale, the colour only gets added by the game as a biome tint at render time. Matched blind, every tree would've come out slabbed dead grey. That one needed a manual override to mossy cobblestone slabs. Anything on the blacklist below was skipped entirely rather than matched, which is why things like air, water, and crops were left alone.
 
 {{% details summary="The blacklist" %}}
 ```python
@@ -73,13 +73,13 @@ Then it was time to point it at the Season 4 whole world.
 
 *Four days.*
 
-I was hoping the amulet library code was gonna have something on the backend to speed it with like numpy but no it was the chokepoint. I was also banking of the palette stuff being enough but no. So it was either push to 2027 or speed it up.
+I was hoping the Amulet library had something under the hood to make it fast, but no - it was the chokepoint. I was also banking on the palette trick alone being enough, but no. So it was either push the release to 2027 or speed it up.
 
 ## Making it concurrent
 
 The fix was to do many regions at the same time. The catch is Amulet really wants to be the only thing holding a world open, so you can't just point a dozen workers at the same world folder and let them fight over it.
 
-It was then I came up with the huge bodge that saved the project why don't I just make more minecraft worlds and merge the files together so I can keep using amulet and not need to find a method to replace it.
+That's when I came up with the huge bodge that saved the project: why not just make more Minecraft worlds and merge the files back together? That way I could keep using Amulet without needing to replace it.
 
 It copies out the world's `level.dat` (which Amulet needs just to recognize the folder as a world) plus the single region file that worker owns, into a temp directory. It processes that region completely on its own, with its own Amulet instance and no shared lock, then moves the finished region file back into the real world and deletes the temp copy. Every worker is isolated, nobody steps on anybody, and the cores all light up.
 
@@ -206,7 +206,7 @@ def process_region(args):
 ```
 {{% /details %}}
 
-Same conversion. Four days became **about an hour.** Tho it did use the entire computer so had to open the window.
+Same conversion. Four days became **about an hour.** Though it did use the entire computer, so I had to open the window.
 ![Task manager showing every core maxed out during the conversion](/images/articles/s4-april-fools-pc-maxed.png "Every core maxed out during the conversion")
 
 # Extra bits
@@ -215,15 +215,13 @@ The passage gave a lot of problems due to the world height and custom biome. I c
 
 The slabbed world got added to the [Nexus server](https://slabserver.org/documentation/nexus/) afterwards, so if you want to go walk around the Great Slabbening yourself, it's still there.
 
-When it released I forgot to turn off firetick, Which is bad when Netherack was converted to Mangrove Slabs.
+When it released I forgot to turn off firetick, which is bad when Netherrack gets converted to mangrove slabs.
 
-I added added the [Etho Slab](https://minecraft.wiki/w/Etho_Slab) retexturing the petrified oak slab to it.
+I added the [Etho Slab](https://minecraft.wiki/w/Etho_Slab), retexturing the petrified oak slab to it.
 
 ## Reception
 
-People enjoyed it. It's a great login: you spawn in and the world you know is suddenly with half missing, everything you built still recognisable but somehow not. It was funny seeing peoples reactions to their builds getting changed.
-
-<!-- Add a couple more specifics here to land it: a standout reaction or moment from Discord, maybe a particular build that looked especially good (or especially cursed) sliced in half. -->
+The [original announcement](https://discord.com/channels/146701388234227712/146702455487463424/1488795095351300197) went out on Discord on April 1st. People enjoyed it. It's a great login: you spawn in and the world you know is suddenly half missing, everything you built still recognisable but somehow not. It was funny seeing people's reactions to their builds getting changed.
 
 # The code
 
