@@ -2,9 +2,40 @@
 {{ $sections := sort .Sections "Weight" "desc" }}
 {{ $pages := where .Pages "Kind" "page" }}
 <div class="page-sheet px-6 sm:px-8 py-8">
-  {{ partial "page-header.html" (dict "title" .Title "description" .Description) }}
+  {{ $headerIcon := "" }}
+  {{ $backHref := "" }}
+  {{ $backLabel := "" }}
+  {{ if eq .Kind "term" }}
+  {{ range hugo.Data.categories.categories }}{{ if eq .slug $.Data.Term }}{{ $headerIcon = .icon }}{{ end }}{{ end }}
+  {{ with .Parent }}{{ $backHref = .RelPermalink }}{{ $backLabel = printf "All %s" .LinkTitle }}{{ end }}
+  {{ end }}
+  {{ partial "page-header.html" (dict "title" .Title "description" .Description "icon" $headerIcon "backHref" $backHref "backLabel" $backLabel) }}
   {{ if hasPrefix .Title "Season" }}{{ partial "season-stats.html" . }}{{ end }}
   {{ with .Content }}<div class="prose mb-6">{{ . }}</div>{{ end }}
+
+  {{/* Taxonomy index (/tags/, /categories/) → a card per term with its count,
+       linking to the term's collection page. .Pages here are the term pages. */}}
+  {{ if eq .Kind "taxonomy" }}
+  {{ with .Pages.ByTitle }}
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {{ range . }}
+    {{ $count := len .Pages }}
+    {{ $icon := "" }}
+    {{ $termSlug := .Data.Term }}
+    {{ range hugo.Data.categories.categories }}{{ if eq .slug $termSlug }}{{ $icon = .icon }}{{ end }}{{ end }}
+    <a href="{{ .RelPermalink }}" class="mc-card mc-card-hover no-underline p-5 flex items-center justify-between gap-3">
+      <span class="flex items-center gap-2.5">
+        {{ with $icon }}{{ partial "mc-icon.html" (dict "slug" . "lg" true) }}{{ end }}
+        <span class="pixel text-[15px] text-fg leading-tight">{{ .LinkTitle }}</span>
+      </span>
+      <span class="text-xs text-faint">{{ $count }} {{ cond (eq $count 1) "page" "pages" }}</span>
+    </a>
+    {{ end }}
+  </div>
+  {{ else }}
+  <p class="text-muted">Nothing here yet.</p>
+  {{ end }}
+  {{ end }}
 
   {{/* Child sections → hub cards (seasons, categories, games) */}}
   {{ with $sections }}

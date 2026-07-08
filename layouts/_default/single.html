@@ -9,6 +9,12 @@
   {{ $slug := . }}
   {{ range hugo.Data.categories.categories }}{{ if eq .slug $slug }}{{ $cats = $cats | append (dict "title" .title "page" (site.GetPage (printf "/categories/%s" .slug))) }}{{ end }}{{ end }}
 {{ end }}
+{{/* Free-form tags (cross-cutting traditions) for the chip row - each links to
+     its /tags/<slug>/ collection page. */}}
+{{ $tags := slice }}
+{{ range .GetTerms "tags" }}
+  {{ $tags = $tags | append (dict "title" .LinkTitle "page" .) }}
+{{ end }}
 <div class="w-full">
   <div class="grid lg:grid-cols-[1fr_300px] gap-5 items-start">
 
@@ -25,10 +31,11 @@
           {{ .Content }}
         </div>
 
-        {{ if or $cats $season }}
+        {{ if or $cats $season $tags }}
         <div class="flex flex-wrap gap-1.5 mt-8 pt-4 border-t-2 border-rowline">
           {{ range $cats }}<a class="chip" href="{{ with .page }}{{ .RelPermalink }}{{ end }}">{{ .title }}</a>{{ end }}
           {{ with $season }}<a class="chip" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}
+          {{ range $tags }}<a class="chip" href="{{ with .page }}{{ .RelPermalink }}{{ end }}">{{ .title }}</a>{{ end }}
         </div>
         {{ end }}
       </article>

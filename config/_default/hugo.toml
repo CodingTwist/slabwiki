@@ -27,6 +27,11 @@ enableRobotsTXT = true
 # Each content/<server>/_index.md cascades a `server` param templates key off.
 [taxonomies]
   category = 'categories'
+  # Free-form cross-cutting tags (e.g. recurring traditions like April Fools
+  # that span multiple seasons/worlds). Unlike `categories` these don't drive
+  # the season-portal grouping - they just auto-generate a /tags/<tag>/ page
+  # collecting everything tagged, rendered by the term branch of list.html.
+  tag = 'tags'
 
 # Home also emits index.json - the client-side search index.
 [outputs]

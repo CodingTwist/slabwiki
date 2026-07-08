@@ -1,9 +1,13 @@
-{{- /* ctx: dict "title" <text> "eyebrow" <optional pixel-label text> "description" <optional> "divider" <optional divider margin class, default "mt-4"> */ -}}
+{{- /* ctx: dict "title" <text> "eyebrow" <optional pixel-label text> "description" <optional> "icon" <optional sprite slug> "backHref" <optional url> "backLabel" <optional text, used with backHref> "divider" <optional divider margin class, default "mt-4"> */ -}}
 {{- $eyebrow := .eyebrow -}}
 {{- $divider := .divider | default "mt-4" -}}
 <div class="mb-5">
+  {{ with .backHref }}<a href="{{ . }}" class="mc-btn mc-btn-dark !py-1.5 !px-2.5 text-[12px] inline-block mb-3">← {{ $.backLabel | default "Back" }}</a>{{ end }}
   {{ with $eyebrow }}<span class="pixel-label text-gold">{{ . }}</span>{{ end }}
-  <h1 class="pixel text-[26px] md:text-[30px]{{ if $eyebrow }} mt-1.5{{ end }}">{{ .title }}</h1>
+  <h1 class="pixel text-[26px] md:text-[30px] flex items-center gap-3{{ if $eyebrow }} mt-1.5{{ end }}">
+    {{ with .icon }}{{ partial "mc-icon.html" (dict "slug" . "lg" true) }}{{ end }}
+    <span>{{ .title }}</span>
+  </h1>
   {{ with .description }}<p class="text-muted text-sm mt-1.5">{{ . }}</p>{{ end }}
   <div class="stripe-divider {{ $divider }}"></div>
 </div>

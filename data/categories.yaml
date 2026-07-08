@@ -10,3 +10,4 @@ categories:
   - {slug: events, title: Events, icon: firework-rocket}
   - {slug: puzzles, title: Puzzles, icon: redstone}
   - {slug: community, title: Community, icon: player-head}
+  - {slug: april-fools, title: April Fools, icon: cake}

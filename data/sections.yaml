@@ -15,7 +15,7 @@ sections:
       - {title: Shops, slug: season-4/shops, icon: tall-grass}
       - {title: Tunnels, slug: season-4/tunnels, icon: rail}
       - {title: Public Resources, slug: season-4/public-resources, icon: beacon}
-      - {title: The Passage, slug: season-4/puzzles/the-passage/, icon: candle}
+      - {title: The Passage, slug: season-4/the-passage, icon: candle}
   - title: Nexus
     slug: nexus
     icon: ender-pearl
@@ -26,4 +26,14 @@ sections:
     icon: crafting-table
     navLabel: Posts
     kind: blog
+    quicklinks: []
+  - title: Categories
+    slug: categories
+    icon: bookshelf
+    navLabel: Categories
+    quicklinks: []
+  - title: Tags
+    slug: tags
+    icon: name-tag
+    navLabel: Tags
     quicklinks: []
