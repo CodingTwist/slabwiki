@@ -380,10 +380,15 @@
 
   /* Prose (article body) - themed typographic defaults. */
   .prose { @apply max-w-none leading-[1.75] text-body text-[16.5px]; }
-  .prose h2, .prose h3 {
+  .prose h1, .prose h2, .prose h3 {
     /* Leave room for the sticky header+breadcrumb stack so "On This Page"
        anchor jumps don't land the heading underneath it. */
     scroll-margin-top: calc(var(--sticky-h) + 10px);
+  }
+  .prose h1 {
+    @apply text-[21px] text-grass-hi border-b-[3px] border-divider pb-2 mt-8 mb-3;
+    font-family: var(--font-pixel);
+    line-height: 1.2;
   }
   .prose h2 {
     @apply text-[17px] text-grass-hi border-b-[3px] border-divider pb-2 mt-8 mb-3;
@@ -433,6 +438,52 @@
   .mc-details[open] .mc-details-summary::before { content: '▾ '; }
   .mc-details-body { @apply border-t-2 border-line p-3; }
   .mc-details-body pre { @apply my-0; }
+
+  /* Before/after drag slider. Native <input type=range> drives a --pos
+     custom property (0-100) that clip-path's the "after" layer, so
+     dragging/keyboard both work for free with no pointer-event JS. */
+  .compare-slider {
+    @apply relative w-full my-4 overflow-hidden border-[3px] border-line select-none;
+    aspect-ratio: 16 / 9;
+    box-shadow: 4px 4px 0 var(--c-card-sh);
+    --pos: 50%;
+  }
+  .compare-slider-before,
+  .compare-slider-after {
+    @apply absolute inset-0 w-full h-full object-cover pointer-events-none;
+  }
+  .compare-slider-after-wrap {
+    @apply absolute inset-0;
+    clip-path: inset(0 0 0 var(--pos));
+  }
+  .compare-slider-line {
+    @apply absolute top-0 bottom-0 w-[3px] bg-line pointer-events-none;
+    left: var(--pos);
+    transform: translateX(-50%);
+  }
+  .compare-slider-handle {
+    @apply absolute top-1/2 flex items-center justify-center w-8 h-8 border-2 border-line bg-surface text-fg text-[13px] pointer-events-none;
+    left: var(--pos);
+    transform: translate(-50%, -50%);
+    box-shadow: 2px 2px 0 var(--c-card-sh);
+  }
+  .compare-slider-tag {
+    @apply absolute top-2 font-pixel text-[11px] text-on-grass bg-grass px-2 py-1 pointer-events-none;
+  }
+  .compare-slider-tag-before { @apply left-2; }
+  .compare-slider-tag-after { @apply right-2; }
+  .compare-slider-input {
+    @apply absolute inset-0 w-full h-full m-0 opacity-0 cursor-ew-resize;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .prose img.compare-slider-before,
+  .prose img.compare-slider-after,
+  img.compare-slider-before,
+  img.compare-slider-after {
+    @apply border-0 my-0 h-full max-w-none;
+    box-shadow: none;
+  }
 
   /*  Puzzle strip: skewed accordion banner
      One inner track carries the single skewX(); the panels inside it

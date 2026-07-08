@@ -6,21 +6,22 @@ date: 2026-04-01
 description: 'The year every block in the Season 4 world became a slab, and the Python that did it.'
 summary: "For a server called Slabserver, there was really only one April Fools joke to make. Here's the idea, and how a whole world got turned into slabs."
 infobox:
-  Type: 'event'
-  Date: '2026-04-01'
-  Scope: 'Entire Season 4 world'
-  Tool: 'Amulet + Python'
-  Conversion time: '~1 hour'
+  image: '/images/articles/s4-april-fools-after.jpg'
+  Started: '2026-03-29'
+  Finished: '2026-04-01'
+  Builders: GamingTwist
 ---
 The server is called Slabserver. So {{< playerhead "GamingTwist" >}} took that personally for April Fools 2026, that kicked a pretty technical challenge that if he knew from the start wouldn't have done: every block in the Season 4 world got halved into a slab of itself. Stone into a stone slab, oak planks into an oak slab, the lot. The whole world. The joke was pushed it was to save storage and along side the world, half the players inventory was randomly removed. The server icon was also halved.
+
+{{< compare before="/images/articles/s4-april-fools-before.jpg" after="/images/articles/s4-april-fools-after.jpg" alt="Spawn before and after the Great Slabbening" >}}
 
 # Starting Small
 
 It started as small as it goes: get one block type, in one chunk, to turn into a another block. For the first test that was dirt into diamond block. If I was able to get this working the idea was most likely doable
 
-The whole thing was built with [Amulet](https://www.amuletmc.com/), a world editor with a Python library underneath it. That library lets you load a Minecraft world. It gave a nice method to easily do it.
+The whole thing was built with [Amulet](https://www.amuletmc.com/), a world editor with a Python library underneath it. That library lets you load a Minecraft world. It gave a nice method to easily do it. [Core example of how this code works](https://amulet-core.readthedocs.io/en/stable/getting_started/blocks/amulet.html)
 
-Python wasn't the obvious pick. Normally this'd be a TypeScript job, but the NBT libraries there were lacking and Python had by far the best support for minecraft NBT. And this was a script that needed to run exactly once and then never again, so none of the usual reasons to reach for a familiar language really applied. It just had to work the one time.
+Python wasn't the obvious pick. Since I prefer TypeScript, but the NBT libraries there were lacking and Python had by far the best support for minecraft NBT. And this was a script that needed to run exactly once and then never again, so none of the usual reasons to reach for a familiar language really applied. It just had to work the one time.
 
 ## Finding the right slab
 
@@ -70,15 +71,15 @@ def build_chunk_lut(chunk, java_version, name_to_slab_name):
 
 Then it was time to point it at the Season 4 whole world.
 
-Four days.
+*Four days.*
 
-I was hoping the amulet library code was gonna have something on the backend to speed it with like numpy but no it was the chokepoint. I was also banking of the palette stuff being enough but no.
+I was hoping the amulet library code was gonna have something on the backend to speed it with like numpy but no it was the chokepoint. I was also banking of the palette stuff being enough but no. So it was either push to 2027 or speed it up.
 
 ## Making it concurrent
 
-The fix was to do many regions at the same time, one per core. The catch is Amulet really wants to be the only thing holding a world open, so you can't just point a dozen workers at the same world folder and let them fight over it.
+The fix was to do many regions at the same time. The catch is Amulet really wants to be the only thing holding a world open, so you can't just point a dozen workers at the same world folder and let them fight over it.
 
-It was then I came up with the huge bogh that saved the project why do I just make more minecraft world and merge the files together so I can keep using amulet and not need to find a method to replace it.
+It was then I came up with the huge bodge that saved the project why don't I just make more minecraft worlds and merge the files together so I can keep using amulet and not need to find a method to replace it.
 
 It copies out the world's `level.dat` (which Amulet needs just to recognize the folder as a world) plus the single region file that worker owns, into a temp directory. It processes that region completely on its own, with its own Amulet instance and no shared lock, then moves the finished region file back into the real world and deletes the temp copy. Every worker is isolated, nobody steps on anybody, and the cores all light up.
 
@@ -100,6 +101,38 @@ def make_temp_world(source_world: Path, region_file: Path) -> Path:
     return tmp
 ```
 {{% /details %}}
+
+The actual per-chunk work is small enough to live on its own: take a chunk and its lookup table, run the LUT over every sub-chunk, and report back what changed. Pulling it out keeps the region loop readable.
+
+{{% details summary="Converting one chunk" %}}
+```python
+def convert_chunk(chunk, cx, cz, lut):
+    """
+    Apply the palette LUT across every sub-chunk. Returns
+    (changed, blocks_replaced, first_coords) where first_coords is the
+    world position of the first replaced block (for the tp log), or None.
+    """
+    chunk_changed      = False
+    total_replacements = 0
+    first_coords       = None
+
+    for cy in chunk.blocks.sub_chunks:
+        sub     = chunk.blocks.get_sub_chunk(cy)
+        new_sub = lut[sub]
+        diff    = new_sub != sub
+        if np.any(diff):
+            sub[:] = new_sub
+            chunk_changed       = True
+            total_replacements += int(diff.sum())
+            if first_coords is None:
+                lx, ly, lz = np.argwhere(diff)[0]
+                first_coords = (cx * 16 + int(lx), cy * 16 + int(ly), cz * 16 + int(lz))
+
+    return chunk_changed, total_replacements, first_coords
+```
+{{% /details %}}
+
+With that out of the way, the region worker is just: clone the world, walk its chunks, convert each one, save, and move the finished region back.
 
 {{% details summary="Processing one region, start to finish" %}}
 ```python
@@ -140,32 +173,16 @@ def process_region(args):
                     continue
 
                 lut = build_chunk_lut(chunk, java_version, mapping)
+                changed, replacements, first = convert_chunk(chunk, cx, cz, lut)
 
-                chunk_changed      = False
-                total_replacements = 0
-                first_world_x = first_world_y = first_world_z = None
-
-                for cy in chunk.blocks.sub_chunks:
-                    sub     = chunk.blocks.get_sub_chunk(cy)
-                    new_sub = lut[sub]
-                    diff    = new_sub != sub
-                    if np.any(diff):
-                        sub[:] = new_sub
-                        chunk_changed       = True
-                        total_replacements += int(diff.sum())
-                        if first_world_x is None:
-                            lx, ly, lz = np.argwhere(diff)[0]
-                            first_world_x = cx * 16 + int(lx)
-                            first_world_y = cy * 16 + int(ly)
-                            first_world_z = cz * 16 + int(lz)
-
-                if chunk_changed:
+                if changed:
                     chunk.changed = True
                     changed_count += 1
+                    fx, fy, fz = first
                     change_log.append({
                         "chunk":          [cx, cz],
-                        "tp":             f"/tp {first_world_x} {first_world_y} {first_world_z}",
-                        "blocks_changed": total_replacements,
+                        "tp":             f"/tp {fx} {fy} {fz}",
+                        "blocks_changed": replacements,
                     })
 
                 level.put_chunk(chunk, DIMENSION)
@@ -190,20 +207,29 @@ def process_region(args):
 {{% /details %}}
 
 Same conversion. Four days became **about an hour.** Tho it did use the entire computer so had to open the window.
-[maxed out](april-fools-pc_maxed.png)
+![Task manager showing every core maxed out during the conversion](/images/articles/s4-april-fools-pc-maxed.png "Every core maxed out during the conversion")
 
 # Extra bits
 
 The passage gave a lot of problems due to the world height and custom biome. I couldn't multithread it without changing the clone process but the world is much smaller so I did it single threaded.
 
+The slabbed world got added to the [Nexus server](https://slabserver.org/documentation/nexus/) afterwards, so if you want to go walk around the Great Slabbening yourself, it's still there.
+
+When it released I forgot to turn off firetick, Which is bad when Netherack was converted to Mangrove Slabs.
+
+I added added the [Etho Slab](https://minecraft.wiki/w/Etho_Slab) retexturing the petrified oak slab to it.
+
 ## Reception
 
-People loved it. It's a great login: you spawn in and the world you know is suddenly with half missing, everything you built still recognisable but somehow not, and the reason is just the server finally living up to its name.
+People enjoyed it. It's a great login: you spawn in and the world you know is suddenly with half missing, everything you built still recognisable but somehow not. It was funny seeing peoples reactions to their builds getting changed.
 
-<!-- Add a couple of specifics here to land it: a screenshot of the slabbed world on login, a standout reaction or moment from Discord, maybe a particular build that looked especially good (or especially cursed) sliced in half. -->
+<!-- Add a couple more specifics here to land it: a standout reaction or moment from Discord, maybe a particular build that looked especially good (or especially cursed) sliced in half. -->
 
 # The code
-{{% details summary="The full conversion script" %}}
+
+Everything above is the interesting part. What's left is the driver: read the config, find every region file, hand them out to the pool, and write the log + tp list once it's done.
+
+{{% details summary="Config, tp log, and the __main__ driver" %}}
 ```python
 from amulet.api.block import Block
 from amulet.api.errors import ChunkLoadError
@@ -218,138 +244,12 @@ import time
 import multiprocessing as mp
 from multiprocessing import Pool, Manager
 
-# ---------- CONFIG ----------
-WORLD_PATH = Path("/var/recordings/slabconvert/SlabserverS4")
-DIMENSION = "minecraft:the_end"
+# CONFIG 
+WORLD_PATH = Path("slabconvert/SlabserverS4")
+DIMENSION = "minecraft:overworld"
 BLOCK_TO_SLAB = Path("block_to_slab_edited.json")
 SAVE_EVERY_N_CHUNKS = 50
 WORKERS = max(1, mp.cpu_count() - 1)
-
-BLACKLIST_BLOCKS = {
-    "air", "water", "lava", "grass", "fern", "tall_grass", "snow", "snow_layer",
-    "oak_sapling", "birch_sapling", "spruce_sapling", "flower", "dandelion",
-    "poppy", "rose_bush", "lily_of_the_valley", "wheat", "carrots", "potatoes",
-    "beetroots", "crops", "reeds", "sugar_cane", "cactus", "vine",
-    "leaves", "leaves2", "tall_flower"
-}
-# ----------------------------
-
-def build_chunk_lut(chunk, java_version, name_to_slab_name):
-    palette_size = len(chunk.block_palette)
-    lut = np.arange(palette_size, dtype=np.uint32)
-    for pid in range(palette_size):
-        universal_block = chunk.block_palette[pid]
-        java_block, _, _ = java_version.block.from_universal(universal_block)
-        if isinstance(java_block, list):
-            java_block = java_block[0]
-        block_name = java_block.base_name
-        if block_name in name_to_slab_name:
-            slab = Block("minecraft", name_to_slab_name[block_name])
-            u_slab, _, _ = java_version.block.to_universal(slab)
-            slab_id = chunk.block_palette.get_add_block(u_slab)
-            lut[pid] = slab_id
-    return lut
-
-
-def make_temp_world(source_world: Path, region_file: Path) -> Path:
-    """
-    Copy the world's level.dat + just one region file into a fresh temp
-    directory. Amulet needs level.dat to identify the world format; the
-    region file is the only data we want to touch.
-    Returns the temp world path.
-    """
-    tmp = Path(tempfile.mkdtemp(prefix="slab_worker_"))
-    # level.dat is required so Amulet recognises it as a valid world
-    shutil.copy2(source_world / "level.dat", tmp / "level.dat")
-    region_dir = tmp / "region"
-    region_dir.mkdir()
-    shutil.copy2(region_file, region_dir / region_file.name)
-    return tmp
-
-
-def process_region(args):
-    """
-    Worker: copies one region into a temp world, processes it with its own
-    Amulet instance (no shared lock), then moves the result back.
-    """
-    rx, rz, world_path_str, mapping, progress_queue = args
-
-    world_path  = Path(world_path_str)
-    region_file = world_path / "region" / f"r.{rx}.{rz}.mca"
-
-    tmp_world = make_temp_world(world_path, region_file)
-    tmp_region_out = tmp_world / "region" / region_file.name
-
-    changed_count = 0
-    skipped_count = 0
-    change_log    = []
-
-    try:
-        level        = amulet.load_level(tmp_world)
-        java_version = level.translation_manager.get_version("java", (1, 21, 11))
-
-        chunk_coords = [
-            (rx * 32 + dx, rz * 32 + dz)
-            for dx in range(32)
-            for dz in range(32)
-        ]
-
-        try:
-            for i, (cx, cz) in enumerate(chunk_coords):
-                try:
-                    chunk = level.get_chunk(cx, cz, DIMENSION)
-                except ChunkLoadError:
-                    skipped_count += 1
-                    progress_queue.put(1)
-                    continue
-
-                lut = build_chunk_lut(chunk, java_version, mapping)
-
-                chunk_changed      = False
-                total_replacements = 0
-                first_world_x = first_world_y = first_world_z = None
-
-                for cy in chunk.blocks.sub_chunks:
-                    sub     = chunk.blocks.get_sub_chunk(cy)
-                    new_sub = lut[sub]
-                    diff    = new_sub != sub
-                    if np.any(diff):
-                        sub[:] = new_sub
-                        chunk_changed       = True
-                        total_replacements += int(diff.sum())
-                        if first_world_x is None:
-                            lx, ly, lz = np.argwhere(diff)[0]
-                            first_world_x = cx * 16 + int(lx)
-                            first_world_y = cy * 16 + int(ly)
-                            first_world_z = cz * 16 + int(lz)
-
-                if chunk_changed:
-                    chunk.changed = True
-                    changed_count += 1
-                    change_log.append({
-                        "chunk":          [cx, cz],
-                        "tp":             f"/tp {first_world_x} {first_world_y} {first_world_z}",
-                        "blocks_changed": total_replacements,
-                    })
-
-                level.put_chunk(chunk, DIMENSION)
-
-                if (i + 1) % SAVE_EVERY_N_CHUNKS == 0:
-                    level.save()
-
-                progress_queue.put(1)
-
-        finally:
-            level.save()
-            level.close()
-
-        # Move the processed region file back to the real world, replacing the original
-        shutil.move(str(tmp_region_out), str(region_file))
-
-    finally:
-        shutil.rmtree(tmp_world, ignore_errors=True)
-
-    return changed_count, skipped_count, change_log
 
 
 def progress_reporter(total, progress_queue, start_time):
@@ -372,7 +272,7 @@ def progress_reporter(total, progress_queue, start_time):
     print()
 
 
-# ── Main ────────────────────────────────────────────────────────────────────
+# Main
 
 if __name__ == "__main__":
     raw_mapping = json.load(open(BLOCK_TO_SLAB))

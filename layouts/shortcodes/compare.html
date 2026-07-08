@@ -1,0 +1,18 @@
+{{- /* Before/after drag-slider. Params: before, after (image paths),
+       alt (base alt text), beforeLabel, afterLabel (default "Before"/"After"). */ -}}
+{{- $before := .Get "before" -}}
+{{- $after := .Get "after" -}}
+{{- $alt := .Get "alt" | default "Comparison" -}}
+{{- $beforeLabel := .Get "beforeLabel" | default "Before" -}}
+{{- $afterLabel := .Get "afterLabel" | default "After" -}}
+<div class="compare-slider">
+  <img class="compare-slider-before" src="{{ $before | relURL }}" alt="{{ $alt }} ({{ $beforeLabel }})" loading="lazy">
+  <div class="compare-slider-after-wrap">
+    <img class="compare-slider-after" src="{{ $after | relURL }}" alt="{{ $alt }} ({{ $afterLabel }})" loading="lazy">
+  </div>
+  <div class="compare-slider-line"></div>
+  <div class="compare-slider-handle" aria-hidden="true">↔</div>
+  <span class="compare-slider-tag compare-slider-tag-before">{{ $beforeLabel }}</span>
+  <span class="compare-slider-tag compare-slider-tag-after">{{ $afterLabel }}</span>
+  <input type="range" class="compare-slider-input" min="0" max="100" value="50" aria-label="Comparison slider position">
+</div>
