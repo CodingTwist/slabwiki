@@ -6,6 +6,8 @@
   <meta name="theme-color" content="#16130e">
   {{ $pageTitle := cond .IsHome (printf "%s - %s" .Site.Title .Site.Params.tagline) (printf "%s · %s" .Title .Site.Title) }}
   {{ $pageDesc := .Description | default .Site.Params.description }}
+  {{ $pageImage := "images/logo.png" }}
+  {{ with .Params.infobox }}{{ with .image }}{{ $pageImage = . | strings.TrimPrefix "/" }}{{ end }}{{ end }}
   <title>{{ $pageTitle }}</title>
   <meta name="description" content="{{ $pageDesc }}">
   <link rel="canonical" href="{{ .Permalink }}">
@@ -16,11 +18,11 @@
   <meta property="og:description" content="{{ $pageDesc }}">
   <meta property="og:url" content="{{ .Permalink }}">
   <meta property="og:site_name" content="{{ .Site.Title }}">
-  <meta property="og:image" content="{{ "images/logo.png" | absURL }}">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="{{ $pageImage | absURL }}">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ $pageTitle }}">
   <meta name="twitter:description" content="{{ $pageDesc }}">
-  <meta name="twitter:image" content="{{ "images/logo.png" | absURL }}">
+  <meta name="twitter:image" content="{{ $pageImage | absURL }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800;6..12,900&display=swap" rel="stylesheet">
