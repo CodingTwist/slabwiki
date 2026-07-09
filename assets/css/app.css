@@ -1665,6 +1665,699 @@
     --c-logo-text: #dbe9cd;
   }
 }
+:root .bg, :root[data-theme="dark"] .bg {
+  color: #f8f8f2;
+}
+:root .chroma, :root[data-theme="dark"] .chroma {
+  color: #f8f8f2;
+  -webkit-text-size-adjust: none;
+}
+:root .chroma .err, :root[data-theme="dark"] .chroma .err {
+  color: #960050;
+  background-color: #1e0010;
+}
+:root .chroma .lnlinks, :root[data-theme="dark"] .chroma .lnlinks {
+  outline: none;
+  text-decoration: none;
+  color: inherit;
+}
+:root .chroma .lntd, :root[data-theme="dark"] .chroma .lntd {
+  vertical-align: top;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+:root .chroma .lntable, :root[data-theme="dark"] .chroma .lntable {
+  border-spacing: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+:root .chroma .hl, :root[data-theme="dark"] .chroma .hl {
+  background-color: #3c3d38;
+}
+:root .chroma .lnt, :root[data-theme="dark"] .chroma .lnt {
+  white-space: pre;
+  -webkit-user-select: none;
+  user-select: none;
+  margin-right: 0.4em;
+  padding: 0 0.4em 0 0.4em;
+  color: #7f7f7f;
+}
+:root .chroma .ln, :root[data-theme="dark"] .chroma .ln {
+  white-space: pre;
+  -webkit-user-select: none;
+  user-select: none;
+  margin-right: 0.4em;
+  padding: 0 0.4em 0 0.4em;
+  color: #7f7f7f;
+}
+:root .chroma .line, :root[data-theme="dark"] .chroma .line {
+  display: flex;
+}
+:root .chroma .k, :root[data-theme="dark"] .chroma .k {
+  color: #66d9ef;
+}
+:root .chroma .kc, :root[data-theme="dark"] .chroma .kc {
+  color: #66d9ef;
+}
+:root .chroma .kd, :root[data-theme="dark"] .chroma .kd {
+  color: #66d9ef;
+}
+:root .chroma .kn, :root[data-theme="dark"] .chroma .kn {
+  color: #f92672;
+}
+:root .chroma .kp, :root[data-theme="dark"] .chroma .kp {
+  color: #66d9ef;
+}
+:root .chroma .kr, :root[data-theme="dark"] .chroma .kr {
+  color: #66d9ef;
+}
+:root .chroma .kt, :root[data-theme="dark"] .chroma .kt {
+  color: #66d9ef;
+}
+:root .chroma .na, :root[data-theme="dark"] .chroma .na {
+  color: #a6e22e;
+}
+:root .chroma .nc, :root[data-theme="dark"] .chroma .nc {
+  color: #a6e22e;
+}
+:root .chroma .no, :root[data-theme="dark"] .chroma .no {
+  color: #66d9ef;
+}
+:root .chroma .nd, :root[data-theme="dark"] .chroma .nd {
+  color: #a6e22e;
+}
+:root .chroma .ne, :root[data-theme="dark"] .chroma .ne {
+  color: #a6e22e;
+}
+:root .chroma .nx, :root[data-theme="dark"] .chroma .nx {
+  color: #a6e22e;
+}
+:root .chroma .nt, :root[data-theme="dark"] .chroma .nt {
+  color: #f92672;
+}
+:root .chroma .nf, :root[data-theme="dark"] .chroma .nf {
+  color: #a6e22e;
+}
+:root .chroma .fm, :root[data-theme="dark"] .chroma .fm {
+  color: #a6e22e;
+}
+:root .chroma .l, :root[data-theme="dark"] .chroma .l {
+  color: #ae81ff;
+}
+:root .chroma .ld, :root[data-theme="dark"] .chroma .ld {
+  color: #e6db74;
+}
+:root .chroma .s, :root[data-theme="dark"] .chroma .s {
+  color: #e6db74;
+}
+:root .chroma .sa, :root[data-theme="dark"] .chroma .sa {
+  color: #e6db74;
+}
+:root .chroma .sb, :root[data-theme="dark"] .chroma .sb {
+  color: #e6db74;
+}
+:root .chroma .sc, :root[data-theme="dark"] .chroma .sc {
+  color: #e6db74;
+}
+:root .chroma .dl, :root[data-theme="dark"] .chroma .dl {
+  color: #e6db74;
+}
+:root .chroma .sd, :root[data-theme="dark"] .chroma .sd {
+  color: #e6db74;
+}
+:root .chroma .s2, :root[data-theme="dark"] .chroma .s2 {
+  color: #e6db74;
+}
+:root .chroma .se, :root[data-theme="dark"] .chroma .se {
+  color: #ae81ff;
+}
+:root .chroma .sh, :root[data-theme="dark"] .chroma .sh {
+  color: #e6db74;
+}
+:root .chroma .si, :root[data-theme="dark"] .chroma .si {
+  color: #e6db74;
+}
+:root .chroma .sx, :root[data-theme="dark"] .chroma .sx {
+  color: #e6db74;
+}
+:root .chroma .sr, :root[data-theme="dark"] .chroma .sr {
+  color: #e6db74;
+}
+:root .chroma .s1, :root[data-theme="dark"] .chroma .s1 {
+  color: #e6db74;
+}
+:root .chroma .ss, :root[data-theme="dark"] .chroma .ss {
+  color: #e6db74;
+}
+:root .chroma .m, :root[data-theme="dark"] .chroma .m {
+  color: #ae81ff;
+}
+:root .chroma .mb, :root[data-theme="dark"] .chroma .mb {
+  color: #ae81ff;
+}
+:root .chroma .mf, :root[data-theme="dark"] .chroma .mf {
+  color: #ae81ff;
+}
+:root .chroma .mh, :root[data-theme="dark"] .chroma .mh {
+  color: #ae81ff;
+}
+:root .chroma .mi, :root[data-theme="dark"] .chroma .mi {
+  color: #ae81ff;
+}
+:root .chroma .il, :root[data-theme="dark"] .chroma .il {
+  color: #ae81ff;
+}
+:root .chroma .mo, :root[data-theme="dark"] .chroma .mo {
+  color: #ae81ff;
+}
+:root .chroma .o, :root[data-theme="dark"] .chroma .o {
+  color: #f92672;
+}
+:root .chroma .ow, :root[data-theme="dark"] .chroma .ow {
+  color: #f92672;
+}
+:root .chroma .or, :root[data-theme="dark"] .chroma .or {
+  color: #f92672;
+}
+:root .chroma .p, :root[data-theme="dark"] .chroma .p {
+  color: #f8f8f2;
+}
+:root .chroma .c, :root[data-theme="dark"] .chroma .c {
+  color: #75715e;
+}
+:root .chroma .ch, :root[data-theme="dark"] .chroma .ch {
+  color: #75715e;
+}
+:root .chroma .cm, :root[data-theme="dark"] .chroma .cm {
+  color: #75715e;
+}
+:root .chroma .c1, :root[data-theme="dark"] .chroma .c1 {
+  color: #75715e;
+}
+:root .chroma .cs, :root[data-theme="dark"] .chroma .cs {
+  color: #75715e;
+}
+:root .chroma .cp, :root[data-theme="dark"] .chroma .cp {
+  color: #75715e;
+}
+:root .chroma .cpf, :root[data-theme="dark"] .chroma .cpf {
+  color: #75715e;
+}
+:root .chroma .gd, :root[data-theme="dark"] .chroma .gd {
+  color: #f92672;
+}
+:root .chroma .ge, :root[data-theme="dark"] .chroma .ge {
+  font-style: italic;
+}
+:root .chroma .gi, :root[data-theme="dark"] .chroma .gi {
+  color: #a6e22e;
+}
+:root .chroma .gs, :root[data-theme="dark"] .chroma .gs {
+  font-weight: bold;
+}
+:root .chroma .gu, :root[data-theme="dark"] .chroma .gu {
+  color: #75715e;
+}
+:root[data-theme="light"] .chroma {
+  -webkit-text-size-adjust: none;
+}
+:root[data-theme="light"] .chroma .err {
+  color: #f6f8fa;
+  background-color: #82071e;
+}
+:root[data-theme="light"] .chroma .lnlinks {
+  outline: none;
+  text-decoration: none;
+  color: inherit;
+}
+:root[data-theme="light"] .chroma .lntd {
+  vertical-align: top;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+:root[data-theme="light"] .chroma .lntable {
+  border-spacing: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+:root[data-theme="light"] .chroma .hl {
+  background-color: #dedede;
+}
+:root[data-theme="light"] .chroma .lnt {
+  white-space: pre;
+  -webkit-user-select: none;
+  user-select: none;
+  margin-right: 0.4em;
+  padding: 0 0.4em 0 0.4em;
+  color: #7f7f7f;
+}
+:root[data-theme="light"] .chroma .ln {
+  white-space: pre;
+  -webkit-user-select: none;
+  user-select: none;
+  margin-right: 0.4em;
+  padding: 0 0.4em 0 0.4em;
+  color: #7f7f7f;
+}
+:root[data-theme="light"] .chroma .line {
+  display: flex;
+}
+:root[data-theme="light"] .chroma .k {
+  color: #cf222e;
+}
+:root[data-theme="light"] .chroma .kc {
+  color: #cf222e;
+}
+:root[data-theme="light"] .chroma .kd {
+  color: #cf222e;
+}
+:root[data-theme="light"] .chroma .kn {
+  color: #cf222e;
+}
+:root[data-theme="light"] .chroma .kp {
+  color: #cf222e;
+}
+:root[data-theme="light"] .chroma .kr {
+  color: #cf222e;
+}
+:root[data-theme="light"] .chroma .kt {
+  color: #cf222e;
+}
+:root[data-theme="light"] .chroma .na {
+  color: #1f2328;
+}
+:root[data-theme="light"] .chroma .nc {
+  color: #1f2328;
+}
+:root[data-theme="light"] .chroma .no {
+  color: #0550ae;
+}
+:root[data-theme="light"] .chroma .nd {
+  color: #0550ae;
+}
+:root[data-theme="light"] .chroma .ni {
+  color: #6639ba;
+}
+:root[data-theme="light"] .chroma .nl {
+  color: #900;
+  font-weight: bold;
+}
+:root[data-theme="light"] .chroma .nn {
+  color: #24292e;
+}
+:root[data-theme="light"] .chroma .nx {
+  color: #1f2328;
+}
+:root[data-theme="light"] .chroma .nt {
+  color: #0550ae;
+}
+:root[data-theme="light"] .chroma .nb {
+  color: #6639ba;
+}
+:root[data-theme="light"] .chroma .bp {
+  color: #6a737d;
+}
+:root[data-theme="light"] .chroma .nv {
+  color: #953800;
+}
+:root[data-theme="light"] .chroma .vc {
+  color: #953800;
+}
+:root[data-theme="light"] .chroma .vg {
+  color: #953800;
+}
+:root[data-theme="light"] .chroma .vi {
+  color: #953800;
+}
+:root[data-theme="light"] .chroma .vm {
+  color: #953800;
+}
+:root[data-theme="light"] .chroma .nf {
+  color: #6639ba;
+}
+:root[data-theme="light"] .chroma .fm {
+  color: #6639ba;
+}
+:root[data-theme="light"] .chroma .s {
+  color: #0a3069;
+}
+:root[data-theme="light"] .chroma .sa {
+  color: #0a3069;
+}
+:root[data-theme="light"] .chroma .sb {
+  color: #0a3069;
+}
+:root[data-theme="light"] .chroma .sc {
+  color: #0a3069;
+}
+:root[data-theme="light"] .chroma .dl {
+  color: #0a3069;
+}
+:root[data-theme="light"] .chroma .sd {
+  color: #0a3069;
+}
+:root[data-theme="light"] .chroma .s2 {
+  color: #0a3069;
+}
+:root[data-theme="light"] .chroma .se {
+  color: #0a3069;
+}
+:root[data-theme="light"] .chroma .sh {
+  color: #0a3069;
+}
+:root[data-theme="light"] .chroma .si {
+  color: #0a3069;
+}
+:root[data-theme="light"] .chroma .sx {
+  color: #0a3069;
+}
+:root[data-theme="light"] .chroma .sr {
+  color: #0a3069;
+}
+:root[data-theme="light"] .chroma .s1 {
+  color: #0a3069;
+}
+:root[data-theme="light"] .chroma .ss {
+  color: #032f62;
+}
+:root[data-theme="light"] .chroma .m {
+  color: #0550ae;
+}
+:root[data-theme="light"] .chroma .mb {
+  color: #0550ae;
+}
+:root[data-theme="light"] .chroma .mf {
+  color: #0550ae;
+}
+:root[data-theme="light"] .chroma .mh {
+  color: #0550ae;
+}
+:root[data-theme="light"] .chroma .mi {
+  color: #0550ae;
+}
+:root[data-theme="light"] .chroma .il {
+  color: #0550ae;
+}
+:root[data-theme="light"] .chroma .mo {
+  color: #0550ae;
+}
+:root[data-theme="light"] .chroma .o {
+  color: #0550ae;
+}
+:root[data-theme="light"] .chroma .ow {
+  color: #0550ae;
+}
+:root[data-theme="light"] .chroma .or {
+  color: #0550ae;
+}
+:root[data-theme="light"] .chroma .p {
+  color: #1f2328;
+}
+:root[data-theme="light"] .chroma .c {
+  color: #57606a;
+}
+:root[data-theme="light"] .chroma .ch {
+  color: #57606a;
+}
+:root[data-theme="light"] .chroma .cm {
+  color: #57606a;
+}
+:root[data-theme="light"] .chroma .c1 {
+  color: #57606a;
+}
+:root[data-theme="light"] .chroma .cs {
+  color: #57606a;
+}
+:root[data-theme="light"] .chroma .cp {
+  color: #57606a;
+}
+:root[data-theme="light"] .chroma .cpf {
+  color: #57606a;
+}
+:root[data-theme="light"] .chroma .gd {
+  color: #82071e;
+  background-color: #ffebe9;
+}
+:root[data-theme="light"] .chroma .ge {
+  color: #1f2328;
+}
+:root[data-theme="light"] .chroma .gi {
+  color: #116329;
+  background-color: #dafbe1;
+}
+:root[data-theme="light"] .chroma .go {
+  color: #1f2328;
+}
+:root[data-theme="light"] .chroma .gl {
+  text-decoration: underline;
+}
+:root[data-theme="light"] .chroma .w {
+  color: #fff;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .chroma {
+    -webkit-text-size-adjust: none;
+  }
+  :root:not([data-theme]) .chroma .err {
+    color: #f6f8fa;
+    background-color: #82071e;
+  }
+  :root:not([data-theme]) .chroma .lnlinks {
+    outline: none;
+    text-decoration: none;
+    color: inherit;
+  }
+  :root:not([data-theme]) .chroma .lntd {
+    vertical-align: top;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+  :root:not([data-theme]) .chroma .lntable {
+    border-spacing: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+  :root:not([data-theme]) .chroma .hl {
+    background-color: #dedede;
+  }
+  :root:not([data-theme]) .chroma .lnt {
+    white-space: pre;
+    -webkit-user-select: none;
+    user-select: none;
+    margin-right: 0.4em;
+    padding: 0 0.4em 0 0.4em;
+    color: #7f7f7f;
+  }
+  :root:not([data-theme]) .chroma .ln {
+    white-space: pre;
+    -webkit-user-select: none;
+    user-select: none;
+    margin-right: 0.4em;
+    padding: 0 0.4em 0 0.4em;
+    color: #7f7f7f;
+  }
+  :root:not([data-theme]) .chroma .line {
+    display: flex;
+  }
+  :root:not([data-theme]) .chroma .k {
+    color: #cf222e;
+  }
+  :root:not([data-theme]) .chroma .kc {
+    color: #cf222e;
+  }
+  :root:not([data-theme]) .chroma .kd {
+    color: #cf222e;
+  }
+  :root:not([data-theme]) .chroma .kn {
+    color: #cf222e;
+  }
+  :root:not([data-theme]) .chroma .kp {
+    color: #cf222e;
+  }
+  :root:not([data-theme]) .chroma .kr {
+    color: #cf222e;
+  }
+  :root:not([data-theme]) .chroma .kt {
+    color: #cf222e;
+  }
+  :root:not([data-theme]) .chroma .na {
+    color: #1f2328;
+  }
+  :root:not([data-theme]) .chroma .nc {
+    color: #1f2328;
+  }
+  :root:not([data-theme]) .chroma .no {
+    color: #0550ae;
+  }
+  :root:not([data-theme]) .chroma .nd {
+    color: #0550ae;
+  }
+  :root:not([data-theme]) .chroma .ni {
+    color: #6639ba;
+  }
+  :root:not([data-theme]) .chroma .nl {
+    color: #900;
+    font-weight: bold;
+  }
+  :root:not([data-theme]) .chroma .nn {
+    color: #24292e;
+  }
+  :root:not([data-theme]) .chroma .nx {
+    color: #1f2328;
+  }
+  :root:not([data-theme]) .chroma .nt {
+    color: #0550ae;
+  }
+  :root:not([data-theme]) .chroma .nb {
+    color: #6639ba;
+  }
+  :root:not([data-theme]) .chroma .bp {
+    color: #6a737d;
+  }
+  :root:not([data-theme]) .chroma .nv {
+    color: #953800;
+  }
+  :root:not([data-theme]) .chroma .vc {
+    color: #953800;
+  }
+  :root:not([data-theme]) .chroma .vg {
+    color: #953800;
+  }
+  :root:not([data-theme]) .chroma .vi {
+    color: #953800;
+  }
+  :root:not([data-theme]) .chroma .vm {
+    color: #953800;
+  }
+  :root:not([data-theme]) .chroma .nf {
+    color: #6639ba;
+  }
+  :root:not([data-theme]) .chroma .fm {
+    color: #6639ba;
+  }
+  :root:not([data-theme]) .chroma .s {
+    color: #0a3069;
+  }
+  :root:not([data-theme]) .chroma .sa {
+    color: #0a3069;
+  }
+  :root:not([data-theme]) .chroma .sb {
+    color: #0a3069;
+  }
+  :root:not([data-theme]) .chroma .sc {
+    color: #0a3069;
+  }
+  :root:not([data-theme]) .chroma .dl {
+    color: #0a3069;
+  }
+  :root:not([data-theme]) .chroma .sd {
+    color: #0a3069;
+  }
+  :root:not([data-theme]) .chroma .s2 {
+    color: #0a3069;
+  }
+  :root:not([data-theme]) .chroma .se {
+    color: #0a3069;
+  }
+  :root:not([data-theme]) .chroma .sh {
+    color: #0a3069;
+  }
+  :root:not([data-theme]) .chroma .si {
+    color: #0a3069;
+  }
+  :root:not([data-theme]) .chroma .sx {
+    color: #0a3069;
+  }
+  :root:not([data-theme]) .chroma .sr {
+    color: #0a3069;
+  }
+  :root:not([data-theme]) .chroma .s1 {
+    color: #0a3069;
+  }
+  :root:not([data-theme]) .chroma .ss {
+    color: #032f62;
+  }
+  :root:not([data-theme]) .chroma .m {
+    color: #0550ae;
+  }
+  :root:not([data-theme]) .chroma .mb {
+    color: #0550ae;
+  }
+  :root:not([data-theme]) .chroma .mf {
+    color: #0550ae;
+  }
+  :root:not([data-theme]) .chroma .mh {
+    color: #0550ae;
+  }
+  :root:not([data-theme]) .chroma .mi {
+    color: #0550ae;
+  }
+  :root:not([data-theme]) .chroma .il {
+    color: #0550ae;
+  }
+  :root:not([data-theme]) .chroma .mo {
+    color: #0550ae;
+  }
+  :root:not([data-theme]) .chroma .o {
+    color: #0550ae;
+  }
+  :root:not([data-theme]) .chroma .ow {
+    color: #0550ae;
+  }
+  :root:not([data-theme]) .chroma .or {
+    color: #0550ae;
+  }
+  :root:not([data-theme]) .chroma .p {
+    color: #1f2328;
+  }
+  :root:not([data-theme]) .chroma .c {
+    color: #57606a;
+  }
+  :root:not([data-theme]) .chroma .ch {
+    color: #57606a;
+  }
+  :root:not([data-theme]) .chroma .cm {
+    color: #57606a;
+  }
+  :root:not([data-theme]) .chroma .c1 {
+    color: #57606a;
+  }
+  :root:not([data-theme]) .chroma .cs {
+    color: #57606a;
+  }
+  :root:not([data-theme]) .chroma .cp {
+    color: #57606a;
+  }
+  :root:not([data-theme]) .chroma .cpf {
+    color: #57606a;
+  }
+  :root:not([data-theme]) .chroma .gd {
+    color: #82071e;
+    background-color: #ffebe9;
+  }
+  :root:not([data-theme]) .chroma .ge {
+    color: #1f2328;
+  }
+  :root:not([data-theme]) .chroma .gi {
+    color: #116329;
+    background-color: #dafbe1;
+  }
+  :root:not([data-theme]) .chroma .go {
+    color: #1f2328;
+  }
+  :root:not([data-theme]) .chroma .gl {
+    text-decoration: underline;
+  }
+  :root:not([data-theme]) .chroma .w {
+    color: #fff;
+  }
+}
 @layer base {
   html {
     scroll-behavior: smooth;

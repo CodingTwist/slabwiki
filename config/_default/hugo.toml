@@ -41,7 +41,7 @@ enableRobotsTXT = true
   unsafe = true
 
 [markup.highlight]
-  noClasses = true
+  noClasses = false
   style = 'monokai'
 
 [markup.tableOfContents]
